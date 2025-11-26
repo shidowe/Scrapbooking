@@ -1,0 +1,14 @@
+.npm
+.eslintcache
+.stylelintcache
+*.tgz
+
+.idea/
+node_modules/
+
+package-lock.json
+
+client/public/dist.bundle.js
+client/public/dist.bundle.js.map
+
+server/dist/
