@@ -1,12 +1,12 @@
 import {effect, h3, turboInput, input, p, turbo, button, TurboView, TurboButton, TurboInput} from "turbodombuilder";
-import {ExampleComponent} from "./exampleComponent";
-import {ExampleComponentModel} from "./exampleComponent.model";
+import {LoginForm} from "./loginForm";
+import {LoginFormModel} from "./loginForm.model";
 //import * as fs from 'fs';
 import users from '../../../server/json/users.json';
 
 
 
-export class ExampleComponentView extends TurboView<ExampleComponent, ExampleComponentModel> {
+export class LoginFormView extends TurboView<LoginForm, LoginFormModel> {
     private login: boolean = true;
     private modeEl: HTMLElement;
 

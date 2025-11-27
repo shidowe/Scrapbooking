@@ -1,5 +1,5 @@
 import {div, TurboIcon} from "turbodombuilder";
-import {exampleComponent} from "./exampleComponent/exampleComponent";
+import {exampleComponent} from "./exampleComponent/loginForm";
 import { navBar } from "./navBar/navBar";
 
 document.addEventListener("DOMContentLoaded", () => {
