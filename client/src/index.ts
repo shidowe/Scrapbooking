@@ -1,8 +1,10 @@
-import {div} from "turbodombuilder";
+import {div, TurboIcon} from "turbodombuilder";
 import {exampleComponent} from "./exampleComponent/exampleComponent";
 import { navBar } from "./navBar/navBar";
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    TurboIcon.config.defaultDirectory = "assets";
 
    /* div({
         parent: document.body,
