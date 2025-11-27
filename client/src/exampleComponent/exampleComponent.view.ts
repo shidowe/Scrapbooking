@@ -1,7 +1,7 @@
 import {effect, h3, turboInput, input, p, turbo, button, TurboView, TurboButton, TurboInput} from "turbodombuilder";
 import {ExampleComponent} from "./exampleComponent";
 import {ExampleComponentModel} from "./exampleComponent.model";
-import * as fs from 'fs';
+//import * as fs from 'fs';
 import users from '../../../server/json/users.json';
 
 
@@ -61,7 +61,7 @@ export class ExampleComponentView extends TurboView<ExampleComponent, ExampleCom
                 if (password == passwordConfirmation && ! users.find(user => user.username == this.usernameEl.value)) { //todo add conditions on the password
                     users.push({id:users.length, username:username, password: password});
                     console.log(users);
-                    fs.writeFile('../../../server/json/users.json', JSON.stringify(users, null, 4), 'utf8', (err)=>{console.log(err)});
+                    //fs.writeFile('../../../server/json/users.json', JSON.stringify(users, null, 4), 'utf8', (err)=>{console.log(err)});
                 }
             }
         })

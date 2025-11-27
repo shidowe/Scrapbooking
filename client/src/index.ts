@@ -1,5 +1,6 @@
 import {div} from "turbodombuilder";
 import {exampleComponent} from "./exampleComponent/exampleComponent";
+import { navBar } from "./navBar/navBar";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -8,11 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
         style: "background-color: red",
         text: "Hey"
     });
-
     */
 
+    navBar({ parent: document.body });
+    
     exampleComponent({ //get parameters from session or something
         parent: document.body.querySelector("#form-div"),
         data: {name: "Bob", age: 20}
     });
+
+
 });
