@@ -1,5 +1,5 @@
 import {div, TurboIcon} from "turbodombuilder";
-import {exampleComponent} from "./exampleComponent/loginForm";
+import {loginForm} from "./loginForm/loginForm";
 import { navBar } from "./navBar/navBar";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,9 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     navBar({ parent: document.body });
     
-    exampleComponent({ //get parameters from session or something
+    loginForm({ //get parameters from session or something
         parent: document.body.querySelector("#form-div"),
-        data: {name: "Bob", age: 20}
     });
 
 
