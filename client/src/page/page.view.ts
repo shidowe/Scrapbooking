@@ -1,22 +1,31 @@
-import {turbo, TurboView, div, p} from "turbodombuilder";
+import {turbo, TurboView, div, p, TurboObserver} from "turbodombuilder";
 
 import {PageModel} from "./page.model";
 import {Page} from "./page";
+import {ScrapComponent} from "../scrapComponents/scrapComponent";
 
 
 export class PageView extends TurboView<Page, PageModel> {
 
     private pageDiv: HTMLElement;
+    private contentObserver: TurboObserver;
 
     initialize(): void {
         super.initialize();
+        this.model.getBlock("content")?.generateObserver({
+            onAdded : (data) => {
+                //functions to create stuff, no new smth
+            }
+        })
+
+
     }
 
     protected setupUIElements() {
         super.setupUIElements();
 
-        this.pageDiv = div({style:"background-image:'create_icon'"}); //todo actually make this work
-        this.pageDiv.appendChild(p({text: String(this.model.pageId)}));
+        this.pageDiv = div({classes:"textured-page"}); //todo actually make this work
+        //this.pageDiv.appendChild(p({text: String(this.model.pageId)}));
 
     }
 

@@ -3,9 +3,12 @@ const path = require("path");
 module.exports = {
     mode: process.env.NODE_ENV ?? "development",
     target: "web",
-    entry: path.resolve(__dirname, "src/index.ts"),
+    entry: {
+        home: path.resolve(__dirname, "src/index.ts"),
+        login: path.resolve(__dirname, "src/login.ts")
+    },
     output: {
-        filename: "dist.bundle.js",
+        filename: ({chunk}) => `${chunk.name}.bundle.js`,
         path: path.resolve(__dirname, "public"),
     },
     devServer: {

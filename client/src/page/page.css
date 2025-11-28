@@ -11,3 +11,9 @@ page-elt {
     border: 2px solid var(--shadow-grey );
     background-color: var(--secondary-color);
 }
+
+.textured-page {
+    background-image: url("../../public/assets/pageTexture.jpg");
+    min-height: 400px;
+    min-width: 600px;
+}

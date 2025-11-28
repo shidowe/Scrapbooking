@@ -11,23 +11,19 @@ export class Page extends TurboElement<PageView, PageModel> {
     @expose("model") public content : Array<ScrapComponent>;
 }
 
-
 export function page(properties = {}): Page {
+    let pageData;
+    if (properties.pageId){
+        //todo populate page data
+    }
     turbo(properties).applyDefaults({
         tag: "page-elt",
         view: PageView,
-        model: PageModel
+        model: PageModel,
+        data: pageData
     });
     return element({...properties}) as Page;
 }
 
 //todo not sure about that, it works tho
-export function pageFromJson(id: number, properties = {}): Page {
-    let pageProperties = pageList[id];
-    turbo(properties).applyDefaults({
-        tag: "page-elt",
-        view: PageView,
-        model: new PageModel(pageProperties),
-    });
-    return element({...properties}) as Page;
-}
+//todo add types
