@@ -1,0 +1,13 @@
+:root {
+    --primary-color: #4D7C8A;
+    --secondary-color: #FCF7F8;
+    --shadow-grey :#342E37;
+}
+
+page-elt {
+    min-height: 400px;
+    min-width: 600px;
+    padding: 50px;
+    border: 2px solid var(--shadow-grey );
+    background-color: var(--secondary-color);
+}
