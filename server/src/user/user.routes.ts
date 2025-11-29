@@ -7,5 +7,7 @@ export function userRoute(): any {
     const controller = new UserController(new UserRepository());
 
     router.post("/signup", (req, res)=> controller.signup(req, res));
+
+    console.log("userRoute");
     return router;
 }

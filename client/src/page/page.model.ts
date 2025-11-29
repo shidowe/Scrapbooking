@@ -7,8 +7,6 @@ export class PageModel extends TurboModel {
     @modelSignal() public userId: number;
     @modelSignal() public content : Array<ScrapComponent>;
 
-    //todo fix the any
-
     @effect private setupContent(){
         this.setBlock(this.content, "", "content");
     }

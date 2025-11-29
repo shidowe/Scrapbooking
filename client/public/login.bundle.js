@@ -173,8 +173,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
 /* harmony import */ var _server_json_users_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../server/json/users.json */ "./server/json/users.json");
+/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../makeRequest */ "./client/src/makeRequest.ts");
 
 //import * as fs from 'fs';
+
 
 class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
     constructor() {
@@ -216,6 +218,8 @@ class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
             else { // if register
                 let passwordConfirmation = this.passwordConfirmationEl.value;
                 let email = this.emailEl.value;
+                let rqh = new _makeRequest__WEBPACK_IMPORTED_MODULE_2__.RequestHandler();
+                rqh.makeRequest("./user/signup", "get", { "username": username, "email": email, "password": password, "passwordConfirmation": passwordConfirmation }, () => { console.log("success"); }, () => { console.log("failure"); });
                 if (password == passwordConfirmation && !_server_json_users_json__WEBPACK_IMPORTED_MODULE_1__.find(user => user.username == this.usernameEl.value)) { //todo add conditions on the password
                     _server_json_users_json__WEBPACK_IMPORTED_MODULE_1__.push({ id: _server_json_users_json__WEBPACK_IMPORTED_MODULE_1__.length, username: username, email: email, password: password });
                     console.log(_server_json_users_json__WEBPACK_IMPORTED_MODULE_1__);
@@ -227,6 +231,59 @@ class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
     setupUILayout() {
         super.setupUILayout();
         (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.modeEl, this.usernameEl, this.emailEl, this.passwordEl, this.passwordConfirmationEl, this.submitButton, this.switchModes]);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./client/src/makeRequest.ts":
+/*!***********************************!*\
+  !*** ./client/src/makeRequest.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   RequestHandler: () => (/* binding */ RequestHandler)
+/* harmony export */ });
+class RequestHandler {
+    constructor() {
+        this.isSecure = window.location.protocol === "https:";
+        this.protocol = this.isSecure ? "https" : "http";
+        this.hostname = window.location.hostname;
+        this.port = this.hostname == "localhost" || this.hostname == "127.0.0.1" ? ":3000" : "";
+        this.serverUrl = `${this.protocol}://${this.hostname}${this.port}/`;
+    }
+    makeRequest(url, method, body, onSuccess = () => { }, onFailure = () => { }, parse = false, responseType = "text") {
+        const request = new XMLHttpRequest();
+        request.responseType = responseType;
+        request.onreadystatechange = _ => {
+            if (request.readyState !== 4)
+                return;
+            if (request.status < 200 || request.status >= 300) {
+                onFailure(request.response);
+                return;
+            }
+            if (parse) {
+                try {
+                    onSuccess(typeof request.response === "string"
+                        ? JSON.parse(request.response)
+                        : JSON.parse(new TextDecoder().decode(request.response)));
+                }
+                catch (err) {
+                    onFailure("Failed to parse JSON: " + err.message);
+                }
+            }
+            else
+                onSuccess(request.response);
+        };
+        request.open(method, url, true);
+        if (!(body instanceof FormData)) {
+            request.setRequestHeader("Content-Type", "application/json");
+            body = JSON.stringify(body);
+        }
+        request.send(body);
     }
 }
 
@@ -348,7 +405,9 @@ let NavBar = (() => {
         setupUIElements() {
             super.setupUIElements();
             this.divEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ style: "display: flex; flex-flow: column; justify-content: space-between;" });
-            this.profileButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "user_icon", onClick: () => window.location.replace("/profile") });
+            this.profileButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "user_icon", onClick: () => {
+                    window.location.replace("/login");
+                } });
             /*
             this.profileButton.appendChild(
                 //img({ src: userIcon, class: "nav-icon" })

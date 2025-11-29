@@ -15,7 +15,9 @@ export class NavBar extends TurboElement {
 
         this.divEl = div({style: "display: flex; flex-flow: column; justify-content: space-between;"});
 
-        this.profileButton = button({leftIcon: "user_icon", onClick: () => window.location.replace("/profile")});
+        this.profileButton = button({leftIcon: "user_icon", onClick: () => {
+                window.location.replace("/login")
+            }});
 
         /*
         this.profileButton.appendChild(
