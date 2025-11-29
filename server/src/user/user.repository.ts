@@ -17,6 +17,7 @@ export class UserRepository {
     public async signUp(username:string, email:string, password:string, passwordConfimation:string):Promise<boolean>{
         let data = await this.fetchData();
         //todo
+        return new Promise((resolve, reject) => {resolve(true);})
     }
 
 }

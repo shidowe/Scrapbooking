@@ -3,7 +3,7 @@ import {PageView} from "./page.view";
 import {PageModel} from "./page.model";
 import {ScrapComponent} from "../scrapComponents/scrapComponent";
 import "./page.css";
-import pageList from '../../../server/json/pageList.json';
+import {PageProperties} from "./page.types";
 
 
 @define("page-elt")
@@ -11,16 +11,17 @@ export class Page extends TurboElement<PageView, PageModel> {
     @expose("model") public content : Array<ScrapComponent>;
 }
 
-export function page(properties = {}): Page {
+export function page(properties:PageProperties = {}): Page {
     let pageData;
     if (properties.pageId){
+        //get page from id
         //todo populate page data
     }
     turbo(properties).applyDefaults({
         tag: "page-elt",
         view: PageView,
         model: PageModel,
-        data: pageData
+        data: pageData,
     });
     return element({...properties}) as Page;
 }
