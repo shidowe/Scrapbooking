@@ -15,38 +15,22 @@ export class NavBar extends TurboElement {
 
         this.divEl = div({style: "display: flex; flex-flow: column; justify-content: space-between;"});
 
-        this.profileButton = button({leftIcon: "user_icon", onClick: () => {
+        this.profileButton = button({leftIcon: "profile_icon", onClick: () => {
                 window.location.replace("/login")
             }});
 
-        /*
-        this.profileButton.appendChild(
-            //img({ src: userIcon, class: "nav-icon" })
-            icon({ icon: userIcon, class: "nav-icon" })
-        );*/
+        this.homeButton = button({leftIcon: "home_icon", onClick: () => {
+                window.location.replace("/");
+            }});
 
-        this.homeButton = button({leftIcon: "home_icon"});
-        /*
-        this.homeButton.appendChild(
-            //img({ src: homeIcon, class: "nav-icon" })
-            icon({ icon: homeIcon, class: "nav-icon" })
-        );*/
-        this.homeButton.addEventListener("click", () => {
-            window.location.replace("/");
-        });
-
-        this.createButton = button({leftIcon: "create_icon"});
-        /*
-        this.createButton.appendChild(
-            icon({ icon: createIcon, class: "nav-icon" })
-        );*/
-        this.createButton.addEventListener("click", () => {
-            window.location.replace("/createPost");
-        });
-
+        this.createButton = button({leftIcon: "create_icon", onClick: () => {
+                window.location.replace("/createPost");
+            }});
+        
+            this.divEl.appendChild(this.profileButton);
         this.divEl.appendChild(this.homeButton);
         this.divEl.appendChild(this.createButton);
-        this.divEl.appendChild(this.profileButton);
+        
     }
 
     protected setupUILayout() {
