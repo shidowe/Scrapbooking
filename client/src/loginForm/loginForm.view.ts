@@ -3,8 +3,7 @@ import {LoginForm} from "./loginForm";
 import {LoginFormModel} from "./loginForm.model";
 //import * as fs from 'fs';
 import users from '../../../server/json/users.json';
-import {RequestHandler} from "../makeRequest";
-
+import {makeRequest} from "../makeRequest";
 
 
 export class LoginFormView extends TurboView<LoginForm, LoginFormModel> {
@@ -64,8 +63,7 @@ export class LoginFormView extends TurboView<LoginForm, LoginFormModel> {
                 let email : string = this.emailEl.value;
 
                 //todo : not quite sure what we're supposed to do here + make request is hella complicated
-                let rqh = new RequestHandler();
-                rqh.makeRequest("./user/signup", "get", {"username":username, "email":email, "password":password, "passwordConfirmation":passwordConfirmation}, ()=>{console.log("success")}, ()=>{console.log("failure")});
+                makeRequest("user/signup", "get", {"username":username, "email":email, "password":password, "passwordConfirmation":passwordConfirmation}, ()=>{console.log("success")}, ()=>{console.log("failure")});
 
                 if (password == passwordConfirmation && ! users.find(user => user.username == this.usernameEl.value)) { //todo add conditions on the password
                     users.push({id:users.length, username:username, email:email, password: password});

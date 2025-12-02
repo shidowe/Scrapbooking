@@ -218,8 +218,8 @@ class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
             else { // if register
                 let passwordConfirmation = this.passwordConfirmationEl.value;
                 let email = this.emailEl.value;
-                let rqh = new _makeRequest__WEBPACK_IMPORTED_MODULE_2__.RequestHandler();
-                rqh.makeRequest("./user/signup", "get", { "username": username, "email": email, "password": password, "passwordConfirmation": passwordConfirmation }, () => { console.log("success"); }, () => { console.log("failure"); });
+                //todo : not quite sure what we're supposed to do here + make request is hella complicated
+                (0,_makeRequest__WEBPACK_IMPORTED_MODULE_2__.makeRequest)("user/signup", "get", { "username": username, "email": email, "password": password, "passwordConfirmation": passwordConfirmation }, () => { console.log("success"); }, () => { console.log("failure"); });
                 if (password == passwordConfirmation && !_server_json_users_json__WEBPACK_IMPORTED_MODULE_1__.find(user => user.username == this.usernameEl.value)) { //todo add conditions on the password
                     _server_json_users_json__WEBPACK_IMPORTED_MODULE_1__.push({ id: _server_json_users_json__WEBPACK_IMPORTED_MODULE_1__.length, username: username, email: email, password: password });
                     console.log(_server_json_users_json__WEBPACK_IMPORTED_MODULE_1__);
@@ -245,46 +245,37 @@ class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   RequestHandler: () => (/* binding */ RequestHandler)
+/* harmony export */   makeRequest: () => (/* binding */ makeRequest)
 /* harmony export */ });
-class RequestHandler {
-    constructor() {
-        this.isSecure = window.location.protocol === "https:";
-        this.protocol = this.isSecure ? "https" : "http";
-        this.hostname = window.location.hostname;
-        this.port = this.hostname == "localhost" || this.hostname == "127.0.0.1" ? ":3000" : "";
-        this.serverUrl = `${this.protocol}://${this.hostname}${this.port}/`;
-    }
-    makeRequest(url, method, body, onSuccess = () => { }, onFailure = () => { }, parse = false, responseType = "text") {
-        const request = new XMLHttpRequest();
-        request.responseType = responseType;
-        request.onreadystatechange = _ => {
-            if (request.readyState !== 4)
-                return;
-            if (request.status < 200 || request.status >= 300) {
-                onFailure(request.response);
-                return;
-            }
-            if (parse) {
-                try {
-                    onSuccess(typeof request.response === "string"
-                        ? JSON.parse(request.response)
-                        : JSON.parse(new TextDecoder().decode(request.response)));
-                }
-                catch (err) {
-                    onFailure("Failed to parse JSON: " + err.message);
-                }
-            }
-            else
-                onSuccess(request.response);
-        };
-        request.open(method, url, true);
-        if (!(body instanceof FormData)) {
-            request.setRequestHeader("Content-Type", "application/json");
-            body = JSON.stringify(body);
+function makeRequest(url, method, body, onSuccess = () => { }, onFailure = () => { }, parse = false, responseType = "text") {
+    const request = new XMLHttpRequest();
+    request.responseType = responseType;
+    request.onreadystatechange = _ => {
+        if (request.readyState !== 4)
+            return;
+        if (request.status < 200 || request.status >= 300) {
+            onFailure(request.response);
+            return;
         }
-        request.send(body);
+        if (parse) {
+            try {
+                onSuccess(typeof request.response === "string"
+                    ? JSON.parse(request.response)
+                    : JSON.parse(new TextDecoder().decode(request.response)));
+            }
+            catch (err) {
+                onFailure("Failed to parse JSON: " + err.message);
+            }
+        }
+        else
+            onSuccess(request.response);
+    };
+    request.open(method, url, true);
+    if (!(body instanceof FormData)) {
+        request.setRequestHeader("Content-Type", "application/json");
+        body = JSON.stringify(body);
     }
+    request.send(body);
 }
 
 
@@ -405,34 +396,18 @@ let NavBar = (() => {
         setupUIElements() {
             super.setupUIElements();
             this.divEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ style: "display: flex; flex-flow: column; justify-content: space-between;" });
-            this.profileButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "user_icon", onClick: () => {
+            this.profileButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "profile_icon", onClick: () => {
                     window.location.replace("/login");
                 } });
-            /*
-            this.profileButton.appendChild(
-                //img({ src: userIcon, class: "nav-icon" })
-                icon({ icon: userIcon, class: "nav-icon" })
-            );*/
-            this.homeButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "home_icon" });
-            /*
-            this.homeButton.appendChild(
-                //img({ src: homeIcon, class: "nav-icon" })
-                icon({ icon: homeIcon, class: "nav-icon" })
-            );*/
-            this.homeButton.addEventListener("click", () => {
-                window.location.replace("/");
-            });
-            this.createButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "create_icon" });
-            /*
-            this.createButton.appendChild(
-                icon({ icon: createIcon, class: "nav-icon" })
-            );*/
-            this.createButton.addEventListener("click", () => {
-                window.location.replace("/createPost");
-            });
+            this.homeButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "home_icon", onClick: () => {
+                    window.location.replace("/");
+                } });
+            this.createButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "create_icon", onClick: () => {
+                    window.location.replace("/createPost");
+                } });
+            this.divEl.appendChild(this.profileButton);
             this.divEl.appendChild(this.homeButton);
             this.divEl.appendChild(this.createButton);
-            this.divEl.appendChild(this.profileButton);
         }
         setupUILayout() {
             super.setupUILayout();
