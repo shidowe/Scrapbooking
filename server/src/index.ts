@@ -50,6 +50,8 @@ app.use(checkOrigin(allowedOrigins));
 app.use(express.static(CLIENT_PUBLIC_PATH));
 app.get("/login", (_req, res) =>
     res.sendFile(path.join(CLIENT_PUBLIC_PATH, "login.html")));
+app.get("/create", (_req, res) =>
+    res.sendFile(path.join(CLIENT_PUBLIC_PATH, "create.html")));
 app.get("*", (_req, res) =>
     res.sendFile(path.join(CLIENT_PUBLIC_PATH, "index.html")));
 

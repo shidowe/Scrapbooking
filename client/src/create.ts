@@ -1,9 +1,12 @@
-import {div, TurboIcon} from "turbodombuilder";
-import { navBar } from "./navBar/navBar"
-import {page} from "./page/page";
+import { div } from "turbodombuilder";
+import { CreateToolbar } from "./createToolbar/createToolbar";
+import { DrawingCanvas } from "./drawingCanvas/drawingCanvas";
 
 document.addEventListener("DOMContentLoaded", () => {
-    TurboIcon.config.defaultDirectory = "assets";
-    
-    navBar({ parent: document.body });
+    const toolbarEl = document.body.querySelector("#toolbar");
+    const canvasAreaEl = document.body.querySelector("#canvas-area");
+
+    //const drawingCanvas = new DrawingCanvas({});
+
+    //createToolbar({});
 });
