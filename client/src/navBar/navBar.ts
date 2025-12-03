@@ -24,7 +24,7 @@ export class NavBar extends TurboElement {
             }});
 
         this.createButton = button({leftIcon: "create_icon", onClick: () => {
-                window.location.replace("/createPost");
+                window.location.replace("/create");
             }});
         
             this.divEl.appendChild(this.profileButton);

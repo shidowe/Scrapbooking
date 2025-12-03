@@ -11,6 +11,7 @@
     "start": "node server/dist/index.js"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "concurrently": "^8.2.2",
     "css-loader": "^7.1.2",
     "style-loader": "^4.0.0",
@@ -22,6 +23,7 @@
     "webpack-dev-server": "^5.2.2"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "turbodombuilder": "^0.9.38"
   }

@@ -5,7 +5,8 @@ module.exports = {
     target: "web",
     entry: {
         home: path.resolve(__dirname, "src/index.ts"),
-        login: path.resolve(__dirname, "src/login.ts")
+        login: path.resolve(__dirname, "src/login.ts"),
+        create: path.resolve(__dirname, "src/create.ts"),
     },
     output: {
         filename: ({chunk}) => `${chunk.name}.bundle.js`,
