@@ -219,7 +219,7 @@ class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
                 let passwordConfirmation = this.passwordConfirmationEl.value;
                 let email = this.emailEl.value;
                 //todo : not quite sure what we're supposed to do here + make request is hella complicated
-                (0,_makeRequest__WEBPACK_IMPORTED_MODULE_2__.makeRequest)("user/signup", "get", { "username": username, "email": email, "password": password, "passwordConfirmation": passwordConfirmation }, () => { console.log("success"); }, () => { console.log("failure"); });
+                (0,_makeRequest__WEBPACK_IMPORTED_MODULE_2__.makeRequest)("localhost:3000/user/signup", "get", { "username": username, "email": email, "password": password, "passwordConfirmation": passwordConfirmation }, () => { console.log("success"); }, () => { console.log("failure"); });
                 if (password == passwordConfirmation && !_server_json_users_json__WEBPACK_IMPORTED_MODULE_1__.find(user => user.username == this.usernameEl.value)) { //todo add conditions on the password
                     _server_json_users_json__WEBPACK_IMPORTED_MODULE_1__.push({ id: _server_json_users_json__WEBPACK_IMPORTED_MODULE_1__.length, username: username, email: email, password: password });
                     console.log(_server_json_users_json__WEBPACK_IMPORTED_MODULE_1__);
