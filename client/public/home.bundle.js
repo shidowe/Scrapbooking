@@ -283,11 +283,15 @@ let PageModel = (() => {
             setupContent() {
                 this.setBlock(this.content, "", "content");
             }
+            addScrapComponent(scrapComponent) {
+                this.content = new Array();
+                this.content.push(scrapComponent);
+            }
             constructor() {
                 super(...arguments);
                 this.pageId = (__runInitializers(this, _instanceExtraInitializers), __runInitializers(this, _pageId_initializers, void 0));
                 this.userId = (__runInitializers(this, _pageId_extraInitializers), __runInitializers(this, _userId_initializers, void 0));
-                this.content = (__runInitializers(this, _userId_extraInitializers), __runInitializers(this, _content_initializers, void 0));
+                this.content = (__runInitializers(this, _userId_extraInitializers), __runInitializers(this, _content_initializers, new Array()));
                 __runInitializers(this, _content_extraInitializers);
             }
         },
@@ -401,8 +405,11 @@ let Page = (() => {
 function page(properties = {}) {
     let pageData;
     if (properties.pageId) {
-        //get page from id
-        //todo populate page data
+        pageData = {
+            pageId: properties.pageId,
+            userId: properties.userId,
+            content: properties.content,
+        };
     }
     (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
         tag: "page-elt",
@@ -429,6 +436,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   PageView: () => (/* binding */ PageView)
 /* harmony export */ });
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../scrapComponents/typing/typing */ "./client/src/scrapComponents/typing/typing.ts");
+
 
 class PageView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
     constructor() {
@@ -447,9 +456,11 @@ class PageView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
     setupUIElements() {
         super.setupUIElements();
         this.pageDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.canvas)({ classes: "textured-page" });
+        //on click create a text annotation
         this.pageDiv.addEventListener("click", (event) => {
-            //this.pageDiv.appendChild( typing(event.clientX, event.clientY );
-            //Todo create scrap component
+            let t = (0,_scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__.typing)({ x: event.clientX, y: event.clientY });
+            this.pageDiv.appendChild(t);
+            this.model.addScrapComponent(t.model);
         });
         //this.pageDiv.appendChild(p({text: String(this.model.pageId)}));
     }
@@ -458,6 +469,374 @@ class PageView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
         (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.pageDiv]);
     }
 }
+
+
+/***/ }),
+
+/***/ "./client/src/scrapComponents/scrapComponent.ts":
+/*!******************************************************!*\
+  !*** ./client/src/scrapComponents/scrapComponent.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ScrapComponent: () => (/* binding */ ScrapComponent)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+
+// TODO : idk what to extend
+let ScrapComponent = (() => {
+    var _a;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboModel;
+    let _x_decorators;
+    let _x_initializers = [];
+    let _x_extraInitializers = [];
+    let _y_decorators;
+    let _y_initializers = [];
+    let _y_extraInitializers = [];
+    return _a = class ScrapComponent extends _classSuper {
+            constructor() {
+                super(...arguments);
+                this.x = __runInitializers(this, _x_initializers, void 0);
+                this.y = (__runInitializers(this, _x_extraInitializers), __runInitializers(this, _y_initializers, void 0));
+                __runInitializers(this, _y_extraInitializers);
+            }
+        },
+        (() => {
+            var _b;
+            const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_b = _classSuper[Symbol.metadata]) !== null && _b !== void 0 ? _b : null) : void 0;
+            _x_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.modelSignal)()];
+            _y_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.modelSignal)()];
+            __esDecorate(null, null, _x_decorators, { kind: "field", name: "x", static: false, private: false, access: { has: obj => "x" in obj, get: obj => obj.x, set: (obj, value) => { obj.x = value; } }, metadata: _metadata }, _x_initializers, _x_extraInitializers);
+            __esDecorate(null, null, _y_decorators, { kind: "field", name: "y", static: false, private: false, access: { has: obj => "y" in obj, get: obj => obj.y, set: (obj, value) => { obj.y = value; } }, metadata: _metadata }, _y_initializers, _y_extraInitializers);
+            if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        })(),
+        _a;
+})();
+
+
+
+/***/ }),
+
+/***/ "./client/src/scrapComponents/typing/typing.model.ts":
+/*!***********************************************************!*\
+  !*** ./client/src/scrapComponents/typing/typing.model.ts ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TypingModel: () => (/* binding */ TypingModel)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _scrapComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../scrapComponent */ "./client/src/scrapComponents/scrapComponent.ts");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+
+
+let TypingModel = (() => {
+    var _a;
+    let _classSuper = _scrapComponent__WEBPACK_IMPORTED_MODULE_1__.ScrapComponent;
+    let _color_decorators;
+    let _color_initializers = [];
+    let _color_extraInitializers = [];
+    let _text_decorators;
+    let _text_initializers = [];
+    let _text_extraInitializers = [];
+    let _length_decorators;
+    let _length_initializers = [];
+    let _length_extraInitializers = [];
+    let _height_decorators;
+    let _height_initializers = [];
+    let _height_extraInitializers = [];
+    return _a = class TypingModel extends _classSuper {
+            constructor(properties) {
+                super(properties.x, properties.y);
+                this.color = __runInitializers(this, _color_initializers, "black"); //todo change this later
+                this.text = (__runInitializers(this, _color_extraInitializers), __runInitializers(this, _text_initializers, void 0));
+                this.length = (__runInitializers(this, _text_extraInitializers), __runInitializers(this, _length_initializers, 100));
+                this.height = (__runInitializers(this, _length_extraInitializers), __runInitializers(this, _height_initializers, void 0));
+                __runInitializers(this, _height_extraInitializers);
+            }
+        },
+        (() => {
+            var _b;
+            const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_b = _classSuper[Symbol.metadata]) !== null && _b !== void 0 ? _b : null) : void 0;
+            _color_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.modelSignal)()];
+            _text_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.modelSignal)()];
+            _length_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.modelSignal)()];
+            _height_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.modelSignal)()];
+            __esDecorate(null, null, _color_decorators, { kind: "field", name: "color", static: false, private: false, access: { has: obj => "color" in obj, get: obj => obj.color, set: (obj, value) => { obj.color = value; } }, metadata: _metadata }, _color_initializers, _color_extraInitializers);
+            __esDecorate(null, null, _text_decorators, { kind: "field", name: "text", static: false, private: false, access: { has: obj => "text" in obj, get: obj => obj.text, set: (obj, value) => { obj.text = value; } }, metadata: _metadata }, _text_initializers, _text_extraInitializers);
+            __esDecorate(null, null, _length_decorators, { kind: "field", name: "length", static: false, private: false, access: { has: obj => "length" in obj, get: obj => obj.length, set: (obj, value) => { obj.length = value; } }, metadata: _metadata }, _length_initializers, _length_extraInitializers);
+            __esDecorate(null, null, _height_decorators, { kind: "field", name: "height", static: false, private: false, access: { has: obj => "height" in obj, get: obj => obj.height, set: (obj, value) => { obj.height = value; } }, metadata: _metadata }, _height_initializers, _height_extraInitializers);
+            if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        })(),
+        _a;
+})();
+
+
+
+/***/ }),
+
+/***/ "./client/src/scrapComponents/typing/typing.ts":
+/*!*****************************************************!*\
+  !*** ./client/src/scrapComponents/typing/typing.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Typing: () => (/* binding */ Typing),
+/* harmony export */   typing: () => (/* binding */ typing)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _typing_view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./typing.view */ "./client/src/scrapComponents/typing/typing.view.ts");
+/* harmony import */ var _typing_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./typing.model */ "./client/src/scrapComponents/typing/typing.model.ts");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+var __setFunctionName = (undefined && undefined.__setFunctionName) || function (f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+};
+
+
+
+let Typing = (() => {
+    let _classDecorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.define)("typing-element")];
+    let _classDescriptor;
+    let _classExtraInitializers = [];
+    let _classThis;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboElement;
+    let _text_decorators;
+    let _text_initializers = [];
+    let _text_extraInitializers = [];
+    let _model_decorators;
+    let _model_initializers = [];
+    let _model_extraInitializers = [];
+    var Typing = _classThis = class extends _classSuper {
+        constructor() {
+            super(...arguments);
+            this.text = __runInitializers(this, _text_initializers, void 0);
+            this.model = (__runInitializers(this, _text_extraInitializers), __runInitializers(this, _model_initializers, void 0));
+            __runInitializers(this, _model_extraInitializers);
+        }
+    };
+    __setFunctionName(_classThis, "Typing");
+    (() => {
+        var _a;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        _text_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.expose)("model")];
+        _model_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.expose)("model")];
+        __esDecorate(null, null, _text_decorators, { kind: "field", name: "text", static: false, private: false, access: { has: obj => "text" in obj, get: obj => obj.text, set: (obj, value) => { obj.text = value; } }, metadata: _metadata }, _text_initializers, _text_extraInitializers);
+        __esDecorate(null, null, _model_decorators, { kind: "field", name: "model", static: false, private: false, access: { has: obj => "model" in obj, get: obj => obj.model, set: (obj, value) => { obj.model = value; } }, metadata: _metadata }, _model_initializers, _model_extraInitializers);
+        __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
+        Typing = _classThis = _classDescriptor.value;
+        if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        __runInitializers(_classThis, _classExtraInitializers);
+    })();
+    return Typing = _classThis;
+})();
+
+function typing(properties = {}) {
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
+        tag: "typing",
+        view: _typing_view__WEBPACK_IMPORTED_MODULE_1__.TypingView,
+        model: _typing_model__WEBPACK_IMPORTED_MODULE_2__.TypingModel
+    });
+    return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
+}
+
+
+/***/ }),
+
+/***/ "./client/src/scrapComponents/typing/typing.view.ts":
+/*!**********************************************************!*\
+  !*** ./client/src/scrapComponents/typing/typing.view.ts ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TypingView: () => (/* binding */ TypingView)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+
+let TypingView = (() => {
+    var _a;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView;
+    let _length_decorators;
+    let _length_initializers = [];
+    let _length_extraInitializers = [];
+    return _a = class TypingView extends _classSuper {
+            constructor() {
+                super(...arguments);
+                this.length = __runInitializers(this, _length_initializers, void 0);
+                this.contentObserver = __runInitializers(this, _length_extraInitializers);
+            }
+            initialize() {
+                super.initialize();
+                /*
+                this.model.getBlock("text")?.generateObserver({
+                    onAdded : (data) => {
+                        //functions to create stuff, no new smth
+                    }
+                })
+                 */
+            }
+            setupUIElements() {
+                super.setupUIElements();
+                this.textEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({ classes: "textured-page" });
+                //this.pageDiv.appendChild(p({text: String(this.model.pageId)}));
+            }
+            setupUILayout() {
+                super.setupUILayout();
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.textEl]);
+            }
+        },
+        (() => {
+            var _b;
+            const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_b = _classSuper[Symbol.metadata]) !== null && _b !== void 0 ? _b : null) : void 0;
+            _length_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.expose)("")];
+            __esDecorate(null, null, _length_decorators, { kind: "field", name: "length", static: false, private: false, access: { has: obj => "length" in obj, get: obj => obj.length, set: (obj, value) => { obj.length = value; } }, metadata: _metadata }, _length_initializers, _length_extraInitializers);
+            if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        })(),
+        _a;
+})();
+
 
 
 /***/ }),

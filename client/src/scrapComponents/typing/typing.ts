@@ -3,9 +3,10 @@ import {TypingView} from "./typing.view";
 import {TypingModel} from "./typing.model";
 import {ScrapComponent} from "../scrapComponent";
 
-@define("typing")
+@define("typing-element")
 export class Typing extends TurboElement<TypingView, TypingModel> {
     @expose("model") public text : String;
+    @expose("model") public model : TypingModel;
 
 }
 

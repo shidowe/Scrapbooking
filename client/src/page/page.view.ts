@@ -3,6 +3,7 @@ import {turbo, TurboView, div, p, TurboObserver, canvas,} from "turbodombuilder"
 import {PageModel} from "./page.model";
 import {Page} from "./page";
 import {ScrapComponent} from "../scrapComponents/scrapComponent";
+import {Typing, typing} from "../scrapComponents/typing/typing";
 
 
 export class PageView extends TurboView<Page, PageModel> {
@@ -27,9 +28,12 @@ export class PageView extends TurboView<Page, PageModel> {
         super.setupUIElements();
 
         this.pageDiv = canvas({classes:"textured-page"});
+
+        //on click create a text annotation
         this.pageDiv.addEventListener("click", (event: MouseEvent) => {
-            //this.pageDiv.appendChild( typing(event.clientX, event.clientY );
-            //Todo create scrap component
+            let t: Typing = typing({x :event.clientX, y: event.clientY} );
+            this.pageDiv.appendChild(t);
+            this.model.addScrapComponent(t.model);
         })
         //this.pageDiv.appendChild(p({text: String(this.model.pageId)}));
 

@@ -6,7 +6,7 @@ import {ScrapComponent} from "../scrapComponents/scrapComponent";
 export type PageData = {
     pageId?: number,
     userId?: number,
-    content?: Array<ScrapComponent>; //no so sure about this type
+    content?: Array<ScrapComponent>;
 };
 
 export type PageProperties =
