@@ -1,4 +1,4 @@
-import {turbo, TurboView, div, p, TurboObserver} from "turbodombuilder";
+import {turbo, TurboView, div, p, TurboObserver, canvas,} from "turbodombuilder";
 
 import {PageModel} from "./page.model";
 import {Page} from "./page";
@@ -9,6 +9,8 @@ export class PageView extends TurboView<Page, PageModel> {
 
     private pageDiv: HTMLElement;
     private contentObserver: TurboObserver;
+
+    private editMode: boolean = false;
 
     initialize(): void {
         super.initialize();
@@ -24,7 +26,11 @@ export class PageView extends TurboView<Page, PageModel> {
     protected setupUIElements() {
         super.setupUIElements();
 
-        this.pageDiv = div({classes:"textured-page"}); //todo actually make this work
+        this.pageDiv = canvas({classes:"textured-page"});
+        this.pageDiv.addEventListener("click", (event: MouseEvent) => {
+            //this.pageDiv.appendChild( typing(event.clientX, event.clientY );
+            //Todo create scrap component
+        })
         //this.pageDiv.appendChild(p({text: String(this.model.pageId)}));
 
     }

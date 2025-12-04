@@ -134,7 +134,7 @@ let NavBar = (() => {
                     window.location.replace("/");
                 } });
             this.createButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "create_icon", onClick: () => {
-                    window.location.replace("/createPost");
+                    window.location.replace("/create");
                 } });
             this.divEl.appendChild(this.profileButton);
             this.divEl.appendChild(this.homeButton);
@@ -431,6 +431,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
 
 class PageView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
+    constructor() {
+        super(...arguments);
+        this.editMode = false;
+    }
     initialize() {
         var _a;
         super.initialize();
@@ -442,7 +446,11 @@ class PageView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
     }
     setupUIElements() {
         super.setupUIElements();
-        this.pageDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ classes: "textured-page" }); //todo actually make this work
+        this.pageDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.canvas)({ classes: "textured-page" });
+        this.pageDiv.addEventListener("click", (event) => {
+            //this.pageDiv.appendChild( typing(event.clientX, event.clientY );
+            //Todo create scrap component
+        });
         //this.pageDiv.appendChild(p({text: String(this.model.pageId)}));
     }
     setupUILayout() {
@@ -518,7 +526,10 @@ nav-bar turbo-button:active {
     background: #9a9898;
 }
 
-
+/* https://codepen.io/charleskitchton/pen/XWomjWX 
+   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i 
+   
+   */
 
 
 
@@ -527,7 +538,7 @@ nav-bar turbo-button:active {
 .turbo-icon svg {
     width: 32px;
     height: 32px;
-}`, "",{"version":3,"sources":["webpack://./client/src/navBar/navBar.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;IACnB,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,mBAAmB;AACvB;;;;;;;;AAQA;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n    width: 50px;\r\n    height: 50px;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./client/src/navBar/navBar.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;IACnB,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;;;IAGI;;;;;;AAMJ;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n    width: 50px;\r\n    height: 50px;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n/* https://codepen.io/charleskitchton/pen/XWomjWX \r\n   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i \r\n   \r\n   */\r\n\r\n\r\n\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

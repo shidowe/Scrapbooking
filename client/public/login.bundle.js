@@ -172,10 +172,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   LoginFormView: () => (/* binding */ LoginFormView)
 /* harmony export */ });
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
-/* harmony import */ var _server_json_users_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../server/json/users.json */ "./server/json/users.json");
-/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../makeRequest */ "./client/src/makeRequest.ts");
-
-//import * as fs from 'fs';
+/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../makeRequest */ "./client/src/makeRequest.ts");
 
 
 class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
@@ -206,25 +203,13 @@ class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
             let password = this.passwordEl.value;
             let username = this.usernameEl.value;
             if (this.login) {
-                for (let user of _server_json_users_json__WEBPACK_IMPORTED_MODULE_1__) {
-                    console.log(user);
-                    if (username == user.username && password == user.password) {
-                        sessionStorage.setItem("id", String(user.id));
-                        window.location.replace("https://www.youtube.com/watch?v=2yJgwwDcgV8");
-                    }
-                }
-                // todo add message if logins wrong
+                (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/user/signin", "post", { "username": username, "password": password }, () => { console.log("success"); }, () => { console.log("failure"); });
             }
             else { // if register
                 let passwordConfirmation = this.passwordConfirmationEl.value;
                 let email = this.emailEl.value;
                 //todo : not quite sure what we're supposed to do here + make request is hella complicated
-                (0,_makeRequest__WEBPACK_IMPORTED_MODULE_2__.makeRequest)("localhost:3000/user/signup", "get", { "username": username, "email": email, "password": password, "passwordConfirmation": passwordConfirmation }, () => { console.log("success"); }, () => { console.log("failure"); });
-                if (password == passwordConfirmation && !_server_json_users_json__WEBPACK_IMPORTED_MODULE_1__.find(user => user.username == this.usernameEl.value)) { //todo add conditions on the password
-                    _server_json_users_json__WEBPACK_IMPORTED_MODULE_1__.push({ id: _server_json_users_json__WEBPACK_IMPORTED_MODULE_1__.length, username: username, email: email, password: password });
-                    console.log(_server_json_users_json__WEBPACK_IMPORTED_MODULE_1__);
-                    //fs.writeFile('../../../server/json/users.json', JSON.stringify(users, null, 2), 'utf8', (err)=>{console.log(err)});
-                }
+                (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/user/signup", "post", { "username": username, "email": email, "password": password, "passwordConfirmation": passwordConfirmation }, () => { console.log("success"); }, () => { console.log("failure"); });
             }
         });
     }
@@ -403,7 +388,7 @@ let NavBar = (() => {
                     window.location.replace("/");
                 } });
             this.createButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "create_icon", onClick: () => {
-                    window.location.replace("/createPost");
+                    window.location.replace("/create");
                 } });
             this.divEl.appendChild(this.profileButton);
             this.divEl.appendChild(this.homeButton);
@@ -607,7 +592,10 @@ nav-bar turbo-button:active {
     background: #9a9898;
 }
 
-
+/* https://codepen.io/charleskitchton/pen/XWomjWX 
+   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i 
+   
+   */
 
 
 
@@ -616,7 +604,7 @@ nav-bar turbo-button:active {
 .turbo-icon svg {
     width: 32px;
     height: 32px;
-}`, "",{"version":3,"sources":["webpack://./client/src/navBar/navBar.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;IACnB,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,mBAAmB;AACvB;;;;;;;;AAQA;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n    width: 50px;\r\n    height: 50px;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./client/src/navBar/navBar.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;IACnB,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;;;IAGI;;;;;;AAMJ;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n    width: 50px;\r\n    height: 50px;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n/* https://codepen.io/charleskitchton/pen/XWomjWX \r\n   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i \r\n   \r\n   */\r\n\r\n\r\n\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -30904,16 +30892,6 @@ glo[importIdentifier] = true;
 
 //# sourceMappingURL=yjs.mjs.map
 
-
-/***/ }),
-
-/***/ "./server/json/users.json":
-/*!********************************!*\
-  !*** ./server/json/users.json ***!
-  \********************************/
-/***/ ((module) => {
-
-module.exports = /*#__PURE__*/JSON.parse('[{"id":0,"username":"Shidowe","email":"","password":"apassword"},{"id":1,"username":"Dokja","email":"","password":"notapassword"}]');
 
 /***/ })
 

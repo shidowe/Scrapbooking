@@ -47,16 +47,7 @@ export class LoginFormView extends TurboView<LoginForm, LoginFormModel> {
             let username : string = this.usernameEl.value;
 
             if(this.login) {
-
-
-                for (let user of users){
-                    console.log(user);
-                    if (username == user.username && password == user.password) {
-                        sessionStorage.setItem("id", String(user.id));
-                        window.location.replace("https://www.youtube.com/watch?v=2yJgwwDcgV8");
-                    }
-                }
-                // todo add message if logins wrong
+                makeRequest("http://localhost:3000/user/signin", "post", {"username":username, "password":password}, ()=>{console.log("success")}, ()=>{console.log("failure")});
             }
             else{ // if register
                 let passwordConfirmation : string = this.passwordConfirmationEl.value;
@@ -64,12 +55,6 @@ export class LoginFormView extends TurboView<LoginForm, LoginFormModel> {
 
                 //todo : not quite sure what we're supposed to do here + make request is hella complicated
                 makeRequest("http://localhost:3000/user/signup", "post", {"username":username, "email":email, "password":password, "passwordConfirmation":passwordConfirmation}, ()=>{console.log("success")}, ()=>{console.log("failure")});
-
-                if (password == passwordConfirmation && ! users.find(user => user.username == this.usernameEl.value)) { //todo add conditions on the password
-                    users.push({id:users.length, username:username, email:email, password: password});
-                    console.log(users);
-                    //fs.writeFile('../../../server/json/users.json', JSON.stringify(users, null, 2), 'utf8', (err)=>{console.log(err)});
-                }
             }
         })
 
