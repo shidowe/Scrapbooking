@@ -1,6 +1,6 @@
 import {define, element, expose, turbo, TurboElement} from "turbodombuilder";
 import {GridBoardView} from "./gridBoard.view";
-import "./navBar.css";
+import "./gridBoard.css";
 
 @define("grid-board")
 export class GridBoard extends TurboElement<GridBoardView> {

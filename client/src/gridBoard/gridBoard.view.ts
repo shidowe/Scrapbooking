@@ -1,29 +1,32 @@
-import {div, turbo, button, TurboView, TurboButton, TurboInput, img, TurboIcon, icon} from "turbodombuilder";
+import {div, turbo, TurboView, img} from "turbodombuilder";
 import {GridBoard} from "./gridBoard";
+import "./gridBoard.css";
 
 
 export class GridBoardView extends TurboView<GridBoard> {
-    private divEl: HTMLDivElement;
+    private container: HTMLDivElement;
 
-    private profileButton: TurboButton;
-    private homeButton: TurboButton;
-    private createButton: TurboButton;
+    private gridItems: Array<HTMLElement> = [];
 
 
     protected setupUIElements() {
         super.setupUIElements();
 
-        this.divEl = div({style: "display: grid; justify-content: space-between;"});
+        //Big container for the grid
+        this.container = div({class:"container", style: "padding-top: 13vh; width: 1400px; margin: auto; columns: 6; column-gap: 20px;"});
 
-        for (let i = 0; i < 10; i++) {
-            const imgEl = img({ src: `https://picsum.photos/200/300?random=${i}`, style: "margin: 10px; cursor: pointer;" });
-            this.divEl.appendChild(imgEl);
+        for(let i=1; i<=15; i++){
+            let box = div({class: "box", style: "width: 100%; margin-bottom: 10px; break-inside: avoid; border-radius: 15px;"});
+            let image = img({src: `https://gallery1.charleskdesigns.com/image/${i.toString().padStart(3, '0')}.jpg`, alt: "image", style: "max-width: 100%; min-width: 100%; border-radius: 10px;"});
+            let caption = div({class: "caption", text: "Lorem ipsum ", style: "padding: 10px; text-align: center;"});
+            box.append(image, caption);
+            this.container.appendChild(box);
         }
     }
 
     protected setupUILayout() {
         super.setupUILayout();
-        turbo(this).addChild([this.divEl]);
+        turbo(this).addChild([this.container]);
     }
 
 }
