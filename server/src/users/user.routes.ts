@@ -5,11 +5,10 @@ import {UserRepository} from "./user.repository";
 export function userRoute(): any {
     const router  =  express.Router();
     const controller = new UserController(new UserRepository());
-    console.log("in user route from routes");
 
-    router.post("/signup", (req, res)=> controller.signup(req, res));
+    router.post("/signup", (req, res)=> controller.signup(req, res))
+
     router.post("/signin", (req, res)=> controller.signin(req, res));
 
-    console.log("userRoute");
     return router;
 }

@@ -47,14 +47,14 @@ export class LoginFormView extends TurboView<LoginForm, LoginFormModel> {
             let username : string = this.usernameEl.value;
 
             if(this.login) {
-                makeRequest("http://localhost:3000/user/signin", "post", {"username":username, "password":password}, ()=>{console.log("success")}, ()=>{console.log("failure")});
+                makeRequest("http://localhost:3000/users/signin", "post", {"username":username, "password":password}, ()=>{console.log("success")}, ()=>{console.log("failure")});
             }
             else{ // if register
                 let passwordConfirmation : string = this.passwordConfirmationEl.value;
                 let email : string = this.emailEl.value;
 
                 //todo : not quite sure what we're supposed to do here + make request is hella complicated
-                makeRequest("http://localhost:3000/user/signup", "post", {"username":username, "email":email, "password":password, "passwordConfirmation":passwordConfirmation}, ()=>{console.log("success")}, ()=>{console.log("failure")});
+                makeRequest("http://localhost:3000/users/signup", "post", {"username":username, "email":email, "password":password, "passwordConfirmation":passwordConfirmation}, ()=>{console.log("success")}, ()=>{console.log("failure")});
             }
         })
 

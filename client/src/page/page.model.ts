@@ -12,6 +12,6 @@ export class PageModel extends TurboModel {
     }
 
     public addScrapComponent(scrapComponent : ScrapComponent) : void {
-        //this.content.push(scrapComponent);
+        this.content.push(scrapComponent);
     }
 }

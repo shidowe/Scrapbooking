@@ -10,7 +10,7 @@ export class PageController {
         let flag =await this.repository.loadPageFromPageId(body.pageId);
         if(flag){
             res.status(200).send({
-                //smth like user id or idk
+                //smth like users id or idk
             })
             return;
         }
@@ -22,7 +22,7 @@ export class PageController {
         let flag =await this.repository.loadPageFromUserId(body.userId);
         if(flag){
             res.status(200).send({
-                //smth like user id or idk
+                //smth like users id or idk
             })
             return;
         }
@@ -35,7 +35,7 @@ export class PageController {
         let flag =await this.repository.loadAllPages();
         if(flag){
             res.status(200).send({
-                //smth like user id or idk
+                //smth like users id or idk
             })
             return;
         }
@@ -47,7 +47,7 @@ export class PageController {
         let flag =await this.repository.savePage(body.pageId, body.userId, body.content);
         if(flag){
             res.status(200).send({
-                //smth like user id or idk
+                //smth like users id or idk
             })
             return;
         }
@@ -62,7 +62,7 @@ export class PageController {
         let flag =await this.repository.signup(body.username, body.email, body.password, body.passwordConfirmation);
             if(flag){
                 res.status(200).send({
-                    //smth like user id or idk
+                    //smth like users id or idk
                 })
                 return;
             }

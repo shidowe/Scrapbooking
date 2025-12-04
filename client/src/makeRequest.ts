@@ -6,6 +6,7 @@ export function makeRequest(
     onFailure: (message: string) => void = () => {},
     parse: boolean = false,
     responseType: XMLHttpRequestResponseType = "text"): void {
+
     const request = new XMLHttpRequest();
     request.responseType = responseType;
 

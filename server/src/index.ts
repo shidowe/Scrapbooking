@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import dotenv from "dotenv";
-import {userRoute} from "./user/user.routes";
+import {userRoute} from "./users/user.routes";
 import cors from "cors";
 
 dotenv.config();
@@ -56,7 +56,7 @@ app.get("*", (_req, res) =>
     res.sendFile(path.join(CLIENT_PUBLIC_PATH, "index.html")));
 
 const router = express.Router();
-app.use("/users", userRoute)
-
+app.use("/users", userRoute());
+app.use(express.json());
 
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));

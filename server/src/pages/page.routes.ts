@@ -5,7 +5,7 @@ import {PageRepository} from "./page.repository";
 export function pagesRoute(): any {
     const router  =  express.Router();
     const controller = new PageController(new PageRepository());
-    console.log("in user route from routes");
+    console.log("in users route from routes");
 
     router.get("/loadPageFromPageId", (req, res)=> controller.loadPageFromPageId(req, res));
     router.get("/loadPageFromUserId", (req, res)=> controller.loadPageFromUserId(req, res));

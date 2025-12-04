@@ -1,7 +1,8 @@
 import {User} from "./user";
 import fs from "fs";
 
-const userJSONPath = "../../json/users.json";
+const userJSONPath = "server/json/users.json";
+
 
 export class UserRepository {
     private data: User[] = [];
