@@ -7,42 +7,45 @@ const userJSONPath = "server/json/users.json";
 export class UserRepository {
     private data: User[] = [];
 
-    public async fetchData():Promise<User[]>  {
-        if(this.data.length>0) return this.data;
-        return new Promise<User[]>((resolve, reject) => {
+    public async fetchData()  {
+        new Promise<User[]>((resolve, reject) => {
             fs.readFile(userJSONPath, "utf8", (err, data) => {
                 this.data = JSON.parse(data);
-                resolve(this.data as any);
             });
         });
     }
 
-    public async signup(username:string, email:string, password:string, passwordConfirmation:string):Promise<boolean>{
-        let data = await this.fetchData();
-
-        if(! this.data.find(user => user.username == username)
-            && password == passwordConfirmation ) { //todo add more conditions to this
-            data.push({
-                "userId": data.length,
-                "username": username,
-                "email": email,
-                "password": password
-            });
-            fs.writeFile(userJSONPath, JSON.stringify(data), (err) => { console.log(err)});
-            return new Promise((resolve, reject) => {resolve(true);})
+    public async signup(username:string, email:string, password:string, passwordConfirmation:string):Promise<[boolean, string]>{
+        if(this.data.length==0) {
+            await this.fetchData();
         }
-        return new Promise((resolve, reject) => {
-            resolve(false);
-        })
+
+        if(! this.data.find(user => user.username == username)){
+            if (password == passwordConfirmation) { //todo add more conditions to this
+                this.data.push({
+                    "userId": this.data.length,
+                    "username": username,
+                    "email": email,
+                    "password": password
+                });
+                fs.writeFile(userJSONPath, JSON.stringify(this.data, null,4), (err) => {
+                    console.log(err)
+                });
+                return [true, ""];
+            }
+            return [false, "Different passwords"];
+        }
+        return [false, "Username is already taken"];
     }
 
-    public async signin(username:string, password:string):Promise<boolean>{
-        await this.fetchData();
+    public async signin(username:string, password:string):Promise<[boolean, number]>{
+        if(this.data.length==0) {
+            await this.fetchData();
+        }
         let user = this.findUser(username);
+        console.log(user);
 
-        return new Promise((resolve, reject) => {
-            resolve(user!=undefined && user.password == password);
-        })
+        return (user!=undefined && user.password == password)? [true, user.userId] : [false, -1] ;
     }
 
     public findUser(username: string): User |undefined {

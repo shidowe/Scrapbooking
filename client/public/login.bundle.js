@@ -188,6 +188,7 @@ class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
         //starting with login so this in not visible
         this.passwordConfirmationEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ input: { type: "password" }, label: "Password confirmation", hidden: true });
         this.emailEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "email", label: "Email", hidden: true });
+        this.messageEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.p)({ hidden: true });
         //button to switch between register and login
         this.switchModes = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.p)({ text: this.login ? "Register" : "Login", id: "switch-modes", });
         this.switchModes.addEventListener("click", () => {
@@ -196,6 +197,7 @@ class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
             this.emailEl.hidden = this.login;
             this.modeEl.textContent = this.login ? "Login" : "Register";
             this.switchModes.textContent = this.login ? "Register" : "Login";
+            this.messageEl.textContent = "";
         });
         //button to submit the form
         this.submitButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ text: "Submit", type: "submit", id: "submit-button" });
@@ -203,7 +205,12 @@ class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
             let password = this.passwordEl.value;
             let username = this.usernameEl.value;
             if (this.login) {
-                (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/users/signin", "post", { "username": username, "password": password }, () => { console.log("success"); }, () => { console.log("failure"); });
+                (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/users/signin", "post", { "username": username, "password": password }, (response) => {
+                    sessionStorage.setItem("username", response.username);
+                    sessionStorage.setItem("userId", response.userId);
+                }, (response) => {
+                    this.messageEl.textContent = response;
+                });
             }
             else { // if register
                 let passwordConfirmation = this.passwordConfirmationEl.value;

@@ -7,7 +7,7 @@ import {Typing, typing} from "../scrapComponents/typing/typing";
 
 export class PageView extends TurboView<Page, PageModel> {
 
-    private pageDiv: HTMLElement;
+    private pageDiv: HTMLCanvasElement;
     private contentObserver: TurboObserver;
 
     private editMode: boolean = false;
