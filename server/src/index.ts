@@ -14,6 +14,8 @@ const CLIENT_PUBLIC_PATH = process.env.CLIENT_PUBLIC_PATH
     : path.resolve(__dirname, "../../client/public");
 
 const app: express.Application = express();
+app.use(express.json());
+
 
 const allowedOrigins = [
     "http://localhost:9000/",
@@ -60,7 +62,5 @@ app.get("*", (_req, res) =>
 const router = express.Router();
 app.use("/users", userRoute());
 app.use("/pages", pageRoute());
-
-app.use(express.json());
 
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
