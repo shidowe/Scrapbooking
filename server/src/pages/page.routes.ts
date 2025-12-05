@@ -2,7 +2,7 @@ import {PageController} from "./page.controller";
 import express from "express";
 import {PageRepository} from "./page.repository";
 
-export function pagesRoute(): any {
+export function pageRoute(): any {
     const router  =  express.Router();
     const controller = new PageController(new PageRepository());
     console.log("in users route from routes");

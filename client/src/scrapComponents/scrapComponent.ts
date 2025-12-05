@@ -1,7 +1,12 @@
-import {modelSignal, TurboModel} from "turbodombuilder";
+import {TurboElementProperties} from "turbodombuilder";
+import {PageView} from "../page/page.view";
+import {PageModel} from "../page/page.model";
+import {PageData} from "../page/page.types";
 
-// TODO : idk what to extend
-export class ScrapComponent extends TurboModel {
-    @modelSignal() public x: number;
-    @modelSignal() public y: number;
-}
+export type ScrapData = {
+    x: number,
+    y: number,
+
+    color: string,
+    text: string,
+} | {};

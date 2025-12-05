@@ -2,7 +2,6 @@ import {turbo, TurboView, div, p, TurboObserver, canvas,} from "turbodombuilder"
 
 import {PageModel} from "./page.model";
 import {Page} from "./page";
-import {ScrapComponent} from "../scrapComponents/scrapComponent";
 import {Typing, typing} from "../scrapComponents/typing/typing";
 
 
@@ -33,7 +32,7 @@ export class PageView extends TurboView<Page, PageModel> {
         this.pageDiv.addEventListener("click", (event: MouseEvent) => {
             let t: Typing = typing({x :event.clientX, y: event.clientY} );
             this.pageDiv.appendChild(t);
-            this.model.addScrapComponent(t.model);
+            this.model.addScrapComponent(t.model.content);
         })
         //this.pageDiv.appendChild(p({text: String(this.model.pageId)}));
 

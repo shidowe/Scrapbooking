@@ -1,14 +1,14 @@
 import {define, element, expose, turbo, TurboElement} from "turbodombuilder";
 import {PageView} from "./page.view";
 import {PageModel} from "./page.model";
-import {ScrapComponent} from "../scrapComponents/scrapComponent";
 import "./page.css";
 import {PageProperties} from "./page.types";
+import {ScrapData} from "../scrapComponents/scrapComponent";
 
 
 @define("page-elt")
 export class Page extends TurboElement<PageView, PageModel> {
-    @expose("model") public content : Array<ScrapComponent>;
+    @expose("model") public content : Array<ScrapData>;
 }
 
 export function page(properties:PageProperties = {}): Page {

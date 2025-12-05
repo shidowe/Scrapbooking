@@ -1,11 +1,8 @@
-import { modelSignal } from "turbodombuilder";
-import { ScrapComponent } from "../scrapComponent";
+import {modelSignal, TurboModel} from "turbodombuilder";
+import {ScrapData} from "../scrapComponent";
 
-export class TypingModel extends ScrapComponent {
-    @modelSignal() private color: any = "black"; //todo change this later
-    @modelSignal() private text : String;
-    @modelSignal() private length: number = 100;
-    @modelSignal() private height: number;
+export class TypingModel extends TurboModel {
+    @modelSignal()  content: ScrapData
 
 
     public constructor(properties: any) {

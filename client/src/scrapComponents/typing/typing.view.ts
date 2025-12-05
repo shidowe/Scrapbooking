@@ -19,8 +19,6 @@ export class TypingView extends TurboView<Typing, TypingModel> {
             }
         })
          */
-
-
     }
 
     protected setupUIElements() {
