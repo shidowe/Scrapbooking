@@ -15,44 +15,35 @@ export class UserRepository {
         });
     }
 
-    public async signup(username:string, email:string, password:string, passwordConfirmation:string):Promise<[boolean, string]>{
+    public async signup(username:string, email:string, password:string, passwordConfirmation:string):Promise<[boolean, any]>{
         if(this.data.length==0) {
             await this.fetchData();
         }
 
         if(! this.data.find(user => user.username == username)){
             if (password == passwordConfirmation) { //todo add more conditions to this
-                this.data.push({
-                    "userId": this.data.length,
-                    "username": username,
-                    "email": email,
-                    "password": password
-                });
-                fs.writeFile(userJSONPath, JSON.stringify(this.data, null,4), (err) => {
-                    console.log(err)
-                });
-                return [true, ""];
+
+                let user = new User(this.data.length, username, email, password, false, [])
+                this.data.push(user);
+                fs.writeFile(userJSONPath, JSON.stringify(this.data, null,4), (err) => {});
+                return [true, user];
             }
             return [false, "Different passwords"];
         }
         return [false, "Username is already taken"];
     }
 
-    public async signin(username:string, password:string):Promise<[boolean, number]>{
+    public async signin(username:string, password:string):Promise<[boolean, User  | string]>{
         if(this.data.length==0) {
             await this.fetchData();
         }
-        let user = this.findUser(username);
-        console.log(user);
 
-        return (user!=undefined && user.password == password)? [true, user.userId] : [false, -1] ;
-    }
-
-    public findUser(username: string): User |undefined {
         for (let user of this.data){
-            if (user.username == username) {return user;}
+            if (user.username == username) {
+                return [true, user];
+            }
         }
-        return undefined;
+        return [false, "Wrong username or password"];
     }
 
 

@@ -1,7 +1,9 @@
-import {div, TurboIcon} from "turbodombuilder";
+import {div, TurboEventManager, TurboIcon} from "turbodombuilder";
 import { navBar } from "./navBar/navBar"
 import {page} from "./page/page";
 import { gridBoard } from "./gridBoard/gridBoard";
+
+TurboEventManager.instance.preventDefaultWheel =false;
 
 document.addEventListener("DOMContentLoaded", () => {
     TurboIcon.config.defaultDirectory = "assets";

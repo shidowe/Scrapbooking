@@ -1,13 +1,21 @@
-import {div, TurboIcon} from "turbodombuilder";
+import {div, TurboEventManager, TurboIcon} from "turbodombuilder";
 import {loginForm} from "./loginForm/loginForm";
 import { navBar } from "./navBar/navBar"
+import {profile} from "./profile/profile";
+TurboEventManager.instance.preventDefaultWheel =false;
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
     TurboIcon.config.defaultDirectory = "assets";
 
     navBar({ parent: document.body });
-    loginForm({ //get parameters from session or something
-        parent: document.body.querySelector("#form-div"),
-    });
+
+    if(sessionStorage.getItem("userId")) {
+        profile({parent: document.body});
+    }
+    else {
+
+        loginForm({ parent: document.body});
+    }
 });

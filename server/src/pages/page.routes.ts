@@ -5,16 +5,12 @@ import {PageRepository} from "./page.repository";
 export function pageRoute(): any {
     const router  =  express.Router();
     const controller = new PageController(new PageRepository());
-    console.log("in users route from routes");
+    console.log("IN PAGE ROUTE");
 
-    router.get("/loadPageFromPageId", (req, res)=> controller.loadPageFromPageId(req, res));
-    router.get("/loadPageFromUserId", (req, res)=> controller.loadPageFromUserId(req, res));
+    router.get("/loadPagesFromPageId", (req, res)=> controller.loadPagesFromPageId(req, res));
     router.get("/loadAllPages", (req, res)=> controller.loadAllPages(req, res));
-
 
     router.post("/savePage", (req, res)=> controller.savePage(req, res));
 
-
-    console.log("userRoute");
     return router;
 }

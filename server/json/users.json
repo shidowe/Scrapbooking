@@ -1,32 +1,20 @@
 [
     {
-        "id": 0,
+        "userId": 0,
         "username": "Shidowe",
         "email": "",
-        "password": "apassword"
+        "password": "apassword",
+        "admin": true,
+        "pages": [
+            0
+        ]
     },
     {
-        "id": 1,
+        "userId": 1,
         "username": "Dokja",
         "email": "",
-        "password": "notapassword"
-    },
-    {
-        "userId": 2,
-        "username": "Shidowes",
-        "email": "yguvh",
-        "password": "aaaaaaaaaa"
-    },
-    {
-        "userId": 3,
-        "username": "TestUsername",
-        "email": "testemail",
-        "password": "thesamepassword"
-    },
-    {
-        "userId": 4,
-        "username": "Shidowey",
-        "email": "cyvuhbijk",
-        "password": "aaaaaa"
+        "password": "notapassword",
+        "admin": true,
+        "pages": []
     }
 ]

@@ -182,47 +182,59 @@ class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
     }
     setupUIElements() {
         super.setupUIElements();
-        this.modeEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.h3)({ text: "Login" });
-        this.usernameEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "text", label: "Username" });
-        this.passwordEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ input: { type: "password" }, label: "Password", minlength: "8", required: "true" });
+        this.formDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ id: 'form-div' });
+        this.modeEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.h3)({ text: "Login", parent: this.formDiv });
+        this.usernameEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "text", label: "Username", parent: this.formDiv });
+        this.passwordEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ input: { type: "password" }, label: "Password", minlength: "8", required: "true", parent: this.formDiv });
         //starting with login so this in not visible
-        this.passwordConfirmationEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ input: { type: "password" }, label: "Password confirmation", hidden: true });
-        this.emailEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "email", label: "Email", hidden: true });
-        this.messageEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.p)({ hidden: true });
+        this.passwordConfirmationEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ input: { type: "password" }, label: "Password confirmation", hidden: true, parent: this.formDiv });
+        this.emailEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "email", label: "Email", hidden: true, parent: this.formDiv });
+        this.messageEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.p)({ hidden: true, color: "red", parent: this.formDiv });
+        //button to submit the form
+        this.submitButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ text: "Submit", type: "submit", id: "submit-button", parent: this.formDiv });
+        this.submitButton.addEventListener("click", () => {
+            let password = this.passwordEl.value;
+            let username = this.usernameEl.value;
+            if (this.login) {
+                (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/users/signin", "post", { "username": username, "password": password }, (response) => {
+                    +this.connect(JSON.parse(response));
+                }, (message) => {
+                    this.messageEl.hidden = false;
+                    this.messageEl.textContent = message;
+                });
+            }
+            else { // if register
+                let passwordConfirmation = this.passwordConfirmationEl.value;
+                let email = this.emailEl.value;
+                (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/users/signup", "post", { "username": username, "email": email, "password": password, "passwordConfirmation": passwordConfirmation }, (response) => {
+                    this.connect(JSON.parse(response));
+                }, (message) => {
+                    this.messageEl.hidden = false;
+                    this.messageEl.textContent = message;
+                });
+            }
+        });
         //button to switch between register and login
-        this.switchModes = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.p)({ text: this.login ? "Register" : "Login", id: "switch-modes", });
+        this.switchModes = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.p)({ text: this.login ? "Register" : "Login", id: "switch-modes", parent: this.formDiv });
         this.switchModes.addEventListener("click", () => {
             this.login = !this.login;
             this.passwordConfirmationEl.hidden = this.login;
             this.emailEl.hidden = this.login;
             this.modeEl.textContent = this.login ? "Login" : "Register";
             this.switchModes.textContent = this.login ? "Register" : "Login";
-            this.messageEl.textContent = "";
-        });
-        //button to submit the form
-        this.submitButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ text: "Submit", type: "submit", id: "submit-button" });
-        this.submitButton.addEventListener("click", () => {
-            let password = this.passwordEl.value;
-            let username = this.usernameEl.value;
-            if (this.login) {
-                (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/users/signin", "post", { "username": username, "password": password }, (response) => {
-                    sessionStorage.setItem("username", response.username);
-                    sessionStorage.setItem("userId", response.userId);
-                }, (response) => {
-                    this.messageEl.textContent = response;
-                });
-            }
-            else { // if register
-                let passwordConfirmation = this.passwordConfirmationEl.value;
-                let email = this.emailEl.value;
-                //todo : not quite sure what we're supposed to do here + make request is hella complicated
-                (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/users/signup", "post", { "username": username, "email": email, "password": password, "passwordConfirmation": passwordConfirmation }, () => { console.log("success"); }, () => { console.log("failure"); });
-            }
+            this.messageEl.hidden = true;
         });
     }
     setupUILayout() {
         super.setupUILayout();
-        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.modeEl, this.usernameEl, this.emailEl, this.passwordEl, this.passwordConfirmationEl, this.submitButton, this.switchModes]);
+        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild(this.formDiv);
+    }
+    connect(response) {
+        sessionStorage.setItem("username", response.username);
+        sessionStorage.setItem("userId", response.userId);
+        sessionStorage.setItem("admin", response.admin);
+        sessionStorage.setItem("pages", response.pages);
+        window.location.replace("/");
     }
 }
 
@@ -428,6 +440,208 @@ function navBar(properties = {}) {
 
 /***/ }),
 
+/***/ "./client/src/profile/profile.css":
+/*!****************************************!*\
+  !*** ./client/src/profile/profile.css ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_profile_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!./profile.css */ "./node_modules/css-loader/dist/cjs.js!./client/src/profile/profile.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_profile_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_profile_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_profile_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_profile_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./client/src/profile/profile.model.ts":
+/*!*********************************************!*\
+  !*** ./client/src/profile/profile.model.ts ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ProfileModel: () => (/* binding */ ProfileModel)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+
+class ProfileModel extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboModel {
+}
+
+
+/***/ }),
+
+/***/ "./client/src/profile/profile.ts":
+/*!***************************************!*\
+  !*** ./client/src/profile/profile.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Profile: () => (/* binding */ Profile),
+/* harmony export */   profile: () => (/* binding */ profile)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _profile_view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./profile.view */ "./client/src/profile/profile.view.ts");
+/* harmony import */ var _profile_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./profile.model */ "./client/src/profile/profile.model.ts");
+/* harmony import */ var _profile_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./profile.css */ "./client/src/profile/profile.css");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+var __setFunctionName = (undefined && undefined.__setFunctionName) || function (f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+};
+
+
+
+
+let Profile = (() => {
+    let _classDecorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.define)("profile-element")];
+    let _classDescriptor;
+    let _classExtraInitializers = [];
+    let _classThis;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboElement;
+    var Profile = _classThis = class extends _classSuper {
+    };
+    __setFunctionName(_classThis, "Profile");
+    (() => {
+        var _a;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
+        Profile = _classThis = _classDescriptor.value;
+        if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        __runInitializers(_classThis, _classExtraInitializers);
+    })();
+    return Profile = _classThis;
+})();
+
+function profile(properties = {}) {
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
+        tag: "profile-element",
+        view: _profile_view__WEBPACK_IMPORTED_MODULE_1__.ProfileView,
+        model: _profile_model__WEBPACK_IMPORTED_MODULE_2__.ProfileModel
+    });
+    return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
+}
+
+
+/***/ }),
+
+/***/ "./client/src/profile/profile.view.ts":
+/*!********************************************!*\
+  !*** ./client/src/profile/profile.view.ts ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ProfileView: () => (/* binding */ ProfileView)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../makeRequest */ "./client/src/makeRequest.ts");
+
+
+class ProfileView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
+    setupUIElements() {
+        super.setupUIElements();
+        this.mainDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ id: "main-div" });
+        this.usernameEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.h1)({ text: sessionStorage.getItem("username"), parent: this.mainDiv });
+        this.logoutEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.p)({ parent: this.mainDiv, text: "Logout" });
+        this.logoutEl.addEventListener("click", () => {
+            sessionStorage.clear();
+            window.location.reload();
+        });
+        (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/pages/loadPagesFromPageId", "get", { "pageId": sessionStorage.getItem("pages") }, (responseString) => {
+            console.log("success");
+            console.log(responseString);
+            //let response = JSON.parse(responseString);
+            //response.parent = this.mainDiv;
+            //page(response);
+        }, (message) => {
+            console.log("failure");
+        });
+    }
+    setupUILayout() {
+        super.setupUILayout();
+        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild(this.mainDiv);
+    }
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./client/src/loginForm/loginForm.css":
 /*!**********************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./client/src/loginForm/loginForm.css ***!
@@ -448,15 +662,15 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `:root {
-    --primary-color: #4D7C8A;
-    --secondary-color: #FCF7F8;
+    --cool-blue: #4D7C8A;
+    --snow: #FCF7F8;
     --shadow-grey :#342E37;
 }
 
 #submit-button {
     min-width: 130px;
     height: 40px;
-    color: var(--secondary-color );
+    color: var(--snow );
     padding: 5px 10px;
     font-weight: bold;
     cursor: pointer;
@@ -470,18 +684,19 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
 }
 
 #submit-button:hover {
-    background: var(--secondary-color );
+    background: var(--snow );
     color: var(--shadow-grey );
 }
 
 
 #form-div {
+    text-align: center;
     --borderradius: 14px;
     --bgsize: 0.38rem;
     padding: 2rem;
     border: 1px solid;
     position: relative;
-    background: var(--secondary-color);
+    background: var(--snow);
     border-radius: var(--borderradius, 14px);
     transform: translateY(-2px);
     z-index: 2;
@@ -496,11 +711,11 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
         border-radius: var(--borderradius, 14px);
         background-image: linear-gradient(
                 45deg,
-                var(--secondary-color) 33.33%,
+                var(--snow) 33.33%,
                 var(--shadow-grey) 33.33%,
                 var(--shadow-grey) 50%,
-                var(--secondary-color) 50%,
-                var(--secondary-color) 83.33%,
+                var(--snow) 50%,
+                var(--snow) 83.33%,
                 var(--shadow-grey) 83.33%,
                 var(--shadow-grey) 100%
         );
@@ -517,7 +732,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
     &::before {
         top: 0rem;
         left: 0rem;
-        background: var(--secondary-color);
+        background: var(--snow);
         z-index: -1;
     }
 }
@@ -527,8 +742,8 @@ body {
     place-content: center;
     min-height: 100vh;
     font-family: "Inter", sans-serif;
-    background: var(--primary-color);
-}`, "",{"version":3,"sources":["webpack://./client/src/loginForm/loginForm.css"],"names":[],"mappings":"AAAA;IACI,wBAAwB;IACxB,0BAA0B;IAC1B,sBAAsB;AAC1B;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,8BAA8B;IAC9B,iBAAiB;IACjB,iBAAiB;IACjB,eAAe;IACf,yBAAyB;IACzB,kBAAkB;IAClB,qBAAqB;IACrB,aAAa;IACb,mBAAmB;IACnB,qCAAqC;IACrC,+BAA+B;AACnC;;AAEA;IACI,mCAAmC;IACnC,0BAA0B;AAC9B;;;AAGA;IACI,oBAAoB;IACpB,iBAAiB;IACjB,aAAa;IACb,iBAAiB;IACjB,kBAAkB;IAClB,kCAAkC;IAClC,wCAAwC;IACxC,2BAA2B;IAC3B,UAAU;;IAEV;QACI,2BAA2B;IAC/B;;IAEA;;;QAGI,wCAAwC;QACxC;;;;;;;;;SASC;QACD,WAAW;QACX,cAAc;QACd,kBAAkB;QAClB,WAAW;QACX,WAAW;QACX,aAAa;QACb,WAAW;QACX,YAAY;QACZ,8DAA8D;IAClE;IACA;QACI,SAAS;QACT,UAAU;QACV,kCAAkC;QAClC,WAAW;IACf;AACJ;;AAEA;IACI,aAAa;IACb,qBAAqB;IACrB,iBAAiB;IACjB,gCAAgC;IAChC,gCAAgC;AACpC","sourcesContent":[":root {\r\n    --primary-color: #4D7C8A;\r\n    --secondary-color: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n}\r\n\r\n#submit-button {\r\n    min-width: 130px;\r\n    height: 40px;\r\n    color: var(--secondary-color );\r\n    padding: 5px 10px;\r\n    font-weight: bold;\r\n    cursor: pointer;\r\n    transition: all 0.3s ease;\r\n    position: relative;\r\n    display: inline-block;\r\n    outline: none;\r\n    border-radius: 20px;\r\n    border: 2px solid var(--shadow-grey );\r\n    background: var(--shadow-grey );\r\n}\r\n\r\n#submit-button:hover {\r\n    background: var(--secondary-color );\r\n    color: var(--shadow-grey );\r\n}\r\n\r\n\r\n#form-div {\r\n    --borderradius: 14px;\r\n    --bgsize: 0.38rem;\r\n    padding: 2rem;\r\n    border: 1px solid;\r\n    position: relative;\r\n    background: var(--secondary-color);\r\n    border-radius: var(--borderradius, 14px);\r\n    transform: translateY(-2px);\r\n    z-index: 2;\r\n\r\n    &:hover {\r\n        transform: translateY(-4px);\r\n    }\r\n\r\n    &::before,\r\n    &::after {\r\n\r\n        border-radius: var(--borderradius, 14px);\r\n        background-image: linear-gradient(\r\n                45deg,\r\n                var(--secondary-color) 33.33%,\r\n                var(--shadow-grey) 33.33%,\r\n                var(--shadow-grey) 50%,\r\n                var(--secondary-color) 50%,\r\n                var(--secondary-color) 83.33%,\r\n                var(--shadow-grey) 83.33%,\r\n                var(--shadow-grey) 100%\r\n        );\r\n        content: \"\";\r\n        display: block;\r\n        position: absolute;\r\n        z-index: -2;\r\n        top: .75rem;\r\n        left: 0.75rem;\r\n        width: 100%;\r\n        height: 100%;\r\n        background-size: var(--bgsize, 0.28rem) var(--bgsize, 0.28rem);\r\n    }\r\n    &::before {\r\n        top: 0rem;\r\n        left: 0rem;\r\n        background: var(--secondary-color);\r\n        z-index: -1;\r\n    }\r\n}\r\n\r\nbody {\r\n    display: grid;\r\n    place-content: center;\r\n    min-height: 100vh;\r\n    font-family: \"Inter\", sans-serif;\r\n    background: var(--primary-color);\r\n}"],"sourceRoot":""}]);
+    background: var(--cool-blue);
+}`, "",{"version":3,"sources":["webpack://./client/src/loginForm/loginForm.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;AAC1B;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,mBAAmB;IACnB,iBAAiB;IACjB,iBAAiB;IACjB,eAAe;IACf,yBAAyB;IACzB,kBAAkB;IAClB,qBAAqB;IACrB,aAAa;IACb,mBAAmB;IACnB,qCAAqC;IACrC,+BAA+B;AACnC;;AAEA;IACI,wBAAwB;IACxB,0BAA0B;AAC9B;;;AAGA;IACI,kBAAkB;IAClB,oBAAoB;IACpB,iBAAiB;IACjB,aAAa;IACb,iBAAiB;IACjB,kBAAkB;IAClB,uBAAuB;IACvB,wCAAwC;IACxC,2BAA2B;IAC3B,UAAU;;IAEV;QACI,2BAA2B;IAC/B;;IAEA;;;QAGI,wCAAwC;QACxC;;;;;;;;;SASC;QACD,WAAW;QACX,cAAc;QACd,kBAAkB;QAClB,WAAW;QACX,WAAW;QACX,aAAa;QACb,WAAW;QACX,YAAY;QACZ,8DAA8D;IAClE;IACA;QACI,SAAS;QACT,UAAU;QACV,uBAAuB;QACvB,WAAW;IACf;AACJ;;AAEA;IACI,aAAa;IACb,qBAAqB;IACrB,iBAAiB;IACjB,gCAAgC;IAChC,4BAA4B;AAChC","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n}\r\n\r\n#submit-button {\r\n    min-width: 130px;\r\n    height: 40px;\r\n    color: var(--snow );\r\n    padding: 5px 10px;\r\n    font-weight: bold;\r\n    cursor: pointer;\r\n    transition: all 0.3s ease;\r\n    position: relative;\r\n    display: inline-block;\r\n    outline: none;\r\n    border-radius: 20px;\r\n    border: 2px solid var(--shadow-grey );\r\n    background: var(--shadow-grey );\r\n}\r\n\r\n#submit-button:hover {\r\n    background: var(--snow );\r\n    color: var(--shadow-grey );\r\n}\r\n\r\n\r\n#form-div {\r\n    text-align: center;\r\n    --borderradius: 14px;\r\n    --bgsize: 0.38rem;\r\n    padding: 2rem;\r\n    border: 1px solid;\r\n    position: relative;\r\n    background: var(--snow);\r\n    border-radius: var(--borderradius, 14px);\r\n    transform: translateY(-2px);\r\n    z-index: 2;\r\n\r\n    &:hover {\r\n        transform: translateY(-4px);\r\n    }\r\n\r\n    &::before,\r\n    &::after {\r\n\r\n        border-radius: var(--borderradius, 14px);\r\n        background-image: linear-gradient(\r\n                45deg,\r\n                var(--snow) 33.33%,\r\n                var(--shadow-grey) 33.33%,\r\n                var(--shadow-grey) 50%,\r\n                var(--snow) 50%,\r\n                var(--snow) 83.33%,\r\n                var(--shadow-grey) 83.33%,\r\n                var(--shadow-grey) 100%\r\n        );\r\n        content: \"\";\r\n        display: block;\r\n        position: absolute;\r\n        z-index: -2;\r\n        top: .75rem;\r\n        left: 0.75rem;\r\n        width: 100%;\r\n        height: 100%;\r\n        background-size: var(--bgsize, 0.28rem) var(--bgsize, 0.28rem);\r\n    }\r\n    &::before {\r\n        top: 0rem;\r\n        left: 0rem;\r\n        background: var(--snow);\r\n        z-index: -1;\r\n    }\r\n}\r\n\r\nbody {\r\n    display: grid;\r\n    place-content: center;\r\n    min-height: 100vh;\r\n    font-family: \"Inter\", sans-serif;\r\n    background: var(--cool-blue);\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -612,6 +827,44 @@ nav-bar turbo-button:active {
     width: 32px;
     height: 32px;
 }`, "",{"version":3,"sources":["webpack://./client/src/navBar/navBar.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;IACnB,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;;;IAGI;;;;;;AAMJ;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n    width: 50px;\r\n    height: 50px;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n/* https://codepen.io/charleskitchton/pen/XWomjWX \r\n   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i \r\n   \r\n   */\r\n\r\n\r\n\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./client/src/profile/profile.css":
+/*!******************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./client/src/profile/profile.css ***!
+  \******************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `:root {
+    --cool-blue: #4D7C8A;
+    --snow: #FCF7F8;
+    --shadow-grey :#342E37;
+}
+
+body {
+    display: grid;
+    place-content: center;
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
+    background: var(--cool-blue);
+}`, "",{"version":3,"sources":["webpack://./client/src/profile/profile.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;AAC1B;;AAEA;IACI,aAAa;IACb,qBAAqB;IACrB,iBAAiB;IACjB,gCAAgC;IAChC,4BAA4B;AAChC","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n}\r\n\r\nbody {\r\n    display: grid;\r\n    place-content: center;\r\n    min-height: 100vh;\r\n    font-family: \"Inter\", sans-serif;\r\n    background: var(--cool-blue);\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -30997,15 +31250,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
 /* harmony import */ var _loginForm_loginForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./loginForm/loginForm */ "./client/src/loginForm/loginForm.ts");
 /* harmony import */ var _navBar_navBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./navBar/navBar */ "./client/src/navBar/navBar.ts");
+/* harmony import */ var _profile_profile__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./profile/profile */ "./client/src/profile/profile.ts");
 
 
 
+
+turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboEventManager.instance.preventDefaultWheel = false;
 document.addEventListener("DOMContentLoaded", () => {
     turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboIcon.config.defaultDirectory = "assets";
     (0,_navBar_navBar__WEBPACK_IMPORTED_MODULE_2__.navBar)({ parent: document.body });
-    (0,_loginForm_loginForm__WEBPACK_IMPORTED_MODULE_1__.loginForm)({
-        parent: document.body.querySelector("#form-div"),
-    });
+    if (sessionStorage.getItem("userId")) {
+        (0,_profile_profile__WEBPACK_IMPORTED_MODULE_3__.profile)({ parent: document.body });
+    }
+    else {
+        (0,_loginForm_loginForm__WEBPACK_IMPORTED_MODULE_1__.loginForm)({ parent: document.body });
+    }
 });
 
 })();

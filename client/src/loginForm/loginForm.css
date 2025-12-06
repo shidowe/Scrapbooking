@@ -1,13 +1,13 @@
 :root {
-    --primary-color: #4D7C8A;
-    --secondary-color: #FCF7F8;
+    --cool-blue: #4D7C8A;
+    --snow: #FCF7F8;
     --shadow-grey :#342E37;
 }
 
 #submit-button {
     min-width: 130px;
     height: 40px;
-    color: var(--secondary-color );
+    color: var(--snow );
     padding: 5px 10px;
     font-weight: bold;
     cursor: pointer;
@@ -21,18 +21,19 @@
 }
 
 #submit-button:hover {
-    background: var(--secondary-color );
+    background: var(--snow );
     color: var(--shadow-grey );
 }
 
 
 #form-div {
+    text-align: center;
     --borderradius: 14px;
     --bgsize: 0.38rem;
     padding: 2rem;
     border: 1px solid;
     position: relative;
-    background: var(--secondary-color);
+    background: var(--snow);
     border-radius: var(--borderradius, 14px);
     transform: translateY(-2px);
     z-index: 2;
@@ -47,11 +48,11 @@
         border-radius: var(--borderradius, 14px);
         background-image: linear-gradient(
                 45deg,
-                var(--secondary-color) 33.33%,
+                var(--snow) 33.33%,
                 var(--shadow-grey) 33.33%,
                 var(--shadow-grey) 50%,
-                var(--secondary-color) 50%,
-                var(--secondary-color) 83.33%,
+                var(--snow) 50%,
+                var(--snow) 83.33%,
                 var(--shadow-grey) 83.33%,
                 var(--shadow-grey) 100%
         );
@@ -68,7 +69,7 @@
     &::before {
         top: 0rem;
         left: 0rem;
-        background: var(--secondary-color);
+        background: var(--snow);
         z-index: -1;
     }
 }
@@ -78,5 +79,5 @@ body {
     place-content: center;
     min-height: 100vh;
     font-family: "Inter", sans-serif;
-    background: var(--primary-color);
+    background: var(--cool-blue);
 }

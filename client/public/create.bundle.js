@@ -30620,6 +30620,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _navBar_navBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navBar/navBar */ "./client/src/navBar/navBar.ts");
 
 
+turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboEventManager.instance.preventDefaultWheel = false;
 document.addEventListener("DOMContentLoaded", () => {
     turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboIcon.config.defaultDirectory = "assets";
     const toolbarEl = document.body.querySelector("#toolbar");

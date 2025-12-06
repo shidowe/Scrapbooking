@@ -30913,6 +30913,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboEventManager.instance.preventDefaultWheel = false;
 document.addEventListener("DOMContentLoaded", () => {
     turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboIcon.config.defaultDirectory = "assets";
     document.body.setAttribute("style", "background:#4D7C8A; align-content-:center");

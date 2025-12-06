@@ -1,0 +1,13 @@
+:root {
+    --cool-blue: #4D7C8A;
+    --snow: #FCF7F8;
+    --shadow-grey :#342E37;
+}
+
+body {
+    display: grid;
+    place-content: center;
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
+    background: var(--cool-blue);
+}

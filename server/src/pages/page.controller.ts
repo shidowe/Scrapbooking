@@ -5,41 +5,21 @@ export class PageController {
     public constructor(private repository: PageRepository) {
     }
 
-    public async loadPageFromPageId(req:any, res:any): Promise<any> {
+    public async loadPagesFromPageId(req:any, res:any): Promise<any> {
+        console.log("IN LOAD PAGES FROM ID");
         const body = req.body;
-        let flag =await this.repository.loadPageFromPageId(body.pageId);
-        if(flag){
-            res.status(200).send({
-                //smth like users id or idk
-            })
-            return;
-        }
-        res.status(400).send({})
+        let response =await this.repository.loadPageFromPageId(body.pageIdList); //TODO : do something if one of the pages is missing
+        res.status(200).send(response)
+        return;
     }
 
-    public async loadPageFromUserId(req:any, res:any): Promise<any> {
-        const body = req.body;
-        let flag =await this.repository.loadPageFromUserId(body.userId);
-        if(flag){
-            res.status(200).send({
-                //smth like users id or idk
-            })
-            return;
-        }
-        res.status(400).send({})
-    }
+
 
 
     public async loadAllPages(req:any, res:any): Promise<any> {
-        const body = req.body;
-        let flag =await this.repository.loadAllPages();
-        if(flag){
-            res.status(200).send({
-                //smth like users id or idk
-            })
-            return;
-        }
-        res.status(400).send({})
+        let response =await this.repository.loadAllPages();
+        res.status(200).send({response});
+        return;
     }
 
     public async savePage(req:any, res:any): Promise<any> {

@@ -1,6 +1,6 @@
 :root {
-    --primary-color: #4D7C8A;
-    --secondary-color: #FCF7F8;
+    --cool-blue: #4D7C8A;
+    --snow: #FCF7F8;
     --shadow-grey :#342E37;
 }
 
@@ -9,7 +9,7 @@ page-elt {
     min-width: 600px;
     padding: 50px;
     border: 2px solid var(--shadow-grey );
-    background-color: var(--secondary-color);
+    background-color: var(--snow);
 }
 
 .textured-page {

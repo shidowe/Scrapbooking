@@ -6,30 +6,24 @@ export class UserController {
     }
 
     public async signup(req:any, res:any): Promise<any> {
-        const body = req.body; //may need to check that les champs sont remplis before moving on
-        //decided to put the condition in the repo function cause we need to have access to the data
-        let [flag, message] =await this.repository.signup(body.username, body.email, body.password, body.passwordConfirmation);
+        const body = req.body; //todo : may need to check that les champs sont remplis before moving on
+        let [flag, response] =await this.repository.signup(body.username, body.email, body.password, body.passwordConfirmation);
             if(flag){
-                res.status(200).send({
-                    "userId":body.userId,
-                    "username":body.username
-                })
-                return;
+                res.status(200).send(response);
+                return ;
             }
 
-        res.status(400).send(message);
+        res.status(400).send(response);
     }
 
     public async signin(req:any, res:any): Promise<any> {
         const body = req.body;
-        let [flag, userId] =await this.repository.signin(body.username, body.password);
+        let [flag, response] =await this.repository.signin(body.username, body.password);
         if(flag){
-            res.status(200).send({
-                    "userId":userId,
-                    "username":body.username
-                })
-                return;
+            console.log(response);
+            res.status(200).send(response);
+                return ;
         }
-        res.status(400).send("Wrong username or password.");
+        res.status(400).send(response);
     }
 }
