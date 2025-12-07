@@ -13,7 +13,7 @@ export class GridBoardView extends TurboView<GridBoard> {
         super.setupUIElements();
 
         //Big container for the grid
-        this.container = div({class:"container", style: "padding-top: 13vh; width: 1400px; margin: auto; columns: 6; column-gap: 20px;"});
+        this.container = div({class:"container", style: "padding-top: 13vh; width: 1400px; margin-left:7%; margin-right: auto; columns: 6; column-gap: 20px;"});
 
         for(let i=1; i<=15; i++){
             let box = div({class: "box", style: "width: 100%; margin-bottom: 10px; break-inside: avoid; border-radius: 15px;"});

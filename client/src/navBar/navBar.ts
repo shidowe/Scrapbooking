@@ -9,6 +9,7 @@ export class NavBar extends TurboElement {
     private profileButton: TurboButton;
     private homeButton: TurboButton;
     private createButton: TurboButton;
+    private logoutButton: TurboButton;
 
     protected setupUIElements() {
         super.setupUIElements();
@@ -26,10 +27,16 @@ export class NavBar extends TurboElement {
         this.createButton = button({leftIcon: "create_icon", onClick: () => {
                 window.location.replace("/create");
             }});
+
+        this.logoutButton = button({leftIcon: "logout_icon", hidden: sessionStorage.getItem("username")?false:true, onClick: () => {
+            sessionStorage.clear();
+            window.location.replace("/login");
+        }});
         
             this.divEl.appendChild(this.profileButton);
         this.divEl.appendChild(this.homeButton);
         this.divEl.appendChild(this.createButton);
+        this.divEl.appendChild(this.logoutButton);
         
     }
 

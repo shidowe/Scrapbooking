@@ -1,6 +1,6 @@
 *
 {
-  margin: 0;
+  margin-left: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Gill Sans", Helvetica, Arial, "sans-serif";
@@ -20,6 +20,7 @@
 img:hover {
   opacity: .95;
   box-shadow: 0 0 10px #fff;
+  cursor: pointer;
 }
 
 .caption{

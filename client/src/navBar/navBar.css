@@ -35,8 +35,6 @@ nav-bar turbo-button {
 
 nav-bar turbo-button:hover {
     background: #9a9898;
-    width: 50px;
-    height: 50px;
 }
 
 nav-bar turbo-button:active {
@@ -47,9 +45,6 @@ nav-bar turbo-button:active {
    https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i 
    
    */
-
-
-
 
 
 .turbo-icon svg {

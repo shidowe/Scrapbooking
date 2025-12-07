@@ -39,13 +39,14 @@ export class LoginFormView extends TurboView<LoginForm, LoginFormModel> {
         this.formDiv= div({id:'form-div'});
 
         this.modeEl= h3({text: "Login", parent:this.formDiv});
+        this.messageEl = p({hidden:true, style:"color: red", parent:this.formDiv});
+
         this.usernameEl = turboInput({type: "text", label: "Username", parent:this.formDiv});
         this.passwordEl = turboInput({input: {type: "password"}, label: "Password", minlength:"8", required:"true", parent:this.formDiv});
 
         //starting with login so this in not visible
         this.passwordConfirmationEl = turboInput({input: {type: "password"}, label: "Password confirmation", hidden: true, parent:this.formDiv});
         this.emailEl = turboInput({type:"email", label:"Email", hidden:true, parent:this.formDiv})
-        this.messageEl = p({hidden:true, color:"red", parent:this.formDiv});
 
         //button to submit the form
         this.submitButton = button({text:"Submit", type:"submit", id:"submit-button", parent:this.formDiv});
