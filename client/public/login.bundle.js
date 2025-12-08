@@ -184,12 +184,12 @@ class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
         super.setupUIElements();
         this.formDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ id: 'form-div' });
         this.modeEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.h3)({ text: "Login", parent: this.formDiv });
+        this.messageEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.p)({ hidden: true, style: "color: red", parent: this.formDiv });
         this.usernameEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "text", label: "Username", parent: this.formDiv });
         this.passwordEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ input: { type: "password" }, label: "Password", minlength: "8", required: "true", parent: this.formDiv });
         //starting with login so this in not visible
         this.passwordConfirmationEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ input: { type: "password" }, label: "Password confirmation", hidden: true, parent: this.formDiv });
         this.emailEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "email", label: "Email", hidden: true, parent: this.formDiv });
-        this.messageEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.p)({ hidden: true, color: "red", parent: this.formDiv });
         //button to submit the form
         this.submitButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ text: "Submit", type: "submit", id: "submit-button", parent: this.formDiv });
         this.submitButton.addEventListener("click", () => {
@@ -233,7 +233,7 @@ class LoginFormView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
         sessionStorage.setItem("username", response.username);
         sessionStorage.setItem("userId", response.userId);
         sessionStorage.setItem("admin", response.admin);
-        sessionStorage.setItem("pages", response.pages);
+        sessionStorage.setItem("pages", JSON.stringify(response.pages));
         window.location.replace("/");
     }
 }
@@ -409,9 +409,14 @@ let NavBar = (() => {
             this.createButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "create_icon", onClick: () => {
                     window.location.replace("/create");
                 } });
+            this.logoutButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "logout_icon", hidden: sessionStorage.getItem("username") ? false : true, onClick: () => {
+                    sessionStorage.clear();
+                    window.location.replace("/login");
+                } });
             this.divEl.appendChild(this.profileButton);
             this.divEl.appendChild(this.homeButton);
             this.divEl.appendChild(this.createButton);
+            this.divEl.appendChild(this.logoutButton);
         }
         setupUILayout() {
             super.setupUILayout();
@@ -623,12 +628,10 @@ class ProfileView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView
             sessionStorage.clear();
             window.location.reload();
         });
-        (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/pages/loadPagesFromPageId", "get", { "pageId": sessionStorage.getItem("pages") }, (responseString) => {
-            console.log("success");
+        console.log("PAGES IN SS :" + sessionStorage.getItem("pages"));
+        (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/pages/loadPagesFromPageId", "get", { "pageIdList": JSON.parse(sessionStorage.getItem("pages")) }, (responseString) => {
+            console.log("success yay");
             console.log(responseString);
-            //let response = JSON.parse(responseString);
-            //response.parent = this.mainDiv;
-            //page(response);
         }, (message) => {
             console.log("failure");
         });
@@ -667,11 +670,17 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
     --shadow-grey :#342E37;
 }
 
+#switch-modes:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 #submit-button {
     min-width: 130px;
     height: 40px;
     color: var(--snow );
     padding: 5px 10px;
+    margin: 1em;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -686,6 +695,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
 #submit-button:hover {
     background: var(--snow );
     color: var(--shadow-grey );
+    cursor: pointer;
 }
 
 
@@ -743,7 +753,7 @@ body {
     min-height: 100vh;
     font-family: "Inter", sans-serif;
     background: var(--cool-blue);
-}`, "",{"version":3,"sources":["webpack://./client/src/loginForm/loginForm.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;AAC1B;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,mBAAmB;IACnB,iBAAiB;IACjB,iBAAiB;IACjB,eAAe;IACf,yBAAyB;IACzB,kBAAkB;IAClB,qBAAqB;IACrB,aAAa;IACb,mBAAmB;IACnB,qCAAqC;IACrC,+BAA+B;AACnC;;AAEA;IACI,wBAAwB;IACxB,0BAA0B;AAC9B;;;AAGA;IACI,kBAAkB;IAClB,oBAAoB;IACpB,iBAAiB;IACjB,aAAa;IACb,iBAAiB;IACjB,kBAAkB;IAClB,uBAAuB;IACvB,wCAAwC;IACxC,2BAA2B;IAC3B,UAAU;;IAEV;QACI,2BAA2B;IAC/B;;IAEA;;;QAGI,wCAAwC;QACxC;;;;;;;;;SASC;QACD,WAAW;QACX,cAAc;QACd,kBAAkB;QAClB,WAAW;QACX,WAAW;QACX,aAAa;QACb,WAAW;QACX,YAAY;QACZ,8DAA8D;IAClE;IACA;QACI,SAAS;QACT,UAAU;QACV,uBAAuB;QACvB,WAAW;IACf;AACJ;;AAEA;IACI,aAAa;IACb,qBAAqB;IACrB,iBAAiB;IACjB,gCAAgC;IAChC,4BAA4B;AAChC","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n}\r\n\r\n#submit-button {\r\n    min-width: 130px;\r\n    height: 40px;\r\n    color: var(--snow );\r\n    padding: 5px 10px;\r\n    font-weight: bold;\r\n    cursor: pointer;\r\n    transition: all 0.3s ease;\r\n    position: relative;\r\n    display: inline-block;\r\n    outline: none;\r\n    border-radius: 20px;\r\n    border: 2px solid var(--shadow-grey );\r\n    background: var(--shadow-grey );\r\n}\r\n\r\n#submit-button:hover {\r\n    background: var(--snow );\r\n    color: var(--shadow-grey );\r\n}\r\n\r\n\r\n#form-div {\r\n    text-align: center;\r\n    --borderradius: 14px;\r\n    --bgsize: 0.38rem;\r\n    padding: 2rem;\r\n    border: 1px solid;\r\n    position: relative;\r\n    background: var(--snow);\r\n    border-radius: var(--borderradius, 14px);\r\n    transform: translateY(-2px);\r\n    z-index: 2;\r\n\r\n    &:hover {\r\n        transform: translateY(-4px);\r\n    }\r\n\r\n    &::before,\r\n    &::after {\r\n\r\n        border-radius: var(--borderradius, 14px);\r\n        background-image: linear-gradient(\r\n                45deg,\r\n                var(--snow) 33.33%,\r\n                var(--shadow-grey) 33.33%,\r\n                var(--shadow-grey) 50%,\r\n                var(--snow) 50%,\r\n                var(--snow) 83.33%,\r\n                var(--shadow-grey) 83.33%,\r\n                var(--shadow-grey) 100%\r\n        );\r\n        content: \"\";\r\n        display: block;\r\n        position: absolute;\r\n        z-index: -2;\r\n        top: .75rem;\r\n        left: 0.75rem;\r\n        width: 100%;\r\n        height: 100%;\r\n        background-size: var(--bgsize, 0.28rem) var(--bgsize, 0.28rem);\r\n    }\r\n    &::before {\r\n        top: 0rem;\r\n        left: 0rem;\r\n        background: var(--snow);\r\n        z-index: -1;\r\n    }\r\n}\r\n\r\nbody {\r\n    display: grid;\r\n    place-content: center;\r\n    min-height: 100vh;\r\n    font-family: \"Inter\", sans-serif;\r\n    background: var(--cool-blue);\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./client/src/loginForm/loginForm.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;AAC1B;;AAEA;IACI,eAAe;IACf,0BAA0B;AAC9B;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,mBAAmB;IACnB,iBAAiB;IACjB,WAAW;IACX,iBAAiB;IACjB,eAAe;IACf,yBAAyB;IACzB,kBAAkB;IAClB,qBAAqB;IACrB,aAAa;IACb,mBAAmB;IACnB,qCAAqC;IACrC,+BAA+B;AACnC;;AAEA;IACI,wBAAwB;IACxB,0BAA0B;IAC1B,eAAe;AACnB;;;AAGA;IACI,kBAAkB;IAClB,oBAAoB;IACpB,iBAAiB;IACjB,aAAa;IACb,iBAAiB;IACjB,kBAAkB;IAClB,uBAAuB;IACvB,wCAAwC;IACxC,2BAA2B;IAC3B,UAAU;;IAEV;QACI,2BAA2B;IAC/B;;IAEA;;;QAGI,wCAAwC;QACxC;;;;;;;;;SASC;QACD,WAAW;QACX,cAAc;QACd,kBAAkB;QAClB,WAAW;QACX,WAAW;QACX,aAAa;QACb,WAAW;QACX,YAAY;QACZ,8DAA8D;IAClE;IACA;QACI,SAAS;QACT,UAAU;QACV,uBAAuB;QACvB,WAAW;IACf;AACJ;;AAEA;IACI,aAAa;IACb,qBAAqB;IACrB,iBAAiB;IACjB,gCAAgC;IAChC,4BAA4B;AAChC","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n}\r\n\r\n#switch-modes:hover {\r\n    cursor: pointer;\r\n    text-decoration: underline;\r\n}\r\n\r\n#submit-button {\r\n    min-width: 130px;\r\n    height: 40px;\r\n    color: var(--snow );\r\n    padding: 5px 10px;\r\n    margin: 1em;\r\n    font-weight: bold;\r\n    cursor: pointer;\r\n    transition: all 0.3s ease;\r\n    position: relative;\r\n    display: inline-block;\r\n    outline: none;\r\n    border-radius: 20px;\r\n    border: 2px solid var(--shadow-grey );\r\n    background: var(--shadow-grey );\r\n}\r\n\r\n#submit-button:hover {\r\n    background: var(--snow );\r\n    color: var(--shadow-grey );\r\n    cursor: pointer;\r\n}\r\n\r\n\r\n#form-div {\r\n    text-align: center;\r\n    --borderradius: 14px;\r\n    --bgsize: 0.38rem;\r\n    padding: 2rem;\r\n    border: 1px solid;\r\n    position: relative;\r\n    background: var(--snow);\r\n    border-radius: var(--borderradius, 14px);\r\n    transform: translateY(-2px);\r\n    z-index: 2;\r\n\r\n    &:hover {\r\n        transform: translateY(-4px);\r\n    }\r\n\r\n    &::before,\r\n    &::after {\r\n\r\n        border-radius: var(--borderradius, 14px);\r\n        background-image: linear-gradient(\r\n                45deg,\r\n                var(--snow) 33.33%,\r\n                var(--shadow-grey) 33.33%,\r\n                var(--shadow-grey) 50%,\r\n                var(--snow) 50%,\r\n                var(--snow) 83.33%,\r\n                var(--shadow-grey) 83.33%,\r\n                var(--shadow-grey) 100%\r\n        );\r\n        content: \"\";\r\n        display: block;\r\n        position: absolute;\r\n        z-index: -2;\r\n        top: .75rem;\r\n        left: 0.75rem;\r\n        width: 100%;\r\n        height: 100%;\r\n        background-size: var(--bgsize, 0.28rem) var(--bgsize, 0.28rem);\r\n    }\r\n    &::before {\r\n        top: 0rem;\r\n        left: 0rem;\r\n        background: var(--snow);\r\n        z-index: -1;\r\n    }\r\n}\r\n\r\nbody {\r\n    display: grid;\r\n    place-content: center;\r\n    min-height: 100vh;\r\n    font-family: \"Inter\", sans-serif;\r\n    background: var(--cool-blue);\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -806,8 +816,6 @@ nav-bar turbo-button {
 
 nav-bar turbo-button:hover {
     background: #9a9898;
-    width: 50px;
-    height: 50px;
 }
 
 nav-bar turbo-button:active {
@@ -820,13 +828,10 @@ nav-bar turbo-button:active {
    */
 
 
-
-
-
 .turbo-icon svg {
     width: 32px;
     height: 32px;
-}`, "",{"version":3,"sources":["webpack://./client/src/navBar/navBar.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;IACnB,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;;;IAGI;;;;;;AAMJ;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n    width: 50px;\r\n    height: 50px;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n/* https://codepen.io/charleskitchton/pen/XWomjWX \r\n   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i \r\n   \r\n   */\r\n\r\n\r\n\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./client/src/navBar/navBar.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;;;IAGI;;;AAGJ;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n/* https://codepen.io/charleskitchton/pen/XWomjWX \r\n   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i \r\n   \r\n   */\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

@@ -17,12 +17,12 @@ export class PageRepository {
     }
 
     public async loadPageFromPageId(pageIdList:[number]):Promise<Page[]> {
-        console.log("IN LOAD PAGES FROM ID in repo");
         if(this.data.length == 0){
             await this.fetchData();
         }
 
         let res=[]
+        console.log("PAGE ID LIST : "+pageIdList);
         for(let pageId of pageIdList){
             res.push(this.data[pageId]);
         }

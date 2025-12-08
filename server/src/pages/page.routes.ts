@@ -7,7 +7,7 @@ export function pageRoute(): any {
     const controller = new PageController(new PageRepository());
     console.log("IN PAGE ROUTE");
 
-    router.get("/loadPagesFromPageId", (req, res)=> controller.loadPagesFromPageId(req, res));
+    router.post("/loadPagesFromPageId", (req, res)=> controller.loadPagesFromPageId(req, res));
     router.get("/loadAllPages", (req, res)=> controller.loadAllPages(req, res));
 
     router.post("/savePage", (req, res)=> controller.savePage(req, res));

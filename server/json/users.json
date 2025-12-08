@@ -6,7 +6,7 @@
         "password": "apassword",
         "admin": true,
         "pages": [
-            0
+            0,1
         ]
     },
     {

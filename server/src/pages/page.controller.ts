@@ -6,8 +6,8 @@ export class PageController {
     }
 
     public async loadPagesFromPageId(req:any, res:any): Promise<any> {
-        console.log("IN LOAD PAGES FROM ID");
         const body = req.body;
+        console.log("BODY : "+body);
         let response =await this.repository.loadPageFromPageId(body.pageIdList); //TODO : do something if one of the pages is missing
         res.status(200).send(response)
         return;

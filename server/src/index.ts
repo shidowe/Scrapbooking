@@ -56,11 +56,13 @@ app.get("/login", (_req, res) =>
     res.sendFile(path.join(CLIENT_PUBLIC_PATH, "login.html")));
 app.get("/create", (_req, res) =>
     res.sendFile(path.join(CLIENT_PUBLIC_PATH, "create.html")));
-app.get("*", (_req, res) =>
-    res.sendFile(path.join(CLIENT_PUBLIC_PATH, "index.html")));
+
 
 const router = express.Router();
 app.use("/users", userRoute());
 app.use("/pages", pageRoute());
+
+app.get("*", (_req, res) =>
+    res.sendFile(path.join(CLIENT_PUBLIC_PATH, "index.html")));
 
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));

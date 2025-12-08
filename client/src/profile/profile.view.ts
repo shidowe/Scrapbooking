@@ -30,14 +30,16 @@ export class ProfileView extends TurboView<Profile, ProfileModel> {
             sessionStorage.clear();
             window.location.reload();
         });
-
+        console.log("PAGES IN SS :"+sessionStorage.getItem("pages"));
         makeRequest(
             "http://localhost:3000/pages/loadPagesFromPageId",
-            "get",
-            {"pageId":sessionStorage.getItem("pages")},
+            "post",
+            {"pageIdList":JSON.parse(sessionStorage.getItem("pages"))},
             (responseString)=>{
-                console.log("success yay");
-                console.log(responseString);
+                let pageList = JSON.parse(responseString);
+                for (let pageData of pageList) {
+                    let pageEL =page({pageData:pageData, parent:this.mainDiv});
+                }
             },
             (message)=>{
                 console.log("failure");

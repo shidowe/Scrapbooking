@@ -165,7 +165,7 @@ class GridBoardView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
     setupUIElements() {
         super.setupUIElements();
         //Big container for the grid
-        this.container = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "container", style: "padding-top: 13vh; width: 1400px; margin: auto; columns: 6; column-gap: 20px;" });
+        this.container = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "container", style: "padding-top: 13vh; width: 1400px; margin-left:7%; margin-right: auto; columns: 6; column-gap: 20px;" });
         for (let i = 1; i <= 15; i++) {
             let box = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "box", style: "width: 100%; margin-bottom: 10px; break-inside: avoid; border-radius: 15px;" });
             let image = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.img)({ src: `https://gallery1.charleskdesigns.com/image/${i.toString().padStart(3, '0')}.jpg`, alt: "image", style: "max-width: 100%; min-width: 100%; border-radius: 10px;" });
@@ -307,9 +307,14 @@ let NavBar = (() => {
             this.createButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "create_icon", onClick: () => {
                     window.location.replace("/create");
                 } });
+            this.logoutButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "logout_icon", hidden: sessionStorage.getItem("username") ? false : true, onClick: () => {
+                    sessionStorage.clear();
+                    window.location.replace("/login");
+                } });
             this.divEl.appendChild(this.profileButton);
             this.divEl.appendChild(this.homeButton);
             this.divEl.appendChild(this.createButton);
+            this.divEl.appendChild(this.logoutButton);
         }
         setupUILayout() {
             super.setupUILayout();
@@ -359,7 +364,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `*
 {
-  margin: 0;
+  margin-left: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Gill Sans", Helvetica, Arial, "sans-serif";
@@ -379,6 +384,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `*
 img:hover {
   opacity: .95;
   box-shadow: 0 0 10px #fff;
+  cursor: pointer;
 }
 
 .caption{
@@ -441,7 +447,7 @@ img:hover {
   {
     columns: 1;
   }
-}`, "",{"version":3,"sources":["webpack://./client/src/gridBoard/gridBoard.css"],"names":[],"mappings":"AAAA;;EAEE,SAAS;EACT,UAAU;EACV,sBAAsB;EACtB,wDAAwD;AAC1D;;;AAGA;;EAEE,iBAAiB;EACjB,aAAa;EACb,YAAY;EACZ,UAAU;EACV,gBAAgB;;AAElB;;AAEA;EACE,YAAY;EACZ,yBAAyB;AAC3B;;AAEA;CACC,WAAW;CACX,yCAAyC;CACzC,YAAY;AACb;;AAEA;;EAEE;;IAEE,UAAU;IACV,wBAAwB;EAC1B;AACF;AACA;;EAEE;;IAEE,UAAU;EACZ;AACF;;AAEA;;EAEE;;IAEE,UAAU;EACZ;;;EAGA;EACA,kBAAkB;CACnB;AACD;;;;AAIA;;EAEE;;IAEE,UAAU;EACZ;;EAEA;IACE,gBAAgB;EAClB;;EAEA;IACE,cAAc;EAChB;AACF;;;AAGA;;EAEE;;IAEE,UAAU;EACZ;AACF","sourcesContent":["*\r\n{\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  font-family: \"Gill Sans\", Helvetica, Arial, \"sans-serif\";\r\n}\r\n\r\n\r\n.container\r\n{\r\n  padding-top: 13vh;\r\n  width: 1400px;\r\n  margin: auto;\r\n  columns: 6;\r\n  column-gap: 20px;\r\n  \r\n}\r\n\r\nimg:hover {\r\n  opacity: .95;\r\n  box-shadow: 0 0 10px #fff;\r\n}\r\n\r\n.caption{\r\n\tcolor: #fff;\r\n\tfont-family: Arial, Helvetica, sans-serif;\r\n\tpadding: 2px;\r\n}\r\n\r\n@media (max-width: 1427px)\r\n{\r\n  .container\r\n  {\r\n    columns: 5;\r\n    width: calc(100% - 40px);\r\n  }\r\n}\r\n@media (max-width: 1200px)\r\n{\r\n  .container\r\n  {\r\n    columns: 4;\r\n  }\r\n}\r\n\r\n@media (max-width: 1000px)\r\n{\r\n  .container\r\n  {\r\n    columns: 3;\r\n  }\r\n  \r\n  \r\n  body{\r\n\t\toverflow-x: hidden;\r\n\t}\r\n}\r\n  \r\n\r\n\r\n@media (max-width: 786px)\r\n{\r\n  .container\r\n  {\r\n    columns: 2;\r\n  }\r\n  \r\n  h1{\r\n    font-size: 1.3em;\r\n  }\r\n  \r\n  h2{\r\n    font-size: 1em;\r\n  }\r\n}\r\n\r\n\r\n@media (max-width: 480px)\r\n{\r\n  .container\r\n  {\r\n    columns: 1;\r\n  }\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./client/src/gridBoard/gridBoard.css"],"names":[],"mappings":"AAAA;;EAEE,cAAc;EACd,UAAU;EACV,sBAAsB;EACtB,wDAAwD;AAC1D;;;AAGA;;EAEE,iBAAiB;EACjB,aAAa;EACb,YAAY;EACZ,UAAU;EACV,gBAAgB;;AAElB;;AAEA;EACE,YAAY;EACZ,yBAAyB;EACzB,eAAe;AACjB;;AAEA;CACC,WAAW;CACX,yCAAyC;CACzC,YAAY;AACb;;AAEA;;EAEE;;IAEE,UAAU;IACV,wBAAwB;EAC1B;AACF;AACA;;EAEE;;IAEE,UAAU;EACZ;AACF;;AAEA;;EAEE;;IAEE,UAAU;EACZ;;;EAGA;EACA,kBAAkB;CACnB;AACD;;;;AAIA;;EAEE;;IAEE,UAAU;EACZ;;EAEA;IACE,gBAAgB;EAClB;;EAEA;IACE,cAAc;EAChB;AACF;;;AAGA;;EAEE;;IAEE,UAAU;EACZ;AACF","sourcesContent":["*\r\n{\r\n  margin-left: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  font-family: \"Gill Sans\", Helvetica, Arial, \"sans-serif\";\r\n}\r\n\r\n\r\n.container\r\n{\r\n  padding-top: 13vh;\r\n  width: 1400px;\r\n  margin: auto;\r\n  columns: 6;\r\n  column-gap: 20px;\r\n  \r\n}\r\n\r\nimg:hover {\r\n  opacity: .95;\r\n  box-shadow: 0 0 10px #fff;\r\n  cursor: pointer;\r\n}\r\n\r\n.caption{\r\n\tcolor: #fff;\r\n\tfont-family: Arial, Helvetica, sans-serif;\r\n\tpadding: 2px;\r\n}\r\n\r\n@media (max-width: 1427px)\r\n{\r\n  .container\r\n  {\r\n    columns: 5;\r\n    width: calc(100% - 40px);\r\n  }\r\n}\r\n@media (max-width: 1200px)\r\n{\r\n  .container\r\n  {\r\n    columns: 4;\r\n  }\r\n}\r\n\r\n@media (max-width: 1000px)\r\n{\r\n  .container\r\n  {\r\n    columns: 3;\r\n  }\r\n  \r\n  \r\n  body{\r\n\t\toverflow-x: hidden;\r\n\t}\r\n}\r\n  \r\n\r\n\r\n@media (max-width: 786px)\r\n{\r\n  .container\r\n  {\r\n    columns: 2;\r\n  }\r\n  \r\n  h1{\r\n    font-size: 1.3em;\r\n  }\r\n  \r\n  h2{\r\n    font-size: 1em;\r\n  }\r\n}\r\n\r\n\r\n@media (max-width: 480px)\r\n{\r\n  .container\r\n  {\r\n    columns: 1;\r\n  }\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -504,8 +510,6 @@ nav-bar turbo-button {
 
 nav-bar turbo-button:hover {
     background: #9a9898;
-    width: 50px;
-    height: 50px;
 }
 
 nav-bar turbo-button:active {
@@ -518,13 +522,10 @@ nav-bar turbo-button:active {
    */
 
 
-
-
-
 .turbo-icon svg {
     width: 32px;
     height: 32px;
-}`, "",{"version":3,"sources":["webpack://./client/src/navBar/navBar.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;IACnB,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;;;IAGI;;;;;;AAMJ;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n    width: 50px;\r\n    height: 50px;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n/* https://codepen.io/charleskitchton/pen/XWomjWX \r\n   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i \r\n   \r\n   */\r\n\r\n\r\n\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./client/src/navBar/navBar.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;;;IAGI;;;AAGJ;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n/* https://codepen.io/charleskitchton/pen/XWomjWX \r\n   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i \r\n   \r\n   */\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
