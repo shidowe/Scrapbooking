@@ -1,4 +1,4 @@
-import {turbo, TurboView, div, p, TurboObserver, canvas,} from "turbodombuilder";
+import {turbo, TurboView, div, p, TurboObserver, canvas, expose,} from "turbodombuilder";
 
 import {PageModel} from "./page.model";
 import {Page} from "./page";
@@ -14,13 +14,18 @@ export class PageView extends TurboView<Page, PageModel> {
 
     initialize(): void {
         super.initialize();
+
         this.model.getBlock("content")?.generateObserver({
             onAdded : (data) => {
-                //functions to create stuff, no new smth
+                console.log("ADDED !");
+                switch (data.type){
+                    case "typing": {
+                        data.parent=this.pageDiv;
+                        typing(data)
+                    };
+                }
             }
-        })
-
-
+        });
     }
 
     protected setupUIElements() {
@@ -30,11 +35,8 @@ export class PageView extends TurboView<Page, PageModel> {
 
         //on click create a text annotation
         this.pageDiv.addEventListener("click", (event: MouseEvent) => {
-            let t: Typing = typing({x :event.clientX, y: event.clientY} );
-            this.pageDiv.appendChild(t);
-            this.model.addScrapComponent(t.model.content);
+            // todo
         })
-        //this.pageDiv.appendChild(p({text: String(this.model.pageId)}));
 
     }
 

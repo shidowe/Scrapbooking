@@ -13,14 +13,11 @@ export class Page extends TurboElement<PageView, PageModel> {
 }
 
 export function page(properties:PageProperties = {}): Page {
-    let pageData;
-    if (properties.pageId){
-        pageData ={
-            pageId:properties.pageId,
-            userId:properties.userId,
-            content: properties.content,
-        };
-    }
+    let pageData={
+        pageId:properties.pageId,
+        userId:properties.userId,
+        content: properties.content,
+    };
     turbo(properties).applyDefaults({
         tag: "page-elt",
         view: PageView,

@@ -38,7 +38,8 @@ export class ProfileView extends TurboView<Profile, ProfileModel> {
             (responseString)=>{
                 let pageList = JSON.parse(responseString);
                 for (let pageData of pageList) {
-                    let pageEL =page({pageData:pageData, parent:this.mainDiv});
+                    pageData.parent=this.mainDiv;
+                    page(pageData);
                 }
             },
             (message)=>{

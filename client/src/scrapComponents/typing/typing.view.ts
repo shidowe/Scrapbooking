@@ -12,22 +12,12 @@ export class TypingView extends TurboView<Typing, TypingModel> {
 
     initialize(): void {
         super.initialize();
-        /*
-        this.model.getBlock("text")?.generateObserver({
-            onAdded : (data) => {
-                //functions to create stuff, no new smth
-            }
-        })
-         */
     }
 
     protected setupUIElements() {
         super.setupUIElements();
 
-        this.textEl = textarea({classes:"textured-page"});
-
-        //this.pageDiv.appendChild(p({text: String(this.model.pageId)}));
-
+        this.textEl = textarea({classes:"textured-page", text: String(this.model.content.text)});
     }
 
     protected setupUILayout() {
