@@ -4,9 +4,10 @@ import {PageModel} from "../page/page.model";
 import {PageData} from "../page/page.types";
 
 export type ScrapData = {
+    type: "typing"|"drawing",
     x: number,
     y: number,
-
     color: string,
-    text: string,
-} | {};
+
+    text?: string,
+};

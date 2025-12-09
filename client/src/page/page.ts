@@ -4,6 +4,7 @@ import {PageModel} from "./page.model";
 import "./page.css";
 import {PageProperties} from "./page.types";
 import {ScrapData} from "../scrapComponents/scrapComponent";
+import {typing} from "../scrapComponents/typing/typing";
 
 
 @define("page-elt")
@@ -26,6 +27,7 @@ export function page(properties:PageProperties = {}): Page {
         model: PageModel,
         data: pageData,
     });
+
     return element({...properties}) as Page;
 }
 
