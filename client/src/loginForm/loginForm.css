@@ -13,6 +13,7 @@
     min-width: 130px;
     height: 40px;
     color: var(--snow );
+    align-content: center;
     padding: 5px 10px;
     margin: 1em;
     font-weight: bold;
@@ -38,8 +39,10 @@
     --borderradius: 14px;
     --bgsize: 0.38rem;
     padding: 2rem;
+    margin-left: 15%;
     border: 1px solid;
     position: relative;
+    width: 50%;
     background: var(--snow);
     border-radius: var(--borderradius, 14px);
     transform: translateY(-2px);

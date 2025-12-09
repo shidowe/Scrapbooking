@@ -19,7 +19,7 @@
 
 img:hover {
   opacity: .95;
-  box-shadow: 0 0 10px #fff;
+  box-shadow: 0 0 10px #0e272f;
   cursor: pointer;
 }
 

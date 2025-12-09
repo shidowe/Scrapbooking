@@ -33,6 +33,10 @@ nav-bar turbo-button {
     border-radius: 10px;
 }
 
+nav-bar turbo-button:last-child {
+    margin-top: auto;
+}
+
 nav-bar turbo-button:hover {
     background: #9a9898;
 }
