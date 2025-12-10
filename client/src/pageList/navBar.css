@@ -1,0 +1,59 @@
+nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 80px;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding-top: 20px;
+
+    flex-direction: column;
+    gap: 20px;
+
+    background: #ffffff;
+    border-right: 1px solid #ddd;
+}
+
+nav-bar turbo-button {
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-grow: 0;
+
+    transition: background 0.2s ease;
+    border-radius: 10px;
+}
+
+nav-bar turbo-button:last-child {
+    margin-top: auto;
+}
+
+nav-bar turbo-button:hover {
+    background: #9a9898;
+}
+
+nav-bar turbo-button:active {
+    background: #9a9898;
+}
+
+/* https://codepen.io/charleskitchton/pen/XWomjWX 
+   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i 
+   
+   */
+
+
+.turbo-icon svg {
+    width: 32px;
+    height: 32px;
+}

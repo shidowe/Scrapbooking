@@ -76,3 +76,22 @@ p {
     background-color: var(--snow);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.page-list-div{text-align: left;
+    background-color: var(--snow);
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    border-radius: 50px;
+    border:solid;
+    border-width: 2px;
+    border-color: var(--cooler-blue);
+    display: grid;
+    width: 800px;
+    /* height: 50px; */
+    font-size: large;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding:25px;
+}

@@ -5,20 +5,9 @@
     --light-border: #bababa;
 }
 
-page-elt {
-    /**min-height: 400px;
-    min-width: 600px;
-    padding: 50px;
-    border: 2px solid var(--shadow-grey );
-    background-color: var(--snow);
-    **/
-}
-
 .textured-page {
     background-image: url("../../public/assets/pageTexture.jpg");
     border: 2px solid var(--light-border );
     min-height: 500px;
     min-width: 400px;
-    max-height: 500px;
-    max-width: 400px;
 }

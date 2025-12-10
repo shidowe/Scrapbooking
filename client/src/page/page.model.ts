@@ -1,4 +1,4 @@
-import {effect, modelSignal, TurboModel} from "turbodombuilder";
+import {effect, initializeEffects, modelSignal, TurboModel} from "turbodombuilder";
 import {ScrapData} from "../scrapComponents/scrapComponent";
 import {typing, Typing} from "../scrapComponents/typing/typing";
 import {PageProperties} from "./page.types";
@@ -16,5 +16,10 @@ export class PageModel extends TurboModel {
 
     public addScrapComponent(scrapComponent: ScrapData) : void {
         this.content.push(scrapComponent);
+    }
+
+    public constructor() {
+        super();
+        initializeEffects(this);
     }
 }

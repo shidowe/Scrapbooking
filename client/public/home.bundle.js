@@ -2,6 +2,16 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./client/public/assets/pageTexture.jpg":
+/*!**********************************************!*\
+  !*** ./client/public/assets/pageTexture.jpg ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "a80eddb666121132408e.jpg";
+
+/***/ }),
+
 /***/ "./client/src/gridBoard/gridBoard.css":
 /*!********************************************!*\
   !*** ./client/src/gridBoard/gridBoard.css ***!
@@ -154,7 +164,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   GridBoardView: () => (/* binding */ GridBoardView)
 /* harmony export */ });
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
-/* harmony import */ var _gridBoard_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gridBoard.css */ "./client/src/gridBoard/gridBoard.css");
+/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../makeRequest */ "./client/src/makeRequest.ts");
+/* harmony import */ var _page_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../page/page */ "./client/src/page/page.ts");
+/* harmony import */ var _gridBoard_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./gridBoard.css */ "./client/src/gridBoard/gridBoard.css");
+
+
 
 
 class GridBoardView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
@@ -164,20 +178,83 @@ class GridBoardView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
     }
     setupUIElements() {
         super.setupUIElements();
-        //Big container for the grid
-        this.container = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "container", style: "padding-top: 13vh; width: 1400px; margin-left:7%; margin-right: auto; columns: 6; column-gap: 20px;" });
-        for (let i = 1; i <= 15; i++) {
-            let box = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "box", style: "width: 100%; margin-bottom: 10px; break-inside: avoid; border-radius: 15px;" });
-            let image = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.img)({ src: `https://gallery1.charleskdesigns.com/image/${i.toString().padStart(3, '0')}.jpg`, alt: "image", style: "max-width: 100%; min-width: 100%; border-radius: 10px;" });
-            let caption = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "caption", text: "Lorem ipsum ", style: "padding: 10px; text-align: center;" });
-            box.append(image, caption);
-            this.container.appendChild(box);
+        console.log("Current page: ", window.location.href);
+        if (window.location.href.includes("login")) {
+            //Big container for the grid
+            this.container = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "container", style: "padding-top: 13vh; width: 1400px; margin-left:7%; margin-right: 0; margin-bottom:7%; columns: 3; column-gap: 10px;" });
+            // Populate grid with user's images
+            console.log("PAGES IN SS :" + sessionStorage.getItem("pages"));
+            (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/pages/loadPagesFromPageId", "post", { "pageIdList": JSON.parse(sessionStorage.getItem("pages")) }, (responseString) => {
+                let pageList = JSON.parse(responseString);
+                for (let pageData of pageList) {
+                    let box = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: this.container, class: "page-box" });
+                    pageData.parent = box;
+                    (0,_page_page__WEBPACK_IMPORTED_MODULE_2__.page)(pageData);
+                }
+            }, (message) => {
+                console.log("failure");
+            });
+        }
+        else { // for now, placeholder images
+            //Big container for the grid
+            this.container = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "container", style: "padding-top: 13vh; width: 1400px; margin-left:7%; margin-right: 0; margin-bottom:7%; columns: 5; column-gap: 20px;" });
+            for (let i = 1; i <= 15; i++) {
+                let box = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "box", style: "width: 100%; margin-bottom: 10px; break-inside: avoid; border-radius: 15px;" });
+                let image = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.img)({ src: `https://gallery1.charleskdesigns.com/image/${i.toString().padStart(3, '0')}.jpg`, alt: "image", style: "max-width: 90%; min-width: 90%; border-radius: 10px;" });
+                let caption = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "caption", text: "Lorem ipsum ", style: "padding: 10px; text-align: center;" });
+                box.append(image, caption);
+                this.container.appendChild(box);
+            }
         }
     }
     setupUILayout() {
         super.setupUILayout();
         (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.container]);
     }
+}
+
+
+/***/ }),
+
+/***/ "./client/src/makeRequest.ts":
+/*!***********************************!*\
+  !*** ./client/src/makeRequest.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   makeRequest: () => (/* binding */ makeRequest)
+/* harmony export */ });
+function makeRequest(url, method, body, onSuccess = () => { }, onFailure = () => { }, parse = false, responseType = "text") {
+    const request = new XMLHttpRequest();
+    request.responseType = responseType;
+    request.onreadystatechange = _ => {
+        if (request.readyState !== 4)
+            return;
+        if (request.status < 200 || request.status >= 300) {
+            onFailure(request.response);
+            return;
+        }
+        if (parse) {
+            try {
+                onSuccess(typeof request.response === "string"
+                    ? JSON.parse(request.response)
+                    : JSON.parse(new TextDecoder().decode(request.response)));
+            }
+            catch (err) {
+                onFailure("Failed to parse JSON: " + err.message);
+            }
+        }
+        else
+            onSuccess(request.response);
+    };
+    request.open(method, url, true);
+    if (!(body instanceof FormData)) {
+        request.setRequestHeader("Content-Type", "application/json");
+        body = JSON.stringify(body);
+    }
+    request.send(body);
 }
 
 
@@ -298,6 +375,7 @@ let NavBar = (() => {
         setupUIElements() {
             super.setupUIElements();
             this.divEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ style: "display: flex; flex-flow: column; justify-content: space-between;" });
+            this.divTop = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ style: "display: flex; flex-flow: column; flex-grow:0;" });
             this.profileButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "profile_icon", onClick: () => {
                     window.location.replace("/login");
                 } });
@@ -311,9 +389,11 @@ let NavBar = (() => {
                     sessionStorage.clear();
                     window.location.replace("/login");
                 } });
-            this.divEl.appendChild(this.profileButton);
-            this.divEl.appendChild(this.homeButton);
-            this.divEl.appendChild(this.createButton);
+            this.divTop.appendChild(this.profileButton);
+            this.divTop.appendChild(this.homeButton);
+            this.divTop.appendChild(this.createButton);
+            this.divEl.appendChild(this.divTop);
+            this.divEl.appendChild((0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.spacer)());
             this.divEl.appendChild(this.logoutButton);
         }
         setupUILayout() {
@@ -339,6 +419,630 @@ function navBar(properties = {}) {
     });
     return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
 }
+
+
+/***/ }),
+
+/***/ "./client/src/page/page.css":
+/*!**********************************!*\
+  !*** ./client/src/page/page.css ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_page_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!./page.css */ "./node_modules/css-loader/dist/cjs.js!./client/src/page/page.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_page_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_page_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_page_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_page_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./client/src/page/page.model.ts":
+/*!***************************************!*\
+  !*** ./client/src/page/page.model.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PageModel: () => (/* binding */ PageModel)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+
+let PageModel = (() => {
+    var _a;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboModel;
+    let _instanceExtraInitializers = [];
+    let _pageId_decorators;
+    let _pageId_initializers = [];
+    let _pageId_extraInitializers = [];
+    let _userId_decorators;
+    let _userId_initializers = [];
+    let _userId_extraInitializers = [];
+    let _content_decorators;
+    let _content_initializers = [];
+    let _content_extraInitializers = [];
+    let _setupContent_decorators;
+    return _a = class PageModel extends _classSuper {
+            setupContent() {
+                this.setBlock(this.content, "", "content");
+                console.log("CONTENT : " + this.content);
+            }
+            addScrapComponent(scrapComponent) {
+                this.content.push(scrapComponent);
+            }
+            constructor() {
+                super();
+                this.pageId = (__runInitializers(this, _instanceExtraInitializers), __runInitializers(this, _pageId_initializers, void 0));
+                this.userId = (__runInitializers(this, _pageId_extraInitializers), __runInitializers(this, _userId_initializers, void 0));
+                this.content = (__runInitializers(this, _userId_extraInitializers), __runInitializers(this, _content_initializers, []));
+                __runInitializers(this, _content_extraInitializers);
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.initializeEffects)(this);
+            }
+        },
+        (() => {
+            var _b;
+            const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_b = _classSuper[Symbol.metadata]) !== null && _b !== void 0 ? _b : null) : void 0;
+            _pageId_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.modelSignal)()];
+            _userId_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.modelSignal)()];
+            _content_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.modelSignal)()];
+            _setupContent_decorators = [turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.effect];
+            __esDecorate(_a, null, _setupContent_decorators, { kind: "method", name: "setupContent", static: false, private: false, access: { has: obj => "setupContent" in obj, get: obj => obj.setupContent }, metadata: _metadata }, null, _instanceExtraInitializers);
+            __esDecorate(null, null, _pageId_decorators, { kind: "field", name: "pageId", static: false, private: false, access: { has: obj => "pageId" in obj, get: obj => obj.pageId, set: (obj, value) => { obj.pageId = value; } }, metadata: _metadata }, _pageId_initializers, _pageId_extraInitializers);
+            __esDecorate(null, null, _userId_decorators, { kind: "field", name: "userId", static: false, private: false, access: { has: obj => "userId" in obj, get: obj => obj.userId, set: (obj, value) => { obj.userId = value; } }, metadata: _metadata }, _userId_initializers, _userId_extraInitializers);
+            __esDecorate(null, null, _content_decorators, { kind: "field", name: "content", static: false, private: false, access: { has: obj => "content" in obj, get: obj => obj.content, set: (obj, value) => { obj.content = value; } }, metadata: _metadata }, _content_initializers, _content_extraInitializers);
+            if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        })(),
+        _a;
+})();
+
+
+
+/***/ }),
+
+/***/ "./client/src/page/page.ts":
+/*!*********************************!*\
+  !*** ./client/src/page/page.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Page: () => (/* binding */ Page),
+/* harmony export */   page: () => (/* binding */ page)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _page_view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./page.view */ "./client/src/page/page.view.ts");
+/* harmony import */ var _page_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./page.model */ "./client/src/page/page.model.ts");
+/* harmony import */ var _page_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./page.css */ "./client/src/page/page.css");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+var __setFunctionName = (undefined && undefined.__setFunctionName) || function (f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+};
+
+
+
+
+let Page = (() => {
+    let _classDecorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.define)("page-elt")];
+    let _classDescriptor;
+    let _classExtraInitializers = [];
+    let _classThis;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboElement;
+    let _content_decorators;
+    let _content_initializers = [];
+    let _content_extraInitializers = [];
+    var Page = _classThis = class extends _classSuper {
+        constructor() {
+            super(...arguments);
+            this.content = __runInitializers(this, _content_initializers, void 0);
+            __runInitializers(this, _content_extraInitializers);
+        }
+    };
+    __setFunctionName(_classThis, "Page");
+    (() => {
+        var _a;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        _content_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.expose)("model")];
+        __esDecorate(null, null, _content_decorators, { kind: "field", name: "content", static: false, private: false, access: { has: obj => "content" in obj, get: obj => obj.content, set: (obj, value) => { obj.content = value; } }, metadata: _metadata }, _content_initializers, _content_extraInitializers);
+        __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
+        Page = _classThis = _classDescriptor.value;
+        if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        __runInitializers(_classThis, _classExtraInitializers);
+    })();
+    return Page = _classThis;
+})();
+
+function page(properties = {}) {
+    let pageData = {
+        pageId: properties.pageId,
+        userId: properties.userId,
+        content: properties.content,
+    };
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
+        tag: "page-elt",
+        view: _page_view__WEBPACK_IMPORTED_MODULE_1__.PageView,
+        model: _page_model__WEBPACK_IMPORTED_MODULE_2__.PageModel,
+        data: pageData,
+    });
+    return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
+}
+//todo not sure about that, it works tho
+//todo add types
+
+
+/***/ }),
+
+/***/ "./client/src/page/page.view.ts":
+/*!**************************************!*\
+  !*** ./client/src/page/page.view.ts ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PageView: () => (/* binding */ PageView)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../scrapComponents/typing/typing */ "./client/src/scrapComponents/typing/typing.ts");
+
+
+class PageView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
+    constructor() {
+        super(...arguments);
+        this.editMode = false;
+    }
+    initialize() {
+        var _a;
+        super.initialize();
+        (_a = this.model.getBlock("content")) === null || _a === void 0 ? void 0 : _a.generateObserver({
+            onAdded: (data) => {
+                switch (data.type) {
+                    case "typing":
+                        {
+                            data.parent = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this.pageDiv);
+                            let t = (0,_scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__.typing)(data);
+                        }
+                        ;
+                }
+            }
+        });
+    }
+    setupUIElements() {
+        super.setupUIElements();
+        this.pageDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ classes: "textured-page" });
+        //on click create a text annotation
+        this.pageDiv.addEventListener("click", (event) => {
+            // todo
+        });
+    }
+    setupUILayout() {
+        super.setupUILayout();
+        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.pageDiv]);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./client/src/scrapComponents/typing/typing.model.ts":
+/*!***********************************************************!*\
+  !*** ./client/src/scrapComponents/typing/typing.model.ts ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TypingModel: () => (/* binding */ TypingModel)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+
+let TypingModel = (() => {
+    var _a;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboModel;
+    let _content_decorators;
+    let _content_initializers = [];
+    let _content_extraInitializers = [];
+    return _a = class TypingModel extends _classSuper {
+            constructor() {
+                super(...arguments);
+                this.content = __runInitializers(this, _content_initializers, void 0);
+                __runInitializers(this, _content_extraInitializers);
+            }
+        },
+        (() => {
+            var _b;
+            const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_b = _classSuper[Symbol.metadata]) !== null && _b !== void 0 ? _b : null) : void 0;
+            _content_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.modelSignal)()];
+            __esDecorate(null, null, _content_decorators, { kind: "field", name: "content", static: false, private: false, access: { has: obj => "content" in obj, get: obj => obj.content, set: (obj, value) => { obj.content = value; } }, metadata: _metadata }, _content_initializers, _content_extraInitializers);
+            if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        })(),
+        _a;
+})();
+
+
+
+/***/ }),
+
+/***/ "./client/src/scrapComponents/typing/typing.ts":
+/*!*****************************************************!*\
+  !*** ./client/src/scrapComponents/typing/typing.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Typing: () => (/* binding */ Typing),
+/* harmony export */   typing: () => (/* binding */ typing)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _typing_view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./typing.view */ "./client/src/scrapComponents/typing/typing.view.ts");
+/* harmony import */ var _typing_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./typing.model */ "./client/src/scrapComponents/typing/typing.model.ts");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+var __setFunctionName = (undefined && undefined.__setFunctionName) || function (f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+};
+
+
+
+let Typing = (() => {
+    let _classDecorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.define)("typing-element")];
+    let _classDescriptor;
+    let _classExtraInitializers = [];
+    let _classThis;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboElement;
+    let _text_decorators;
+    let _text_initializers = [];
+    let _text_extraInitializers = [];
+    let _model_decorators;
+    let _model_initializers = [];
+    let _model_extraInitializers = [];
+    var Typing = _classThis = class extends _classSuper {
+        constructor() {
+            super(...arguments);
+            this.text = __runInitializers(this, _text_initializers, void 0);
+            this.model = (__runInitializers(this, _text_extraInitializers), __runInitializers(this, _model_initializers, void 0));
+            __runInitializers(this, _model_extraInitializers);
+        }
+    };
+    __setFunctionName(_classThis, "Typing");
+    (() => {
+        var _a;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        _text_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.expose)("model")];
+        _model_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.expose)("model")];
+        __esDecorate(null, null, _text_decorators, { kind: "field", name: "text", static: false, private: false, access: { has: obj => "text" in obj, get: obj => obj.text, set: (obj, value) => { obj.text = value; } }, metadata: _metadata }, _text_initializers, _text_extraInitializers);
+        __esDecorate(null, null, _model_decorators, { kind: "field", name: "model", static: false, private: false, access: { has: obj => "model" in obj, get: obj => obj.model, set: (obj, value) => { obj.model = value; } }, metadata: _metadata }, _model_initializers, _model_extraInitializers);
+        __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
+        Typing = _classThis = _classDescriptor.value;
+        if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        __runInitializers(_classThis, _classExtraInitializers);
+    })();
+    return Typing = _classThis;
+})();
+
+function typing(properties) {
+    console.log("TYPING PROPERTIES: " + properties.toString());
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
+        tag: "typing",
+        view: _typing_view__WEBPACK_IMPORTED_MODULE_1__.TypingView,
+        model: _typing_model__WEBPACK_IMPORTED_MODULE_2__.TypingModel,
+    });
+    return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
+}
+
+
+/***/ }),
+
+/***/ "./client/src/scrapComponents/typing/typing.view.ts":
+/*!**********************************************************!*\
+  !*** ./client/src/scrapComponents/typing/typing.view.ts ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TypingView: () => (/* binding */ TypingView)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+
+let TypingView = (() => {
+    var _a;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView;
+    let _length_decorators;
+    let _length_initializers = [];
+    let _length_extraInitializers = [];
+    return _a = class TypingView extends _classSuper {
+            constructor() {
+                super(...arguments);
+                this.length = __runInitializers(this, _length_initializers, void 0);
+                this.contentObserver = __runInitializers(this, _length_extraInitializers);
+            }
+            initialize() {
+                super.initialize();
+            }
+            setupUIElements() {
+                super.setupUIElements();
+                this.textEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({ text: String(this.model.content.text), color: this.model.content.color });
+            }
+            setupUILayout() {
+                super.setupUILayout();
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).setStyle("position", "relative");
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).setStyle("left", this.model.content.x);
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).setStyle("top", this.model.content.y);
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.textEl]);
+            }
+        },
+        (() => {
+            var _b;
+            const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_b = _classSuper[Symbol.metadata]) !== null && _b !== void 0 ? _b : null) : void 0;
+            _length_decorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.expose)("")];
+            __esDecorate(null, null, _length_decorators, { kind: "field", name: "length", static: false, private: false, access: { has: obj => "length" in obj, get: obj => obj.length, set: (obj, value) => { obj.length = value; } }, metadata: _metadata }, _length_initializers, _length_extraInitializers);
+            if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        })(),
+        _a;
+})();
+
+
+
+/***/ }),
+
+/***/ "./client/src/style.css":
+/*!******************************!*\
+  !*** ./client/src/style.css ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js!./style.css */ "./node_modules/css-loader/dist/cjs.js!./client/src/style.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -381,9 +1085,15 @@ ___CSS_LOADER_EXPORT___.push([module.id, `*
   
 }
 
+.page-box{
+  max-width: 100%; min-width: 100%;
+  margin-bottom: 10px;
+  break-inside: avoid;
+}
+
 img:hover {
   opacity: .95;
-  box-shadow: 0 0 10px #fff;
+  box-shadow: 0 0 10px #0e272f;
   cursor: pointer;
 }
 
@@ -413,7 +1123,7 @@ img:hover {
 {
   .container
   {
-    columns: 3;
+    columns: 2;
   }
   
   
@@ -447,7 +1157,7 @@ img:hover {
   {
     columns: 1;
   }
-}`, "",{"version":3,"sources":["webpack://./client/src/gridBoard/gridBoard.css"],"names":[],"mappings":"AAAA;;EAEE,cAAc;EACd,UAAU;EACV,sBAAsB;EACtB,wDAAwD;AAC1D;;;AAGA;;EAEE,iBAAiB;EACjB,aAAa;EACb,YAAY;EACZ,UAAU;EACV,gBAAgB;;AAElB;;AAEA;EACE,YAAY;EACZ,yBAAyB;EACzB,eAAe;AACjB;;AAEA;CACC,WAAW;CACX,yCAAyC;CACzC,YAAY;AACb;;AAEA;;EAEE;;IAEE,UAAU;IACV,wBAAwB;EAC1B;AACF;AACA;;EAEE;;IAEE,UAAU;EACZ;AACF;;AAEA;;EAEE;;IAEE,UAAU;EACZ;;;EAGA;EACA,kBAAkB;CACnB;AACD;;;;AAIA;;EAEE;;IAEE,UAAU;EACZ;;EAEA;IACE,gBAAgB;EAClB;;EAEA;IACE,cAAc;EAChB;AACF;;;AAGA;;EAEE;;IAEE,UAAU;EACZ;AACF","sourcesContent":["*\r\n{\r\n  margin-left: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  font-family: \"Gill Sans\", Helvetica, Arial, \"sans-serif\";\r\n}\r\n\r\n\r\n.container\r\n{\r\n  padding-top: 13vh;\r\n  width: 1400px;\r\n  margin: auto;\r\n  columns: 6;\r\n  column-gap: 20px;\r\n  \r\n}\r\n\r\nimg:hover {\r\n  opacity: .95;\r\n  box-shadow: 0 0 10px #fff;\r\n  cursor: pointer;\r\n}\r\n\r\n.caption{\r\n\tcolor: #fff;\r\n\tfont-family: Arial, Helvetica, sans-serif;\r\n\tpadding: 2px;\r\n}\r\n\r\n@media (max-width: 1427px)\r\n{\r\n  .container\r\n  {\r\n    columns: 5;\r\n    width: calc(100% - 40px);\r\n  }\r\n}\r\n@media (max-width: 1200px)\r\n{\r\n  .container\r\n  {\r\n    columns: 4;\r\n  }\r\n}\r\n\r\n@media (max-width: 1000px)\r\n{\r\n  .container\r\n  {\r\n    columns: 3;\r\n  }\r\n  \r\n  \r\n  body{\r\n\t\toverflow-x: hidden;\r\n\t}\r\n}\r\n  \r\n\r\n\r\n@media (max-width: 786px)\r\n{\r\n  .container\r\n  {\r\n    columns: 2;\r\n  }\r\n  \r\n  h1{\r\n    font-size: 1.3em;\r\n  }\r\n  \r\n  h2{\r\n    font-size: 1em;\r\n  }\r\n}\r\n\r\n\r\n@media (max-width: 480px)\r\n{\r\n  .container\r\n  {\r\n    columns: 1;\r\n  }\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./client/src/gridBoard/gridBoard.css"],"names":[],"mappings":"AAAA;;EAEE,cAAc;EACd,UAAU;EACV,sBAAsB;EACtB,wDAAwD;AAC1D;;;AAGA;;EAEE,iBAAiB;EACjB,aAAa;EACb,YAAY;EACZ,UAAU;EACV,gBAAgB;;AAElB;;AAEA;EACE,eAAe,EAAE,eAAe;EAChC,mBAAmB;EACnB,mBAAmB;AACrB;;AAEA;EACE,YAAY;EACZ,4BAA4B;EAC5B,eAAe;AACjB;;AAEA;CACC,WAAW;CACX,yCAAyC;CACzC,YAAY;AACb;;AAEA;;EAEE;;IAEE,UAAU;IACV,wBAAwB;EAC1B;AACF;AACA;;EAEE;;IAEE,UAAU;EACZ;AACF;;AAEA;;EAEE;;IAEE,UAAU;EACZ;;;EAGA;EACA,kBAAkB;CACnB;AACD;;;;AAIA;;EAEE;;IAEE,UAAU;EACZ;;EAEA;IACE,gBAAgB;EAClB;;EAEA;IACE,cAAc;EAChB;AACF;;;AAGA;;EAEE;;IAEE,UAAU;EACZ;AACF","sourcesContent":["*\r\n{\r\n  margin-left: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  font-family: \"Gill Sans\", Helvetica, Arial, \"sans-serif\";\r\n}\r\n\r\n\r\n.container\r\n{\r\n  padding-top: 13vh;\r\n  width: 1400px;\r\n  margin: auto;\r\n  columns: 6;\r\n  column-gap: 20px;\r\n  \r\n}\r\n\r\n.page-box{\r\n  max-width: 100%; min-width: 100%;\r\n  margin-bottom: 10px;\r\n  break-inside: avoid;\r\n}\r\n\r\nimg:hover {\r\n  opacity: .95;\r\n  box-shadow: 0 0 10px #0e272f;\r\n  cursor: pointer;\r\n}\r\n\r\n.caption{\r\n\tcolor: #fff;\r\n\tfont-family: Arial, Helvetica, sans-serif;\r\n\tpadding: 2px;\r\n}\r\n\r\n@media (max-width: 1427px)\r\n{\r\n  .container\r\n  {\r\n    columns: 5;\r\n    width: calc(100% - 40px);\r\n  }\r\n}\r\n@media (max-width: 1200px)\r\n{\r\n  .container\r\n  {\r\n    columns: 4;\r\n  }\r\n}\r\n\r\n@media (max-width: 1000px)\r\n{\r\n  .container\r\n  {\r\n    columns: 2;\r\n  }\r\n  \r\n  \r\n  body{\r\n\t\toverflow-x: hidden;\r\n\t}\r\n}\r\n  \r\n\r\n\r\n@media (max-width: 786px)\r\n{\r\n  .container\r\n  {\r\n    columns: 2;\r\n  }\r\n  \r\n  h1{\r\n    font-size: 1.3em;\r\n  }\r\n  \r\n  h2{\r\n    font-size: 1em;\r\n  }\r\n}\r\n\r\n\r\n@media (max-width: 480px)\r\n{\r\n  .container\r\n  {\r\n    columns: 1;\r\n  }\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -504,8 +1214,14 @@ nav-bar turbo-button {
     align-items: center;
     justify-content: center;
 
+    flex-grow: 0;
+
     transition: background 0.2s ease;
     border-radius: 10px;
+}
+
+nav-bar turbo-button:last-child {
+    margin-top: auto;
 }
 
 nav-bar turbo-button:hover {
@@ -525,7 +1241,123 @@ nav-bar turbo-button:active {
 .turbo-icon svg {
     width: 32px;
     height: 32px;
-}`, "",{"version":3,"sources":["webpack://./client/src/navBar/navBar.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;;;IAGI;;;AAGJ;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n/* https://codepen.io/charleskitchton/pen/XWomjWX \r\n   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i \r\n   \r\n   */\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./client/src/navBar/navBar.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,YAAY;;IAEZ,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;;;IAGI;;;AAGJ;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    flex-grow: 0;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:last-child {\r\n    margin-top: auto;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n/* https://codepen.io/charleskitchton/pen/XWomjWX \r\n   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i \r\n   \r\n   */\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./client/src/page/page.css":
+/*!************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./client/src/page/page.css ***!
+  \************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/getUrl.js */ "./node_modules/css-loader/dist/runtime/getUrl.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
+// Imports
+
+
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../../public/assets/pageTexture.jpg */ "./client/public/assets/pageTexture.jpg"), __webpack_require__.b);
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `:root {
+    --cool-blue: #4D7C8A;
+    --snow: #FCF7F8;
+    --shadow-grey :#342E37;
+    --light-border: #bababa;
+}
+
+.textured-page {
+    background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
+    border: 2px solid var(--light-border );
+    min-height: 500px;
+    min-width: 400px;
+}`, "",{"version":3,"sources":["webpack://./client/src/page/page.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;IACtB,uBAAuB;AAC3B;;AAEA;IACI,yDAA4D;IAC5D,sCAAsC;IACtC,iBAAiB;IACjB,gBAAgB;AACpB","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n    --light-border: #bababa;\r\n}\r\n\r\n.textured-page {\r\n    background-image: url(\"../../public/assets/pageTexture.jpg\");\r\n    border: 2px solid var(--light-border );\r\n    min-height: 500px;\r\n    min-width: 400px;\r\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./client/src/style.css":
+/*!********************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./client/src/style.css ***!
+  \********************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `/** background:#4D7C8A; **/
+
+:root {
+  --text-color: #23424b;
+}
+
+body {
+  margin: 0;
+  min-height: 690px;
+  min-width: 650px;
+
+  align-content: center;
+
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(90deg, #ccf0ff80 40px, transparent 40px),
+    linear-gradient(#ccf0ff80 40px, transparent 40px);
+  background-position: 10px 10px;
+  background-size: 78px 78px;
+}
+
+h1 {
+  color: var(--text-color);
+    font-family: "Baskerville", "Georgia", serif;
+    font-style: italic;
+    font-size: 5em !important;
+    margin: 0;
+}
+
+h2 {
+    font-size: 1.5em !important;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.container{
+  display: flex;
+  direction: column;
+  gap: 5px;
+}
+
+.footer {
+  height:100px;
+  width: 100vw;
+  background-color:var(--text-color);
+  align-items: center;
+}
+`, "",{"version":3,"sources":["webpack://./client/src/style.css"],"names":[],"mappings":"AAAA,0BAA0B;;AAE1B;EACE,qBAAqB;AACvB;;AAEA;EACE,SAAS;EACT,iBAAiB;EACjB,gBAAgB;;EAEhB,qBAAqB;;EAErB,yBAAyB;EACzB;;qDAEmD;EACnD,8BAA8B;EAC9B,0BAA0B;AAC5B;;AAEA;EACE,wBAAwB;IACtB,4CAA4C;IAC5C,kBAAkB;IAClB,yBAAyB;IACzB,SAAS;AACb;;AAEA;IACI,2BAA2B;IAC3B,wBAAwB;IACxB,SAAS;AACb;;AAEA;EACE,aAAa;EACb,iBAAiB;EACjB,QAAQ;AACV;;AAEA;EACE,YAAY;EACZ,YAAY;EACZ,kCAAkC;EAClC,mBAAmB;AACrB","sourcesContent":["/** background:#4D7C8A; **/\r\n\r\n:root {\r\n  --text-color: #23424b;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  min-height: 690px;\r\n  min-width: 650px;\r\n\r\n  align-content: center;\r\n\r\n  background-color: #ffffff;\r\n  background-image:\r\n    linear-gradient(90deg, #ccf0ff80 40px, transparent 40px),\r\n    linear-gradient(#ccf0ff80 40px, transparent 40px);\r\n  background-position: 10px 10px;\r\n  background-size: 78px 78px;\r\n}\r\n\r\nh1 {\r\n  color: var(--text-color);\r\n    font-family: \"Baskerville\", \"Georgia\", serif;\r\n    font-style: italic;\r\n    font-size: 5em !important;\r\n    margin: 0;\r\n}\r\n\r\nh2 {\r\n    font-size: 1.5em !important;\r\n    color: var(--text-color);\r\n    margin: 0;\r\n}\r\n\r\n.container{\r\n  display: flex;\r\n  direction: column;\r\n  gap: 5px;\r\n}\r\n\r\n.footer {\r\n  height:100px;\r\n  width: 100vw;\r\n  background-color:var(--text-color);\r\n  align-items: center;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -622,6 +1454,41 @@ module.exports = function (cssWithMappingToString) {
     }
   };
   return list;
+};
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/getUrl.js":
+/*!********************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/getUrl.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+
+
+module.exports = function (url, options) {
+  if (!options) {
+    options = {};
+  }
+  if (!url) {
+    return url;
+  }
+  url = String(url.__esModule ? url.default : url);
+
+  // If url is already wrapped in quotes, remove them
+  if (/^['"].*['"]$/.test(url)) {
+    url = url.slice(1, -1);
+  }
+  if (options.hash) {
+    url += options.hash;
+  }
+
+  // Should url be wrapped?
+  // See https://drafts.csswg.org/css-values-3/#urls
+  if (/["'() \t\n]|(%20)/.test(url) || options.needQuotes) {
+    return "\"".concat(url.replace(/"/g, '\\"').replace(/\n/g, "\\n"), "\"");
+  }
+  return url;
 };
 
 /***/ }),
@@ -30842,6 +31709,9 @@ glo[importIdentifier] = true;
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -30895,6 +31765,55 @@ glo[importIdentifier] = true;
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript && document.currentScript.tagName.toUpperCase() === 'SCRIPT')
+/******/ 				scriptUrl = document.currentScript.src;
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) {
+/******/ 					var i = scripts.length - 1;
+/******/ 					while (i > -1 && (!scriptUrl || !/^http(s?):/.test(scriptUrl))) scriptUrl = scripts[i--].src;
+/******/ 				}
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/^blob:/, "").replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		__webpack_require__.b = (typeof document !== 'undefined' && document.baseURI) || self.location.href;
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"home": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		// no on chunks loaded
+/******/ 		
+/******/ 		// no jsonp function
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/nonce */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nc = undefined;
@@ -30911,15 +31830,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
 /* harmony import */ var _navBar_navBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navBar/navBar */ "./client/src/navBar/navBar.ts");
 /* harmony import */ var _gridBoard_gridBoard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gridBoard/gridBoard */ "./client/src/gridBoard/gridBoard.ts");
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.css */ "./client/src/style.css");
+
 
 
 
 turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboEventManager.instance.preventDefaultWheel = false;
 document.addEventListener("DOMContentLoaded", () => {
     turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboIcon.config.defaultDirectory = "assets";
-    document.body.setAttribute("style", "background:#4D7C8A; align-content-:center");
+    //document.body.setAttribute("style", "background:#4D7C8A; align-content-:center");
     (0,_navBar_navBar__WEBPACK_IMPORTED_MODULE_1__.navBar)({ parent: document.body });
     (0,_gridBoard_gridBoard__WEBPACK_IMPORTED_MODULE_2__.gridBoard)({ parent: document.body });
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: document.body, classes: "footer" });
+    let footer_text = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.p)({ parent: document.querySelector(".footer"), text: "© 2025 Patchwork - Sidonie Minodier and Victoria Myot\nAll rights reserved.", style: "color: white; text-align: center; padding: 10px; padding-top: 35px;" });
 });
 
 })();

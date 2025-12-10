@@ -14,7 +14,7 @@ export class Typing extends TurboElement<TypingView, TypingModel> {
 }
 
 export function typing(properties:any): Typing {
-    console.log("TYPING PROPERTIES: "+properties);
+    console.log("TYPING PROPERTIES: "+properties.toString());
     turbo(properties).applyDefaults({
         tag: "typing",
         view: TypingView,

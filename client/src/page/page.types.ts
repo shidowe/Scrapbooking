@@ -6,6 +6,7 @@ import {ScrapData} from "../scrapComponents/scrapComponent";
 export type PageData = {
     pageId?: number,
     userId?: number,
+    title?: string,
     content?: Array<ScrapData>;
 };
 

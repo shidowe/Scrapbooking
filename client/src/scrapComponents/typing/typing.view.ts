@@ -16,12 +16,14 @@ export class TypingView extends TurboView<Typing, TypingModel> {
 
     protected setupUIElements() {
         super.setupUIElements();
-
-        this.textEl = textarea({classes:"textured-page", text: String(this.model.content.text)});
+        this.textEl = textarea({text: String(this.model.content.text), color: this.model.content.color});
     }
 
     protected setupUILayout() {
         super.setupUILayout();
+        turbo(this).setStyle("position", "relative");
+        turbo(this).setStyle("left", this.model.content.x);
+        turbo(this).setStyle("top", this.model.content.y);
         turbo(this).addChild([this.textEl]);
     }
 

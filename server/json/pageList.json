@@ -2,12 +2,13 @@
   {
     "pageId":0,
     "userId": 0,
+    "title": "Test Page",
     "content": [
       {
-        "x": 0,
-        "y": 0,
+        "x": 10,
+        "y": 10,
         "type": "typing",
-        "color": "red",
+        "color": "blue",
         "text": "testttttttttttt"
       }
     ]
@@ -15,6 +16,7 @@
   {
     "pageId":1,
     "userId": 0,
+    "title" : "still a test page",
     "content": [
       {
         "x": 0,

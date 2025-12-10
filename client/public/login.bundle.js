@@ -12,6 +12,210 @@ module.exports = __webpack_require__.p + "a80eddb666121132408e.jpg";
 
 /***/ }),
 
+/***/ "./client/src/gridBoard/gridBoard.css":
+/*!********************************************!*\
+  !*** ./client/src/gridBoard/gridBoard.css ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_gridBoard_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!./gridBoard.css */ "./node_modules/css-loader/dist/cjs.js!./client/src/gridBoard/gridBoard.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_gridBoard_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_gridBoard_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_gridBoard_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_gridBoard_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./client/src/gridBoard/gridBoard.ts":
+/*!*******************************************!*\
+  !*** ./client/src/gridBoard/gridBoard.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   GridBoard: () => (/* binding */ GridBoard),
+/* harmony export */   gridBoard: () => (/* binding */ gridBoard)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _gridBoard_view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gridBoard.view */ "./client/src/gridBoard/gridBoard.view.ts");
+/* harmony import */ var _gridBoard_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gridBoard.css */ "./client/src/gridBoard/gridBoard.css");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+var __setFunctionName = (undefined && undefined.__setFunctionName) || function (f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+};
+
+
+
+let GridBoard = (() => {
+    let _classDecorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.define)("grid-board")];
+    let _classDescriptor;
+    let _classExtraInitializers = [];
+    let _classThis;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboElement;
+    var GridBoard = _classThis = class extends _classSuper {
+    };
+    __setFunctionName(_classThis, "GridBoard");
+    (() => {
+        var _a;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
+        GridBoard = _classThis = _classDescriptor.value;
+        if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        __runInitializers(_classThis, _classExtraInitializers);
+    })();
+    return GridBoard = _classThis;
+})();
+
+//grid board = content page, should take content from a json file and then display it like
+//on pinterest with a grid of images/posts where each image/post is clickable and leads to the post page
+//or maybe instead of a post page it could be a div above that shows the post details when clicked
+function gridBoard(properties = {}) {
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
+        tag: "grid-board",
+        view: _gridBoard_view__WEBPACK_IMPORTED_MODULE_1__.GridBoardView
+    });
+    return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
+}
+
+
+/***/ }),
+
+/***/ "./client/src/gridBoard/gridBoard.view.ts":
+/*!************************************************!*\
+  !*** ./client/src/gridBoard/gridBoard.view.ts ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   GridBoardView: () => (/* binding */ GridBoardView)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../makeRequest */ "./client/src/makeRequest.ts");
+/* harmony import */ var _page_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../page/page */ "./client/src/page/page.ts");
+/* harmony import */ var _gridBoard_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./gridBoard.css */ "./client/src/gridBoard/gridBoard.css");
+
+
+
+
+class GridBoardView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
+    constructor() {
+        super(...arguments);
+        this.gridItems = [];
+    }
+    setupUIElements() {
+        super.setupUIElements();
+        console.log("Current page: ", window.location.href);
+        if (window.location.href.includes("login")) {
+            //Big container for the grid
+            this.container = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "container", style: "padding-top: 13vh; width: 1400px; margin-left:7%; margin-right: 0; margin-bottom:7%; columns: 3; column-gap: 10px;" });
+            // Populate grid with user's images
+            console.log("PAGES IN SS :" + sessionStorage.getItem("pages"));
+            (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/pages/loadPagesFromPageId", "post", { "pageIdList": JSON.parse(sessionStorage.getItem("pages")) }, (responseString) => {
+                let pageList = JSON.parse(responseString);
+                for (let pageData of pageList) {
+                    let box = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: this.container, class: "page-box" });
+                    pageData.parent = box;
+                    (0,_page_page__WEBPACK_IMPORTED_MODULE_2__.page)(pageData);
+                }
+            }, (message) => {
+                console.log("failure");
+            });
+        }
+        else { // for now, placeholder images
+            //Big container for the grid
+            this.container = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "container", style: "padding-top: 13vh; width: 1400px; margin-left:7%; margin-right: 0; margin-bottom:7%; columns: 5; column-gap: 20px;" });
+            for (let i = 1; i <= 15; i++) {
+                let box = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "box", style: "width: 100%; margin-bottom: 10px; break-inside: avoid; border-radius: 15px;" });
+                let image = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.img)({ src: `https://gallery1.charleskdesigns.com/image/${i.toString().padStart(3, '0')}.jpg`, alt: "image", style: "max-width: 90%; min-width: 90%; border-radius: 10px;" });
+                let caption = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "caption", text: "Lorem ipsum ", style: "padding: 10px; text-align: center;" });
+                box.append(image, caption);
+                this.container.appendChild(box);
+            }
+        }
+    }
+    setupUILayout() {
+        super.setupUILayout();
+        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.container]);
+    }
+}
+
+
+/***/ }),
+
 /***/ "./client/src/loginForm/loginForm.css":
 /*!********************************************!*\
   !*** ./client/src/loginForm/loginForm.css ***!
@@ -410,6 +614,7 @@ let NavBar = (() => {
         setupUIElements() {
             super.setupUIElements();
             this.divEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ style: "display: flex; flex-flow: column; justify-content: space-between;" });
+            this.divTop = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ style: "display: flex; flex-flow: column; flex-grow:0;" });
             this.profileButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "profile_icon", onClick: () => {
                     window.location.replace("/login");
                 } });
@@ -423,9 +628,11 @@ let NavBar = (() => {
                     sessionStorage.clear();
                     window.location.replace("/login");
                 } });
-            this.divEl.appendChild(this.profileButton);
-            this.divEl.appendChild(this.homeButton);
-            this.divEl.appendChild(this.createButton);
+            this.divTop.appendChild(this.profileButton);
+            this.divTop.appendChild(this.homeButton);
+            this.divTop.appendChild(this.createButton);
+            this.divEl.appendChild(this.divTop);
+            this.divEl.appendChild((0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.spacer)());
             this.divEl.appendChild(this.logoutButton);
         }
         setupUILayout() {
@@ -570,16 +777,18 @@ let PageModel = (() => {
     return _a = class PageModel extends _classSuper {
             setupContent() {
                 this.setBlock(this.content, "", "content");
+                console.log("CONTENT : " + this.content);
             }
             addScrapComponent(scrapComponent) {
                 this.content.push(scrapComponent);
             }
             constructor() {
-                super(...arguments);
+                super();
                 this.pageId = (__runInitializers(this, _instanceExtraInitializers), __runInitializers(this, _pageId_initializers, void 0));
                 this.userId = (__runInitializers(this, _pageId_extraInitializers), __runInitializers(this, _userId_initializers, void 0));
-                this.content = (__runInitializers(this, _userId_extraInitializers), __runInitializers(this, _content_initializers, new Array()));
+                this.content = (__runInitializers(this, _userId_extraInitializers), __runInitializers(this, _content_initializers, []));
                 __runInitializers(this, _content_extraInitializers);
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.initializeEffects)(this);
             }
         },
         (() => {
@@ -690,14 +899,11 @@ let Page = (() => {
 })();
 
 function page(properties = {}) {
-    let pageData;
-    if (properties.pageId) {
-        pageData = {
-            pageId: properties.pageId,
-            userId: properties.userId,
-            content: properties.content,
-        };
-    }
+    let pageData = {
+        pageId: properties.pageId,
+        userId: properties.userId,
+        content: properties.content,
+    };
     (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
         tag: "page-elt",
         view: _page_view__WEBPACK_IMPORTED_MODULE_1__.PageView,
@@ -736,20 +942,24 @@ class PageView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
         super.initialize();
         (_a = this.model.getBlock("content")) === null || _a === void 0 ? void 0 : _a.generateObserver({
             onAdded: (data) => {
-                //functions to create stuff, no new smth
+                switch (data.type) {
+                    case "typing":
+                        {
+                            data.parent = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this.pageDiv);
+                            let t = (0,_scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__.typing)(data);
+                        }
+                        ;
+                }
             }
         });
     }
     setupUIElements() {
         super.setupUIElements();
-        this.pageDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.canvas)({ classes: "textured-page" });
+        this.pageDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ classes: "textured-page" });
         //on click create a text annotation
         this.pageDiv.addEventListener("click", (event) => {
-            let t = (0,_scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__.typing)({ x: event.clientX, y: event.clientY });
-            this.pageDiv.appendChild(t);
-            this.model.addScrapComponent(t.model.content);
+            // todo
         });
-        //this.pageDiv.appendChild(p({text: String(this.model.pageId)}));
     }
     setupUILayout() {
         super.setupUILayout();
@@ -931,33 +1141,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
 /* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../makeRequest */ "./client/src/makeRequest.ts");
-/* harmony import */ var _page_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../page/page */ "./client/src/page/page.ts");
+/* harmony import */ var _profile_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./profile.css */ "./client/src/profile/profile.css");
+/* harmony import */ var _gridBoard_gridBoard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../gridBoard/gridBoard */ "./client/src/gridBoard/gridBoard.ts");
+
 
 
 
 class ProfileView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
+    constructor() {
+        super(...arguments);
+        //private logoutEl : HTMLElement;
+        this.currentDisplayMode = "list";
+    }
     setupUIElements() {
         super.setupUIElements();
-        this.mainDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ id: "main-div" });
-        this.usernameEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.h1)({ text: sessionStorage.getItem("username"), parent: this.mainDiv });
-        this.logoutEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.p)({ parent: this.mainDiv, text: "Logout" });
-        this.logoutEl.addEventListener("click", () => {
-            sessionStorage.clear();
-            window.location.reload();
-        });
-        console.log("PAGES IN SS :" + sessionStorage.getItem("pages"));
-        (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/pages/loadPagesFromPageId", "post", { "pageIdList": JSON.parse(sessionStorage.getItem("pages")) }, (responseString) => {
-            let pageList = JSON.parse(responseString);
-            for (let pageData of pageList) {
-                let pageEL = (0,_page_page__WEBPACK_IMPORTED_MODULE_2__.page)({ pageData: pageData, parent: this.mainDiv });
-            }
-        }, (message) => {
-            console.log("failure");
-        });
+        this.profileHeader = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ id: "profile-header", parent: document.body });
+        //let leftDiv = div({parent:this.profileHeader, style:"display:flex; flex-direction:row; align-items:baseline;"});
+        this.usernameEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.h1)({ text: sessionStorage.getItem("username"), parent: this.profileHeader });
+        let profileLine = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.h2)({ text: "'s page <3", parent: this.profileHeader, style: "margin-left:10px;" });
+        if (this.currentDisplayMode == "list") {
+            (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/pages/loadPagesFromPageId", "post", { "pageIdList": JSON.parse(sessionStorage.getItem("pages")) }, (responseString) => {
+                let pageList = JSON.parse(responseString);
+                for (let pageData of pageList) {
+                    let d = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ text: pageData.title, parent: document.body, classes: "page-list-div" });
+                }
+            }, (message) => {
+                console.log("failure");
+            });
+        }
+        else {
+            (0,_gridBoard_gridBoard__WEBPACK_IMPORTED_MODULE_3__.gridBoard)({ parent: document.body });
+        }
     }
     setupUILayout() {
         super.setupUILayout();
-        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild(this.mainDiv);
+        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild(this.profileHeader);
     }
 }
 
@@ -1017,8 +1235,8 @@ let TypingModel = (() => {
     let _content_initializers = [];
     let _content_extraInitializers = [];
     return _a = class TypingModel extends _classSuper {
-            constructor(properties) {
-                super(properties.x, properties.y);
+            constructor() {
+                super(...arguments);
                 this.content = __runInitializers(this, _content_initializers, void 0);
                 __runInitializers(this, _content_extraInitializers);
             }
@@ -1128,13 +1346,12 @@ let Typing = (() => {
     return Typing = _classThis;
 })();
 
-function typing(properties = {}) {
-    //TODO idk what I'm doing
+function typing(properties) {
+    console.log("TYPING PROPERTIES: " + properties.toString());
     (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
         tag: "typing",
         view: _typing_view__WEBPACK_IMPORTED_MODULE_1__.TypingView,
         model: _typing_model__WEBPACK_IMPORTED_MODULE_2__.TypingModel,
-        data: properties
     });
     return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
 }
@@ -1202,21 +1419,16 @@ let TypingView = (() => {
             }
             initialize() {
                 super.initialize();
-                /*
-                this.model.getBlock("text")?.generateObserver({
-                    onAdded : (data) => {
-                        //functions to create stuff, no new smth
-                    }
-                })
-                 */
             }
             setupUIElements() {
                 super.setupUIElements();
-                this.textEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({ classes: "textured-page" });
-                //this.pageDiv.appendChild(p({text: String(this.model.pageId)}));
+                this.textEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({ text: String(this.model.content.text), color: this.model.content.color });
             }
             setupUILayout() {
                 super.setupUILayout();
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).setStyle("position", "relative");
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).setStyle("left", this.model.content.x);
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).setStyle("top", this.model.content.y);
                 (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.textEl]);
             }
         },
@@ -1230,6 +1442,175 @@ let TypingView = (() => {
         _a;
 })();
 
+
+
+/***/ }),
+
+/***/ "./client/src/style.css":
+/*!******************************!*\
+  !*** ./client/src/style.css ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js!./style.css */ "./node_modules/css-loader/dist/cjs.js!./client/src/style.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./client/src/gridBoard/gridBoard.css":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./client/src/gridBoard/gridBoard.css ***!
+  \**********************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `*
+{
+  margin-left: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Gill Sans", Helvetica, Arial, "sans-serif";
+}
+
+
+.container
+{
+  padding-top: 13vh;
+  width: 1400px;
+  margin: auto;
+  columns: 6;
+  column-gap: 20px;
+  
+}
+
+.page-box{
+  max-width: 100%; min-width: 100%;
+  margin-bottom: 10px;
+  break-inside: avoid;
+}
+
+img:hover {
+  opacity: .95;
+  box-shadow: 0 0 10px #0e272f;
+  cursor: pointer;
+}
+
+.caption{
+	color: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 2px;
+}
+
+@media (max-width: 1427px)
+{
+  .container
+  {
+    columns: 5;
+    width: calc(100% - 40px);
+  }
+}
+@media (max-width: 1200px)
+{
+  .container
+  {
+    columns: 4;
+  }
+}
+
+@media (max-width: 1000px)
+{
+  .container
+  {
+    columns: 2;
+  }
+  
+  
+  body{
+		overflow-x: hidden;
+	}
+}
+  
+
+
+@media (max-width: 786px)
+{
+  .container
+  {
+    columns: 2;
+  }
+  
+  h1{
+    font-size: 1.3em;
+  }
+  
+  h2{
+    font-size: 1em;
+  }
+}
+
+
+@media (max-width: 480px)
+{
+  .container
+  {
+    columns: 1;
+  }
+}`, "",{"version":3,"sources":["webpack://./client/src/gridBoard/gridBoard.css"],"names":[],"mappings":"AAAA;;EAEE,cAAc;EACd,UAAU;EACV,sBAAsB;EACtB,wDAAwD;AAC1D;;;AAGA;;EAEE,iBAAiB;EACjB,aAAa;EACb,YAAY;EACZ,UAAU;EACV,gBAAgB;;AAElB;;AAEA;EACE,eAAe,EAAE,eAAe;EAChC,mBAAmB;EACnB,mBAAmB;AACrB;;AAEA;EACE,YAAY;EACZ,4BAA4B;EAC5B,eAAe;AACjB;;AAEA;CACC,WAAW;CACX,yCAAyC;CACzC,YAAY;AACb;;AAEA;;EAEE;;IAEE,UAAU;IACV,wBAAwB;EAC1B;AACF;AACA;;EAEE;;IAEE,UAAU;EACZ;AACF;;AAEA;;EAEE;;IAEE,UAAU;EACZ;;;EAGA;EACA,kBAAkB;CACnB;AACD;;;;AAIA;;EAEE;;IAEE,UAAU;EACZ;;EAEA;IACE,gBAAgB;EAClB;;EAEA;IACE,cAAc;EAChB;AACF;;;AAGA;;EAEE;;IAEE,UAAU;EACZ;AACF","sourcesContent":["*\r\n{\r\n  margin-left: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  font-family: \"Gill Sans\", Helvetica, Arial, \"sans-serif\";\r\n}\r\n\r\n\r\n.container\r\n{\r\n  padding-top: 13vh;\r\n  width: 1400px;\r\n  margin: auto;\r\n  columns: 6;\r\n  column-gap: 20px;\r\n  \r\n}\r\n\r\n.page-box{\r\n  max-width: 100%; min-width: 100%;\r\n  margin-bottom: 10px;\r\n  break-inside: avoid;\r\n}\r\n\r\nimg:hover {\r\n  opacity: .95;\r\n  box-shadow: 0 0 10px #0e272f;\r\n  cursor: pointer;\r\n}\r\n\r\n.caption{\r\n\tcolor: #fff;\r\n\tfont-family: Arial, Helvetica, sans-serif;\r\n\tpadding: 2px;\r\n}\r\n\r\n@media (max-width: 1427px)\r\n{\r\n  .container\r\n  {\r\n    columns: 5;\r\n    width: calc(100% - 40px);\r\n  }\r\n}\r\n@media (max-width: 1200px)\r\n{\r\n  .container\r\n  {\r\n    columns: 4;\r\n  }\r\n}\r\n\r\n@media (max-width: 1000px)\r\n{\r\n  .container\r\n  {\r\n    columns: 2;\r\n  }\r\n  \r\n  \r\n  body{\r\n\t\toverflow-x: hidden;\r\n\t}\r\n}\r\n  \r\n\r\n\r\n@media (max-width: 786px)\r\n{\r\n  .container\r\n  {\r\n    columns: 2;\r\n  }\r\n  \r\n  h1{\r\n    font-size: 1.3em;\r\n  }\r\n  \r\n  h2{\r\n    font-size: 1em;\r\n  }\r\n}\r\n\r\n\r\n@media (max-width: 480px)\r\n{\r\n  .container\r\n  {\r\n    columns: 1;\r\n  }\r\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
@@ -1259,6 +1640,10 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
     --shadow-grey :#342E37;
 }
 
+#switch-modes {
+    margin:0;
+}
+
 #switch-modes:hover {
     cursor: pointer;
     text-decoration: underline;
@@ -1268,6 +1653,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
     min-width: 130px;
     height: 40px;
     color: var(--snow );
+    align-content: center;
     padding: 5px 10px;
     margin: 1em;
     font-weight: bold;
@@ -1287,14 +1673,26 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
     cursor: pointer;
 }
 
+#submit-button > h4 {
+    margin: 0;
+    padding: 0;
+}
+
+.turbo-input {
+    margin: 10px 0;
+}
 
 #form-div {
     text-align: center;
     --borderradius: 14px;
     --bgsize: 0.38rem;
-    padding: 2rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     border: 1px solid;
     position: relative;
+    width: fit-content;
     background: var(--snow);
     border-radius: var(--borderradius, 14px);
     transform: translateY(-2px);
@@ -1337,12 +1735,20 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
 }
 
 body {
-    display: grid;
+    /*display: grid;*/
+    align-content: center;
     place-content: center;
     min-height: 100vh;
     font-family: "Inter", sans-serif;
-    background: var(--cool-blue);
-}`, "",{"version":3,"sources":["webpack://./client/src/loginForm/loginForm.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;AAC1B;;AAEA;IACI,eAAe;IACf,0BAA0B;AAC9B;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,mBAAmB;IACnB,iBAAiB;IACjB,WAAW;IACX,iBAAiB;IACjB,eAAe;IACf,yBAAyB;IACzB,kBAAkB;IAClB,qBAAqB;IACrB,aAAa;IACb,mBAAmB;IACnB,qCAAqC;IACrC,+BAA+B;AACnC;;AAEA;IACI,wBAAwB;IACxB,0BAA0B;IAC1B,eAAe;AACnB;;;AAGA;IACI,kBAAkB;IAClB,oBAAoB;IACpB,iBAAiB;IACjB,aAAa;IACb,iBAAiB;IACjB,kBAAkB;IAClB,uBAAuB;IACvB,wCAAwC;IACxC,2BAA2B;IAC3B,UAAU;;IAEV;QACI,2BAA2B;IAC/B;;IAEA;;;QAGI,wCAAwC;QACxC;;;;;;;;;SASC;QACD,WAAW;QACX,cAAc;QACd,kBAAkB;QAClB,WAAW;QACX,WAAW;QACX,aAAa;QACb,WAAW;QACX,YAAY;QACZ,8DAA8D;IAClE;IACA;QACI,SAAS;QACT,UAAU;QACV,uBAAuB;QACvB,WAAW;IACf;AACJ;;AAEA;IACI,aAAa;IACb,qBAAqB;IACrB,iBAAiB;IACjB,gCAAgC;IAChC,4BAA4B;AAChC","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n}\r\n\r\n#switch-modes:hover {\r\n    cursor: pointer;\r\n    text-decoration: underline;\r\n}\r\n\r\n#submit-button {\r\n    min-width: 130px;\r\n    height: 40px;\r\n    color: var(--snow );\r\n    padding: 5px 10px;\r\n    margin: 1em;\r\n    font-weight: bold;\r\n    cursor: pointer;\r\n    transition: all 0.3s ease;\r\n    position: relative;\r\n    display: inline-block;\r\n    outline: none;\r\n    border-radius: 20px;\r\n    border: 2px solid var(--shadow-grey );\r\n    background: var(--shadow-grey );\r\n}\r\n\r\n#submit-button:hover {\r\n    background: var(--snow );\r\n    color: var(--shadow-grey );\r\n    cursor: pointer;\r\n}\r\n\r\n\r\n#form-div {\r\n    text-align: center;\r\n    --borderradius: 14px;\r\n    --bgsize: 0.38rem;\r\n    padding: 2rem;\r\n    border: 1px solid;\r\n    position: relative;\r\n    background: var(--snow);\r\n    border-radius: var(--borderradius, 14px);\r\n    transform: translateY(-2px);\r\n    z-index: 2;\r\n\r\n    &:hover {\r\n        transform: translateY(-4px);\r\n    }\r\n\r\n    &::before,\r\n    &::after {\r\n\r\n        border-radius: var(--borderradius, 14px);\r\n        background-image: linear-gradient(\r\n                45deg,\r\n                var(--snow) 33.33%,\r\n                var(--shadow-grey) 33.33%,\r\n                var(--shadow-grey) 50%,\r\n                var(--snow) 50%,\r\n                var(--snow) 83.33%,\r\n                var(--shadow-grey) 83.33%,\r\n                var(--shadow-grey) 100%\r\n        );\r\n        content: \"\";\r\n        display: block;\r\n        position: absolute;\r\n        z-index: -2;\r\n        top: .75rem;\r\n        left: 0.75rem;\r\n        width: 100%;\r\n        height: 100%;\r\n        background-size: var(--bgsize, 0.28rem) var(--bgsize, 0.28rem);\r\n    }\r\n    &::before {\r\n        top: 0rem;\r\n        left: 0rem;\r\n        background: var(--snow);\r\n        z-index: -1;\r\n    }\r\n}\r\n\r\nbody {\r\n    display: grid;\r\n    place-content: center;\r\n    min-height: 100vh;\r\n    font-family: \"Inter\", sans-serif;\r\n    background: var(--cool-blue);\r\n}"],"sourceRoot":""}]);
+}
+
+h3 {
+    font-size: 2em !important;
+    font-family: "Baskerville", "Georgia", serif;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 15px;
+}`, "",{"version":3,"sources":["webpack://./client/src/loginForm/loginForm.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;AAC1B;;AAEA;IACI,QAAQ;AACZ;;AAEA;IACI,eAAe;IACf,0BAA0B;AAC9B;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,mBAAmB;IACnB,qBAAqB;IACrB,iBAAiB;IACjB,WAAW;IACX,iBAAiB;IACjB,eAAe;IACf,yBAAyB;IACzB,kBAAkB;IAClB,qBAAqB;IACrB,aAAa;IACb,mBAAmB;IACnB,qCAAqC;IACrC,+BAA+B;AACnC;;AAEA;IACI,wBAAwB;IACxB,0BAA0B;IAC1B,eAAe;AACnB;;AAEA;IACI,SAAS;IACT,UAAU;AACd;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,kBAAkB;IAClB,oBAAoB;IACpB,iBAAiB;IACjB,kBAAkB;IAClB,mBAAmB;IACnB,iBAAiB;IACjB,oBAAoB;IACpB,iBAAiB;IACjB,kBAAkB;IAClB,kBAAkB;IAClB,uBAAuB;IACvB,wCAAwC;IACxC,2BAA2B;IAC3B,UAAU;;IAEV;QACI,2BAA2B;IAC/B;;IAEA;;;QAGI,wCAAwC;QACxC;;;;;;;;;SASC;QACD,WAAW;QACX,cAAc;QACd,kBAAkB;QAClB,WAAW;QACX,WAAW;QACX,aAAa;QACb,WAAW;QACX,YAAY;QACZ,8DAA8D;IAClE;IACA;QACI,SAAS;QACT,UAAU;QACV,uBAAuB;QACvB,WAAW;IACf;AACJ;;AAEA;IACI,iBAAiB;IACjB,qBAAqB;IACrB,qBAAqB;IACrB,iBAAiB;IACjB,gCAAgC;AACpC;;AAEA;IACI,yBAAyB;IACzB,4CAA4C;IAC5C,kBAAkB;IAClB,aAAa;IACb,mBAAmB;AACvB","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n}\r\n\r\n#switch-modes {\r\n    margin:0;\r\n}\r\n\r\n#switch-modes:hover {\r\n    cursor: pointer;\r\n    text-decoration: underline;\r\n}\r\n\r\n#submit-button {\r\n    min-width: 130px;\r\n    height: 40px;\r\n    color: var(--snow );\r\n    align-content: center;\r\n    padding: 5px 10px;\r\n    margin: 1em;\r\n    font-weight: bold;\r\n    cursor: pointer;\r\n    transition: all 0.3s ease;\r\n    position: relative;\r\n    display: inline-block;\r\n    outline: none;\r\n    border-radius: 20px;\r\n    border: 2px solid var(--shadow-grey );\r\n    background: var(--shadow-grey );\r\n}\r\n\r\n#submit-button:hover {\r\n    background: var(--snow );\r\n    color: var(--shadow-grey );\r\n    cursor: pointer;\r\n}\r\n\r\n#submit-button > h4 {\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.turbo-input {\r\n    margin: 10px 0;\r\n}\r\n\r\n#form-div {\r\n    text-align: center;\r\n    --borderradius: 14px;\r\n    --bgsize: 0.38rem;\r\n    padding-left: 4rem;\r\n    padding-right: 4rem;\r\n    padding-top: 2rem;\r\n    padding-bottom: 2rem;\r\n    border: 1px solid;\r\n    position: relative;\r\n    width: fit-content;\r\n    background: var(--snow);\r\n    border-radius: var(--borderradius, 14px);\r\n    transform: translateY(-2px);\r\n    z-index: 2;\r\n\r\n    &:hover {\r\n        transform: translateY(-4px);\r\n    }\r\n\r\n    &::before,\r\n    &::after {\r\n\r\n        border-radius: var(--borderradius, 14px);\r\n        background-image: linear-gradient(\r\n                45deg,\r\n                var(--snow) 33.33%,\r\n                var(--shadow-grey) 33.33%,\r\n                var(--shadow-grey) 50%,\r\n                var(--snow) 50%,\r\n                var(--snow) 83.33%,\r\n                var(--shadow-grey) 83.33%,\r\n                var(--shadow-grey) 100%\r\n        );\r\n        content: \"\";\r\n        display: block;\r\n        position: absolute;\r\n        z-index: -2;\r\n        top: .75rem;\r\n        left: 0.75rem;\r\n        width: 100%;\r\n        height: 100%;\r\n        background-size: var(--bgsize, 0.28rem) var(--bgsize, 0.28rem);\r\n    }\r\n    &::before {\r\n        top: 0rem;\r\n        left: 0rem;\r\n        background: var(--snow);\r\n        z-index: -1;\r\n    }\r\n}\r\n\r\nbody {\r\n    /*display: grid;*/\r\n    align-content: center;\r\n    place-content: center;\r\n    min-height: 100vh;\r\n    font-family: \"Inter\", sans-serif;\r\n}\r\n\r\nh3 {\r\n    font-size: 2em !important;\r\n    font-family: \"Baskerville\", \"Georgia\", serif;\r\n    font-style: italic;\r\n    margin-top: 0;\r\n    margin-bottom: 15px;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1399,8 +1805,14 @@ nav-bar turbo-button {
     align-items: center;
     justify-content: center;
 
+    flex-grow: 0;
+
     transition: background 0.2s ease;
     border-radius: 10px;
+}
+
+nav-bar turbo-button:last-child {
+    margin-top: auto;
 }
 
 nav-bar turbo-button:hover {
@@ -1420,7 +1832,7 @@ nav-bar turbo-button:active {
 .turbo-icon svg {
     width: 32px;
     height: 32px;
-}`, "",{"version":3,"sources":["webpack://./client/src/navBar/navBar.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;;;IAGI;;;AAGJ;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n/* https://codepen.io/charleskitchton/pen/XWomjWX \r\n   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i \r\n   \r\n   */\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./client/src/navBar/navBar.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,YAAY;;IAEZ,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;;;IAGI;;;AAGJ;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    flex-grow: 0;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:last-child {\r\n    margin-top: auto;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n/* https://codepen.io/charleskitchton/pen/XWomjWX \r\n   https://dev.to/shreelaxmihegde/i-recreated-pinterest-ui-with-bootstrap-4i1i \r\n   \r\n   */\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1455,23 +1867,15 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
     --cool-blue: #4D7C8A;
     --snow: #FCF7F8;
     --shadow-grey :#342E37;
-}
-
-page-elt {
-    min-height: 400px;
-    min-width: 600px;
-    padding: 50px;
-    border: 2px solid var(--shadow-grey );
-    background-color: var(--snow);
+    --light-border: #bababa;
 }
 
 .textured-page {
     background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
+    border: 2px solid var(--light-border );
     min-height: 500px;
     min-width: 400px;
-    max-height: 500px;
-    max-width: 400px;
-}`, "",{"version":3,"sources":["webpack://./client/src/page/page.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;AAC1B;;AAEA;IACI,iBAAiB;IACjB,gBAAgB;IAChB,aAAa;IACb,qCAAqC;IACrC,6BAA6B;AACjC;;AAEA;IACI,yDAA4D;IAC5D,iBAAiB;IACjB,gBAAgB;IAChB,iBAAiB;IACjB,gBAAgB;AACpB","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n}\r\n\r\npage-elt {\r\n    min-height: 400px;\r\n    min-width: 600px;\r\n    padding: 50px;\r\n    border: 2px solid var(--shadow-grey );\r\n    background-color: var(--snow);\r\n}\r\n\r\n.textured-page {\r\n    background-image: url(\"../../public/assets/pageTexture.jpg\");\r\n    min-height: 500px;\r\n    min-width: 400px;\r\n    max-height: 500px;\r\n    max-width: 400px;\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./client/src/page/page.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;IACtB,uBAAuB;AAC3B;;AAEA;IACI,yDAA4D;IAC5D,sCAAsC;IACtC,iBAAiB;IACjB,gBAAgB;AACpB","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n    --light-border: #bababa;\r\n}\r\n\r\n.textured-page {\r\n    background-image: url(\"../../public/assets/pageTexture.jpg\");\r\n    border: 2px solid var(--light-border );\r\n    min-height: 500px;\r\n    min-width: 400px;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1499,17 +1903,174 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `:root {
     --cool-blue: #4D7C8A;
+    --cooler-blue: #23424b;
     --snow: #FCF7F8;
     --shadow-grey :#342E37;
 }
 
 body {
-    display: grid;
-    place-content: center;
     min-height: 100vh;
     font-family: "Inter", sans-serif;
-    background: var(--cool-blue);
-}`, "",{"version":3,"sources":["webpack://./client/src/profile/profile.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;AAC1B;;AAEA;IACI,aAAa;IACb,qBAAqB;IACrB,iBAAiB;IACjB,gCAAgC;IAChC,4BAA4B;AAChC","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n}\r\n\r\nbody {\r\n    display: grid;\r\n    place-content: center;\r\n    min-height: 100vh;\r\n    font-family: \"Inter\", sans-serif;\r\n    background: var(--cool-blue);\r\n}"],"sourceRoot":""}]);
+
+    margin: 0;
+    padding: 0;
+
+    /*align-content: center;*/
+
+    background-color: #ffffff;
+    background-image:
+        linear-gradient(90deg, #ccf0ff80 40px, transparent 40px),
+        linear-gradient(#ccf0ff80 40px, transparent 40px);
+    background-position: 10px 10px;
+    background-size: 78px 78px;
+}
+
+h1 {
+    color: var(--cooler-blue);
+    font-family: "Baskerville", "Georgia", serif;
+    font-style: italic;
+    font-size: 5em !important;
+    margin: 0;
+}
+
+h2 {
+    font-size: 1.5em !important;
+    color: var(--cooler-blue);
+    margin: 0;
+}
+
+p {
+    color: var(--cooler-blue);
+}
+
+#logout-el {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+.container{
+    display: flex;
+    direction: column;
+    gap: 5px;
+}
+
+.posts-container{
+    display: grid;
+    place-content: center;
+}
+
+#profile-header {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+
+    
+
+    height: 10em;
+    padding-left:150px;
+    padding-top: 2em;
+
+    width:100%;
+
+    margin-top: 0px;
+
+    background-color: var(--snow);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.page-list-div{text-align: left;
+    background-color: var(--snow);
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    border-radius: 50px;
+    border:solid;
+    border-width: 2px;
+    border-color: var(--cooler-blue);
+    display: grid;
+    width: 800px;
+    /* height: 50px; */
+    font-size: large;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding:25px;
+}`, "",{"version":3,"sources":["webpack://./client/src/profile/profile.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,sBAAsB;IACtB,eAAe;IACf,sBAAsB;AAC1B;;AAEA;IACI,iBAAiB;IACjB,gCAAgC;;IAEhC,SAAS;IACT,UAAU;;IAEV,yBAAyB;;IAEzB,yBAAyB;IACzB;;yDAEqD;IACrD,8BAA8B;IAC9B,0BAA0B;AAC9B;;AAEA;IACI,yBAAyB;IACzB,4CAA4C;IAC5C,kBAAkB;IAClB,yBAAyB;IACzB,SAAS;AACb;;AAEA;IACI,2BAA2B;IAC3B,yBAAyB;IACzB,SAAS;AACb;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,eAAe;IACf,0BAA0B;AAC9B;;;AAGA;IACI,aAAa;IACb,iBAAiB;IACjB,QAAQ;AACZ;;AAEA;IACI,aAAa;IACb,qBAAqB;AACzB;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,qBAAqB;IACrB,uBAAuB;;;;IAIvB,YAAY;IACZ,kBAAkB;IAClB,gBAAgB;;IAEhB,UAAU;;IAEV,eAAe;;IAEf,6BAA6B;IAC7B,wCAAwC;AAC5C;;AAEA,eAAe,gBAAgB;IAC3B,6BAA6B;IAC7B,0CAA0C;IAC1C,gBAAgB;IAChB,mBAAmB;IACnB,YAAY;IACZ,iBAAiB;IACjB,gCAAgC;IAChC,aAAa;IACb,YAAY;IACZ,kBAAkB;IAClB,gBAAgB;IAChB,iBAAiB;IACjB,kBAAkB;IAClB,gBAAgB;IAChB,mBAAmB;IACnB,YAAY;AAChB","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --cooler-blue: #23424b;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n}\r\n\r\nbody {\r\n    min-height: 100vh;\r\n    font-family: \"Inter\", sans-serif;\r\n\r\n    margin: 0;\r\n    padding: 0;\r\n\r\n    /*align-content: center;*/\r\n\r\n    background-color: #ffffff;\r\n    background-image:\r\n        linear-gradient(90deg, #ccf0ff80 40px, transparent 40px),\r\n        linear-gradient(#ccf0ff80 40px, transparent 40px);\r\n    background-position: 10px 10px;\r\n    background-size: 78px 78px;\r\n}\r\n\r\nh1 {\r\n    color: var(--cooler-blue);\r\n    font-family: \"Baskerville\", \"Georgia\", serif;\r\n    font-style: italic;\r\n    font-size: 5em !important;\r\n    margin: 0;\r\n}\r\n\r\nh2 {\r\n    font-size: 1.5em !important;\r\n    color: var(--cooler-blue);\r\n    margin: 0;\r\n}\r\n\r\np {\r\n    color: var(--cooler-blue);\r\n}\r\n\r\n#logout-el {\r\n    cursor: pointer;\r\n    text-decoration: underline;\r\n}\r\n\r\n\r\n.container{\r\n    display: flex;\r\n    direction: column;\r\n    gap: 5px;\r\n}\r\n\r\n.posts-container{\r\n    display: grid;\r\n    place-content: center;\r\n}\r\n\r\n#profile-header {\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: baseline;\r\n    justify-content: center;\r\n\r\n    \r\n\r\n    height: 10em;\r\n    padding-left:150px;\r\n    padding-top: 2em;\r\n\r\n    width:100%;\r\n\r\n    margin-top: 0px;\r\n\r\n    background-color: var(--snow);\r\n    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.page-list-div{text-align: left;\r\n    background-color: var(--snow);\r\n    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);\r\n    transition: 0.3s;\r\n    border-radius: 50px;\r\n    border:solid;\r\n    border-width: 2px;\r\n    border-color: var(--cooler-blue);\r\n    display: grid;\r\n    width: 800px;\r\n    /* height: 50px; */\r\n    font-size: large;\r\n    margin-left: auto;\r\n    margin-right: auto;\r\n    margin-top: 15px;\r\n    margin-bottom: 15px;\r\n    padding:25px;\r\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./client/src/style.css":
+/*!********************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./client/src/style.css ***!
+  \********************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `/** background:#4D7C8A; **/
+
+:root {
+  --text-color: #23424b;
+}
+
+body {
+  margin: 0;
+  min-height: 690px;
+  min-width: 650px;
+
+  align-content: center;
+
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(90deg, #ccf0ff80 40px, transparent 40px),
+    linear-gradient(#ccf0ff80 40px, transparent 40px);
+  background-position: 10px 10px;
+  background-size: 78px 78px;
+}
+
+h1 {
+  color: var(--text-color);
+    font-family: "Baskerville", "Georgia", serif;
+    font-style: italic;
+    font-size: 5em !important;
+    margin: 0;
+}
+
+h2 {
+    font-size: 1.5em !important;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.container{
+  display: flex;
+  direction: column;
+  gap: 5px;
+}
+
+.footer {
+  height:100px;
+  width: 100vw;
+  background-color:var(--text-color);
+  align-items: center;
+}
+`, "",{"version":3,"sources":["webpack://./client/src/style.css"],"names":[],"mappings":"AAAA,0BAA0B;;AAE1B;EACE,qBAAqB;AACvB;;AAEA;EACE,SAAS;EACT,iBAAiB;EACjB,gBAAgB;;EAEhB,qBAAqB;;EAErB,yBAAyB;EACzB;;qDAEmD;EACnD,8BAA8B;EAC9B,0BAA0B;AAC5B;;AAEA;EACE,wBAAwB;IACtB,4CAA4C;IAC5C,kBAAkB;IAClB,yBAAyB;IACzB,SAAS;AACb;;AAEA;IACI,2BAA2B;IAC3B,wBAAwB;IACxB,SAAS;AACb;;AAEA;EACE,aAAa;EACb,iBAAiB;EACjB,QAAQ;AACV;;AAEA;EACE,YAAY;EACZ,YAAY;EACZ,kCAAkC;EAClC,mBAAmB;AACrB","sourcesContent":["/** background:#4D7C8A; **/\r\n\r\n:root {\r\n  --text-color: #23424b;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  min-height: 690px;\r\n  min-width: 650px;\r\n\r\n  align-content: center;\r\n\r\n  background-color: #ffffff;\r\n  background-image:\r\n    linear-gradient(90deg, #ccf0ff80 40px, transparent 40px),\r\n    linear-gradient(#ccf0ff80 40px, transparent 40px);\r\n  background-position: 10px 10px;\r\n  background-size: 78px 78px;\r\n}\r\n\r\nh1 {\r\n  color: var(--text-color);\r\n    font-family: \"Baskerville\", \"Georgia\", serif;\r\n    font-style: italic;\r\n    font-size: 5em !important;\r\n    margin: 0;\r\n}\r\n\r\nh2 {\r\n    font-size: 1.5em !important;\r\n    color: var(--text-color);\r\n    margin: 0;\r\n}\r\n\r\n.container{\r\n  display: flex;\r\n  direction: column;\r\n  gap: 5px;\r\n}\r\n\r\n.footer {\r\n  height:100px;\r\n  width: 100vw;\r\n  background-color:var(--text-color);\r\n  align-items: center;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -31983,6 +32544,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _loginForm_loginForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./loginForm/loginForm */ "./client/src/loginForm/loginForm.ts");
 /* harmony import */ var _navBar_navBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./navBar/navBar */ "./client/src/navBar/navBar.ts");
 /* harmony import */ var _profile_profile__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./profile/profile */ "./client/src/profile/profile.ts");
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.css */ "./client/src/style.css");
+
 
 
 
@@ -31995,7 +32558,10 @@ document.addEventListener("DOMContentLoaded", () => {
         (0,_profile_profile__WEBPACK_IMPORTED_MODULE_3__.profile)({ parent: document.body });
     }
     else {
-        (0,_loginForm_loginForm__WEBPACK_IMPORTED_MODULE_1__.loginForm)({ parent: document.body });
+        let d = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: document.body });
+        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.h1)({ parent: d, text: "Patchwork", style: "text-align: center;" });
+        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.h2)({ parent: d, text: "A Scrapbooking website", style: "text-align: center;" });
+        (0,_loginForm_loginForm__WEBPACK_IMPORTED_MODULE_1__.loginForm)({ parent: document.body, style: "align-self: center;" });
     }
 });
 

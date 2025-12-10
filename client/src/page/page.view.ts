@@ -7,7 +7,7 @@ import {Typing, typing} from "../scrapComponents/typing/typing";
 
 export class PageView extends TurboView<Page, PageModel> {
 
-    private pageDiv: HTMLCanvasElement;
+    private pageDiv: HTMLDivElement;
     private contentObserver: TurboObserver;
 
     private editMode: boolean = false;
@@ -17,11 +17,10 @@ export class PageView extends TurboView<Page, PageModel> {
 
         this.model.getBlock("content")?.generateObserver({
             onAdded : (data) => {
-                console.log("ADDED !");
                 switch (data.type){
                     case "typing": {
-                        data.parent=this.pageDiv;
-                        typing(data)
+                        data.parent=turbo(this.pageDiv);
+                        let t = typing(data)
                     };
                 }
             }
@@ -31,7 +30,7 @@ export class PageView extends TurboView<Page, PageModel> {
     protected setupUIElements() {
         super.setupUIElements();
 
-        this.pageDiv = canvas({classes:"textured-page"});
+        this.pageDiv = div({classes:"textured-page"});
 
         //on click create a text annotation
         this.pageDiv.addEventListener("click", (event: MouseEvent) => {
