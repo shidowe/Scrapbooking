@@ -4,6 +4,10 @@
     --shadow-grey :#342E37;
 }
 
+#switch-modes {
+    margin:0;
+}
+
 #switch-modes:hover {
     cursor: pointer;
     text-decoration: underline;
@@ -33,16 +37,26 @@
     cursor: pointer;
 }
 
+#submit-button > h4 {
+    margin: 0;
+    padding: 0;
+}
+
+.turbo-input {
+    margin: 10px 0;
+}
 
 #form-div {
     text-align: center;
     --borderradius: 14px;
     --bgsize: 0.38rem;
-    padding: 2rem;
-    margin-left: 15%;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     border: 1px solid;
     position: relative;
-    width: 50%;
+    width: fit-content;
     background: var(--snow);
     border-radius: var(--borderradius, 14px);
     transform: translateY(-2px);
@@ -85,9 +99,17 @@
 }
 
 body {
-    display: grid;
+    /*display: grid;*/
+    align-content: center;
     place-content: center;
     min-height: 100vh;
     font-family: "Inter", sans-serif;
-    background: var(--cool-blue);
+}
+
+h3 {
+    font-size: 2em !important;
+    font-family: "Baskerville", "Georgia", serif;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 15px;
 }

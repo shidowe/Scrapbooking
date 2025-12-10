@@ -1,10 +1,11 @@
-import {button, define, div, element, expose, turbo, TurboButton, TurboElement} from "turbodombuilder";
+import {button, define, div, element, expose, spacer, turbo, TurboButton, TurboElement} from "turbodombuilder";
 import "./navBar.css";
 
 @define("nav-bar")
 export class NavBar extends TurboElement {
 
     private divEl: HTMLDivElement;
+    private divTop: HTMLDivElement;
 
     private profileButton: TurboButton;
     private homeButton: TurboButton;
@@ -15,6 +16,7 @@ export class NavBar extends TurboElement {
         super.setupUIElements();
 
         this.divEl = div({style: "display: flex; flex-flow: column; justify-content: space-between;"});
+        this.divTop = div({style: "display: flex; flex-flow: column; flex-grow:0;"});
 
         this.profileButton = button({leftIcon: "profile_icon", onClick: () => {
                 window.location.replace("/login")
@@ -33,9 +35,13 @@ export class NavBar extends TurboElement {
             window.location.replace("/login");
         }});
         
-            this.divEl.appendChild(this.profileButton);
-        this.divEl.appendChild(this.homeButton);
-        this.divEl.appendChild(this.createButton);
+        
+        
+        this.divTop.appendChild(this.profileButton);
+        this.divTop.appendChild(this.homeButton);
+        this.divTop.appendChild(this.createButton);
+        this.divEl.appendChild(this.divTop);
+        this.divEl.appendChild(spacer());
         this.divEl.appendChild(this.logoutButton);
         
     }

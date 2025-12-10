@@ -8,12 +8,7 @@ TurboEventManager.instance.preventDefaultWheel =false;
 document.addEventListener("DOMContentLoaded", () => {
     TurboIcon.config.defaultDirectory = "assets";
 
-    const toolbarEl = document.body.querySelector("#toolbar");
-    const canvasAreaEl = document.body.querySelector("#canvas-area");
-
     navBar({parent: document.body});
 
-    //const drawingCanvas = new DrawingCanvas({});
-
-    //createToolbar({});
+    
 });

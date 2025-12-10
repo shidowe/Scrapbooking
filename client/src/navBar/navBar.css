@@ -29,6 +29,8 @@ nav-bar turbo-button {
     align-items: center;
     justify-content: center;
 
+    flex-grow: 0;
+
     transition: background 0.2s ease;
     border-radius: 10px;
 }

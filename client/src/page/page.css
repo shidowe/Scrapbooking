@@ -2,18 +2,21 @@
     --cool-blue: #4D7C8A;
     --snow: #FCF7F8;
     --shadow-grey :#342E37;
+    --light-border: #bababa;
 }
 
 page-elt {
-    min-height: 400px;
+    /**min-height: 400px;
     min-width: 600px;
     padding: 50px;
     border: 2px solid var(--shadow-grey );
     background-color: var(--snow);
+    **/
 }
 
 .textured-page {
     background-image: url("../../public/assets/pageTexture.jpg");
+    border: 2px solid var(--light-border );
     min-height: 500px;
     min-width: 400px;
     max-height: 500px;

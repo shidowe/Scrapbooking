@@ -1,4 +1,4 @@
-import {div, spacer, TurboEventManager, TurboIcon} from "turbodombuilder";
+import {div, h1, h2, spacer, style, TurboEventManager, TurboIcon} from "turbodombuilder";
 import {loginForm} from "./loginForm/loginForm";
 import { navBar } from "./navBar/navBar"
 import {profile} from "./profile/profile";
@@ -16,7 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
         profile({parent: document.body});
     }
     else {
-        spacer({ parent: document.body });
-        loginForm({ parent: document.body});
+
+        let d = div({parent: document.body});
+        h1({parent:d, text: "Patchwork", style: "text-align: center;"});
+        h2({parent:d, text: "A Scrapbooking website", style: "text-align: center;"});
+        
+        loginForm({ parent: document.body, style: "align-self: center;"});
     }
 });
