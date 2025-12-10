@@ -1,5 +1,5 @@
 import {button, define, div, element, expose, spacer, turbo, TurboButton, TurboElement} from "turbodombuilder";
-import "./navBar.css";
+import "./PageList.css";
 import {makeRequest} from "../makeRequest";
 
 @define("page-list")
