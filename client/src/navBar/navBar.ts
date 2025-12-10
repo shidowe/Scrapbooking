@@ -1,5 +1,7 @@
 import {button, define, div, element, expose, spacer, turbo, TurboButton, TurboElement} from "turbodombuilder";
 import "./navBar.css";
+import {makeRequest} from "../makeRequest";
+import {page, Page} from "../page/page";
 
 @define("nav-bar")
 export class NavBar extends TurboElement {
@@ -26,9 +28,20 @@ export class NavBar extends TurboElement {
                 window.location.replace("/");
             }});
 
-        this.createButton = button({leftIcon: "create_icon", onClick: () => {
-                window.location.replace("/create");
-            }});
+        this.createButton= button({leftIcon: "create_icon", onClick: () => {
+            //todo if there's a current page save it
+            makeRequest(
+                "http://localhost:3000/pages/createNewPage",
+                "post",
+                {"userId":JSON.parse(sessionStorage.getItem("userId"))},
+                (responseString)=>{
+                    sessionStorage.setItem("currentPage", responseString);
+                    window.location.replace("/create");
+                },
+                (message)=> { console.log("failure");}
+            );
+            this.createButton.hidden=true; //doesn't work
+        }});
 
         this.logoutButton = button({leftIcon: "logout_icon", hidden: sessionStorage.getItem("username")?false:true, onClick: () => {
             sessionStorage.clear();
