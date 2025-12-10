@@ -7,9 +7,15 @@ export class PageController {
 
     public async loadPagesFromPageId(req:any, res:any): Promise<any> {
         const body = req.body;
-        console.log("BODY : "+body);
         let response =await this.repository.loadPageFromPageId(body.pageIdList); //TODO : do something if one of the pages is missing
-        res.status(200).send(response)
+        res.status(200).send(response);
+        return;
+    }
+
+    public async createNewPage(req:any, res:any): Promise<any> {
+        const body = req.body;
+        let response =await this.repository.createNewPage(body.userId); //TODO : do something if one of the pages is missingres.status(200).send(response)
+        res.status(200).send(response);
         return;
     }
 

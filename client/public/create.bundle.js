@@ -2,6 +2,50 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./client/src/makeRequest.ts":
+/*!***********************************!*\
+  !*** ./client/src/makeRequest.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   makeRequest: () => (/* binding */ makeRequest)
+/* harmony export */ });
+function makeRequest(url, method, body, onSuccess = () => { }, onFailure = () => { }, parse = false, responseType = "text") {
+    const request = new XMLHttpRequest();
+    request.responseType = responseType;
+    request.onreadystatechange = _ => {
+        if (request.readyState !== 4)
+            return;
+        if (request.status < 200 || request.status >= 300) {
+            onFailure(request.response);
+            return;
+        }
+        if (parse) {
+            try {
+                onSuccess(typeof request.response === "string"
+                    ? JSON.parse(request.response)
+                    : JSON.parse(new TextDecoder().decode(request.response)));
+            }
+            catch (err) {
+                onFailure("Failed to parse JSON: " + err.message);
+            }
+        }
+        else
+            onSuccess(request.response);
+    };
+    request.open(method, url, true);
+    if (!(body instanceof FormData)) {
+        request.setRequestHeader("Content-Type", "application/json");
+        body = JSON.stringify(body);
+    }
+    request.send(body);
+}
+
+
+/***/ }),
+
 /***/ "./client/src/navBar/navBar.css":
 /*!**************************************!*\
   !*** ./client/src/navBar/navBar.css ***!
@@ -30627,11 +30671,27 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
 /* harmony import */ var _navBar_navBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navBar/navBar */ "./client/src/navBar/navBar.ts");
+/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./makeRequest */ "./client/src/makeRequest.ts");
+
 
 
 turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboEventManager.instance.preventDefaultWheel = false;
 document.addEventListener("DOMContentLoaded", () => {
     turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboIcon.config.defaultDirectory = "assets";
+    if (!sessionStorage.getItem("userId")) {
+        window.location.replace("/login");
+    }
+    if (sessionStorage.getItem("currentPage")) {
+        //todo load page
+    }
+    else {
+        let newPageButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ text: "New Page", parent: document.body });
+        newPageButton.addEventListener("click", () => {
+            (0,_makeRequest__WEBPACK_IMPORTED_MODULE_2__.makeRequest)("http://localhost:3000/pages/createNewPage", "post", { "userId": JSON.parse(sessionStorage.getItem("userId")) }, (responseString) => {
+                console.log("success yayyyyy");
+            }, (message) => { console.log("failure"); });
+        });
+    }
     (0,_navBar_navBar__WEBPACK_IMPORTED_MODULE_1__.navBar)({ parent: document.body });
 });
 

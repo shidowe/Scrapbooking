@@ -1,5 +1,6 @@
 import {Page} from "./page";
 import fs from "fs";
+import {User} from "../users/user";
 
 const pageListJSONPath = "server/json/pageList.json";
 
@@ -33,9 +34,18 @@ export class PageRepository {
         if(this.data.length == 0){
             await this.fetchData();
         }
-
         await this.fetchData();
         return this.data;
+    }
+
+    public async createNewPage(userId:number):Promise<Page>  {
+        if(this.data.length==0) {
+            await this.fetchData();
+        }
+        let page = new Page(this.data.length, userId, []);
+        this.data.push(page);
+        fs.writeFile(pageListJSONPath, JSON.stringify(this.data, null,4), (err) => {});
+        return page;
     }
 
 
