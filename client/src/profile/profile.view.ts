@@ -12,7 +12,7 @@ import {page} from "../page/page";
 import "./profile.css";
 import {GridBoard, gridBoard} from "../gridBoard/gridBoard";
 import {PageList, pageList} from "../pageList/pageList";
-import {PageDisplay, pageDisplay} from "../pageDisplay/profile";
+import {PageDisplay, pageDisplay} from "../pageDisplay/pageDisplay";
 
 
 export class ProfileView extends TurboView<Profile, ProfileModel> {
