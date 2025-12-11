@@ -2,7 +2,6 @@ import {define, element, expose, turbo, TurboElement} from "turbodombuilder";
 import {TypingView} from "./typing.view";
 import {TypingModel} from "./typing.model";
 import {PageProperties} from "../../page/page.types";
-import {PageView} from "../../page/page.view";
 import {PageModel} from "../../page/page.model";
 import {Page} from "../../page/page";
 import {ScrapData} from "../scrapComponent";
@@ -13,7 +12,7 @@ export class Typing extends TurboElement<TypingView, TypingModel> {
     @expose("model") public model : TypingModel;
 }
 
-export function typing(properties:any): Typing {
+export function typing(properties:any, listDisplay?:boolean): Typing {
     console.log("TYPING PROPERTIES: "+properties.toString());
     turbo(properties).applyDefaults({
         tag: "typing",

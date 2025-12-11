@@ -40,7 +40,6 @@ export class NavBar extends TurboElement {
                 },
                 (message)=> { console.log("failure");}
             );
-            this.createButton.hidden=true; //doesn't work
         }});
 
         this.logoutButton = button({leftIcon: "logout_icon", hidden: sessionStorage.getItem("username")?false:true, onClick: () => {

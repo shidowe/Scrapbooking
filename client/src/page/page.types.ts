@@ -1,7 +1,8 @@
 import {TurboElementProperties} from "turbodombuilder";
-import {PageView} from "./page.view";
 import {PageModel} from "./page.model";
 import {ScrapData} from "../scrapComponents/scrapComponent";
+import {PageDrawingView} from "./pageDrawing.view";
+import {PageListView} from "./pageList.view";
 
 export type PageData = {
     pageId?: number,
@@ -11,6 +12,6 @@ export type PageData = {
 };
 
 export type PageProperties =
-    TurboElementProperties<PageView, PageData, PageModel> & {
+    TurboElementProperties<PageDrawingView|PageListView, PageData, PageModel> & {
     //TODO
 };

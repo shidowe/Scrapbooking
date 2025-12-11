@@ -74,7 +74,7 @@ export class PageRepository {
         }
         //TODO
 
-        fs.writeFile(pageListJSONPath, JSON.stringify(this.data, null, 4), (err) => { console.log(err)});
+        //fs.writeFile(pageListJSONPath, JSON.stringify(this.data, null, 4), (err) => { console.log(err)});
         return new Promise((resolve, reject) => {resolve(true);})
     }
 

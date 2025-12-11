@@ -325,6 +325,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
 /* harmony import */ var _navBar_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navBar.css */ "./client/src/navBar/navBar.css");
+/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../makeRequest */ "./client/src/makeRequest.ts");
 var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
     function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
     var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
@@ -365,6 +366,7 @@ var __setFunctionName = (undefined && undefined.__setFunctionName) || function (
 };
 
 
+
 let NavBar = (() => {
     let _classDecorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.define)("nav-bar")];
     let _classDescriptor;
@@ -383,7 +385,12 @@ let NavBar = (() => {
                     window.location.replace("/");
                 } });
             this.createButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "create_icon", onClick: () => {
-                    window.location.replace("/create");
+                    //todo if there's a current page save it
+                    (0,_makeRequest__WEBPACK_IMPORTED_MODULE_2__.makeRequest)("http://localhost:3000/pages/createNewPage", "post", { "userId": JSON.parse(sessionStorage.getItem("userId")) }, (responseString) => {
+                        sessionStorage.setItem("currentPage", responseString);
+                        window.location.replace("/create");
+                    }, (message) => { console.log("failure"); });
+                    this.createButton.hidden = true; //doesn't work
                 } });
             this.logoutButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ leftIcon: "logout_icon", hidden: sessionStorage.getItem("username") ? false : true, onClick: () => {
                     sessionStorage.clear();

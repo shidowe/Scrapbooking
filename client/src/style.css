@@ -45,3 +45,38 @@ h2 {
   background-color:var(--text-color);
   align-items: center;
 }
+
+
+/* Create page layout */
+.create-page-layout {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.nav-bar {
+    grid-row: span 5 / span 5;
+}
+
+.page-drawing {
+    grid-column: span 8 / span 8;
+    grid-row: span 4 / span 4;
+    background-color: var(--snow);
+
+}
+
+.page-list {
+    grid-row: span 4 / span 4;
+    grid-column-start: 10;
+    background-color: var(--snow);
+    overflow-y: scroll
+}
+
+.toolbar{
+    grid-column: span 9 / span 9;
+    grid-column-start: 2;
+    grid-row-start: 5;
+}
+
+

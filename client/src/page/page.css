@@ -8,6 +8,7 @@
 .textured-page {
     background-image: url("../../public/assets/pageTexture.jpg");
     border: 2px solid var(--light-border );
-    min-height: 500px;
-    min-width: 400px;
+    height: 500px;
+    width: 400px;
 }
+
