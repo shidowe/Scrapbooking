@@ -13,7 +13,7 @@ import {
 import {makeRequest} from "../makeRequest";
 import {PageList, pageList} from "../pageList/pageList";
 import {GridBoard, gridBoard} from "../gridBoard/gridBoard";
-import "./profile.css";
+import "./pageDisplay.css";
 
 @define("page-display")
 export class PageDisplay extends TurboElement {
