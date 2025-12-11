@@ -13,6 +13,7 @@ import {
 import {makeRequest} from "../makeRequest";
 import {PageList, pageList} from "../pageList/pageList";
 import {GridBoard, gridBoard} from "../gridBoard/gridBoard";
+import "./profile.css";
 
 @define("page-display")
 export class PageDisplay extends TurboElement {
@@ -27,7 +28,10 @@ export class PageDisplay extends TurboElement {
     protected setupUIElements() {
         super.setupUIElements();
 
-        this.changeDisplayMode = button({parent:document.body, leftIcon: "profile_icon", onClick: () => {
+        let btnDiv = div({parent:document.body, style:"display:flex; justify-content:flex-end; margin:10px;"});
+
+        this.changeDisplayMode = button({parent:btnDiv, text:this.gridDisplayMode?"List view":"Grid view",
+            onClick: () => {
                 this.gridDisplayMode = !this.gridDisplayMode;
                 this.gridBoard.hidden= this.gridDisplayMode;
                 this.pageList.hidden= !this.gridDisplayMode;
