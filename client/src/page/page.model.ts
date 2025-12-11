@@ -7,7 +7,7 @@ import content from "*.svg";
 export class PageModel extends TurboModel {
     @modelSignal() public pageId: number;
     @modelSignal() public userId: number;
-    @modelSignal() public title: number;
+    @modelSignal() public title: string;
     @modelSignal() public content : ScrapData[]=[];
 
     @effect private setupContent(){

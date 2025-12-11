@@ -20,6 +20,7 @@ export function page(properties:PageProperties = {}, listDisplay=false): Page {
         title: properties.title,
         content: properties.content,
     };
+    console.log("in page.ts : ",properties);
     if (listDisplay) {
         turbo(properties).applyDefaults({
             tag: "page-elt",

@@ -4,9 +4,8 @@ import {TypingModel} from "./typing.model"
 import {typing, Typing} from "./typing";
 
 
-export class TypingView extends TurboView<Typing, TypingModel> {
+export class TypingDrawingView extends TurboView<Typing, TypingModel> {
     private textEl: HTMLElement;
-    @expose("") length;
 
     private contentObserver: TurboObserver;
 
