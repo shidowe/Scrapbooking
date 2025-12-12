@@ -11,7 +11,7 @@ import {
     TurboProperties
 } from "turbodombuilder";
 import {makeRequest} from "../makeRequest";
-import {PageList, pageList} from "../pageList/pageList";
+import {PageList, pageList} from "./pageList/pageList";
 import {GridBoard, gridBoard} from "../gridBoard/gridBoard";
 import "./pageDisplay.css";
 

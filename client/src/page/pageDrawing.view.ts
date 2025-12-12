@@ -1,8 +1,9 @@
-import {turbo, TurboView, div, p, TurboObserver, canvas, expose,} from "turbodombuilder";
+import {turbo, TurboView, div, TurboObserver} from "turbodombuilder";
 
 import {PageModel} from "./page.model";
 import {Page} from "./page";
-import {Typing, typing} from "../scrapComponents/typing/typing";
+import {typing} from "../scrapComponents/typing/typing";
+import {sketch} from "../scrapComponents/sketch/sketch";
 
 
 export class PageDrawingView extends TurboView<Page, PageModel> {
@@ -19,7 +20,11 @@ export class PageDrawingView extends TurboView<Page, PageModel> {
                     case "typing": {
                         typing({data:data, parent:this.pageDiv});
                         break;
-                    };
+                    }
+                    case "sketch": {
+                        sketch({data:data, parent:this.pageDiv});
+                        break;
+                    }
                 }
             }
         });

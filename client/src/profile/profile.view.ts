@@ -11,7 +11,7 @@ import {success} from "concurrently/dist/src/defaults";
 import {page} from "../page/page";
 import "./profile.css";
 import {GridBoard, gridBoard} from "../gridBoard/gridBoard";
-import {PageList, pageList} from "../pageList/pageList";
+import {PageList, pageList} from "../pageDisplay/pageList/pageList";
 import {PageDisplay, pageDisplay} from "../pageDisplay/pageDisplay";
 
 

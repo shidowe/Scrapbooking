@@ -1,6 +1,6 @@
 import {button, define, div, element, expose, spacer, turbo, TurboButton, TurboElement} from "turbodombuilder";
 import "./PageList.css";
-import {makeRequest} from "../makeRequest";
+import {makeRequest} from "../../makeRequest";
 
 @define("page-list")
 export class PageList extends TurboElement {

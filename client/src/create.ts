@@ -6,6 +6,7 @@ import {makeRequest} from "./makeRequest";
 import {PageData} from "./page/page.types";
 TurboEventManager.instance.preventDefaultWheel =false;
 import "./style.css";
+import {PageModel} from "./page/page.model";
 
 
 
@@ -22,10 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
     navBar({parent: createPageLayout, classes:"nav-bar"});
 
     //page in drawing form
-    let pageDrawing = page({...JSON.parse(sessionStorage.getItem("currentPage")), ...{parent:createPageLayout, classes:"page-drawing"}});
+    let pageDrawing = page({ data: JSON.parse(sessionStorage.getItem("currentPage")), parent:createPageLayout, classes:"page-drawing"});
 
     //page in list form
-    let pageList = page({...JSON.parse(sessionStorage.getItem("currentPage")), ...{parent:createPageLayout, classes:"page-list"}}, true);
+    let pageList = page({model:pageDrawing.model, parent:createPageLayout, classes:"page-list"}, true);
 
 
 

@@ -2,9 +2,11 @@ import {expose, textarea, turbo, turboInput, TurboObserver, TurboView} from "tur
 
 import {TypingModel} from "./typing.model"
 import {typing, Typing} from "./typing";
+import "./typing.css";
 
 
-export class TypingListView extends TurboView<Typing, TypingModel> {
+
+export class TypingInfoView extends TurboView<Typing, TypingModel> {
 
     private contentObserver: TurboObserver;
 
@@ -28,6 +30,8 @@ export class TypingListView extends TurboView<Typing, TypingModel> {
     protected setupUILayout() {
         super.setupUILayout();
         turbo(this).addChild([this.textEl, this.xEl, this.yEl, this.colorEl]);
+        turbo(this).addClass("typing-info");
+
     }
 
 }
