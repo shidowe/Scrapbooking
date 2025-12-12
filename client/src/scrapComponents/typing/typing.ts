@@ -10,24 +10,14 @@ import {TypingListView} from "./typingList.view";
 @define("typing-element")
 export class Typing extends TurboElement<TypingDrawingView|TypingListView, TypingModel> {
     @expose("model") public text : String;
-    @expose("model") public model : TypingModel;
 }
 
 export function typing(properties:any, listDisplay=false): Typing {
-    if(listDisplay){
         turbo(properties).applyDefaults({
-            tag: "typing",
-            view: TypingListView,
+            tag: "typing-element",
+            view: listDisplay ? TypingListView : TypingDrawingView,
             model: TypingModel,
         });
-    }
-    else{
-        turbo(properties).applyDefaults({
-            tag: "typing",
-            view: TypingDrawingView,
-            model: TypingModel,
-        });
-    }
     return element({...properties}) as Typing;
 
 }

@@ -19,10 +19,10 @@ export class TypingListView extends TurboView<Typing, TypingModel> {
 
     protected setupUIElements() {
         super.setupUIElements();
-        this.textEl = textarea({text: String(this.model.content.text), color: this.model.content.color});
-        this.xEl = turboInput({type:"number", placeholder:this.model.content.x});
-        this.yEl = turboInput({type:"number", placeholder:this.model.content.y});
-        this.colorEl = turboInput({type:"color", placeholder:this.model.content.color});
+        this.textEl = textarea({text: String(this.model.text), color: this.model.color});
+        this.xEl = turboInput({type:"number", placeholder:this.model.x});
+        this.yEl = turboInput({type:"number", placeholder:this.model.y});
+        this.colorEl = turboInput({type:"color", placeholder:this.model.color});
     }
 
     protected setupUILayout() {

@@ -17,7 +17,8 @@ export class PageDrawingView extends TurboView<Page, PageModel> {
             onAdded : (data) => {
                 switch (data.type){
                     case "typing": {
-                        typing({...data, ...{parent:this.pageDiv}});
+                        typing({data:data, parent:this.pageDiv});
+                        break;
                     };
                 }
             }

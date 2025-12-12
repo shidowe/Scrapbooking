@@ -6,6 +6,7 @@ import {page, Page} from "../page/page";
 @define("nav-bar")
 export class NavBar extends TurboElement {
 
+    //todo remove those 2
     private divEl: HTMLDivElement;
     private divTop: HTMLDivElement;
 
