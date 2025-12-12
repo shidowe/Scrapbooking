@@ -1,4 +1,4 @@
-import {expose, textarea, turbo, turboInput, TurboObserver, TurboView} from "turbodombuilder";
+import {expose, textarea, turbo, TurboInput, turboInput, TurboObserver, TurboView} from "turbodombuilder";
 
 import {TypingModel} from "./typing.model"
 import {typing, Typing} from "./typing";
@@ -11,7 +11,7 @@ export class TypingInfoView extends TurboView<Typing, TypingModel> {
     private contentObserver: TurboObserver;
 
     private textEl: HTMLElement;
-    private xEl: HTMLElement;
+    private xEl: TurboInput;
     private yEl: HTMLElement;
     private colorEl: HTMLElement;
 
@@ -22,7 +22,9 @@ export class TypingInfoView extends TurboView<Typing, TypingModel> {
     protected setupUIElements() {
         super.setupUIElements();
         this.textEl = textarea({text: String(this.model.text), color: this.model.color});
-        this.xEl = turboInput({type:"number", placeholder:this.model.x});
+        this.xEl = turboInput({type:"number", placeholder:this.model.x, oninput:()=>{
+            console.log(this.xEl.value);
+        }});
         this.yEl = turboInput({type:"number", placeholder:this.model.y});
         this.colorEl = turboInput({type:"color", placeholder:this.model.color});
     }
