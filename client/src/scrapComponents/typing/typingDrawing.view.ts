@@ -5,7 +5,7 @@ import {typing, Typing} from "./typing";
 
 
 export class TypingDrawingView extends TurboView<Typing, TypingModel> {
-    private textEl: HTMLDivElement;
+    private textEl: HTMLTextAreaElement;
 
     private contentObserver: TurboObserver;
 
@@ -15,9 +15,11 @@ export class TypingDrawingView extends TurboView<Typing, TypingModel> {
 
     protected setupUIElements() {
         super.setupUIElements();
-        this.textEl = div({text: String(this.model.text), contentEditable: "true", color: this.model.color, oninput :()=>{
-            this.model.text= this.textEl.textContent ;
-            }});
+        this.textEl = textarea({
+            text: this.model.text,
+            color: this.model.color,
+            oninput: () => this.model.text = this.textEl.value
+        });
     }
 
     protected setupUILayout() {

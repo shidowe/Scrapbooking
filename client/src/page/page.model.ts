@@ -1,4 +1,4 @@
-import {effect, initializeEffects, modelSignal, TurboModel, TurboYBlock} from "turbodombuilder";
+import {effect, initializeEffects, modelSignal, MvcBlockKeyType, TurboModel, TurboYBlock} from "turbodombuilder";
 import {ScrapData} from "../scrapComponents/scrapComponent";
 import {typing, Typing} from "../scrapComponents/typing/typing";
 import {PageProperties} from "./page.types";
@@ -14,6 +14,11 @@ export class PageModel extends TurboModel {
 
     @effect private setupContent(){
     if (!this.hasBlock("content")) this.setBlock(this.content, "", "content");
+    }
+
+    public initialize(blockKey?: MvcBlockKeyType<"array"|"map">){
+        super.initialize(blockKey);
+        this.setBlock(this.content, "", "content");
     }
 
     public addScrapComponent(scrapComponent: ScrapData) : void {

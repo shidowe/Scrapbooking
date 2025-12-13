@@ -38,7 +38,7 @@ export class TypingInfoView extends TurboView<Typing, TypingModel> {
     }
 
     @effect textChanged() {
-        console.log("info"+this.model.text)
+        this.textEl.textContent = this.model.text;
     }
 
 }

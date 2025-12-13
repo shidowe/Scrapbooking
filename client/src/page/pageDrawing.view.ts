@@ -26,8 +26,8 @@ export class PageDrawingView extends TurboView<Page, PageModel> {
                         component=sketch({data:data, parent:this.pageDiv});
                         break;
                     }
-                    return component;
                 }
+                return component;
             }
         });
     }
