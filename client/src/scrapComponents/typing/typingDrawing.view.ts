@@ -28,5 +28,9 @@ export class TypingDrawingView extends TurboView<Typing, TypingModel> {
         turbo(this).addChild([this.textEl]);
     }
 
+    @effect textChanged() {
+        console.log("drawing"+this.model.text)
+    }
+
 
 }

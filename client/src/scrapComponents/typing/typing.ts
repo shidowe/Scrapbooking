@@ -11,9 +11,7 @@ import {TypingInfoView} from "./typingInfo.view";
 export class Typing extends TurboElement<TypingDrawingView|TypingInfoView, TypingModel> {
     @expose("model") public text : String;
 
-    @effect textChanged() {
-        console.log(this.text)
-    }
+
 }
 
 export function typing(properties:any, listDisplay=false): Typing {
