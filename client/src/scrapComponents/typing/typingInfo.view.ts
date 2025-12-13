@@ -10,7 +10,7 @@ export class TypingInfoView extends TurboView<Typing, TypingModel> {
 
     private contentObserver: TurboObserver;
 
-    private textEl: HTMLElement;
+    private textEl: HTMLTextAreaElement;
     private xEl: TurboInput;
     private yEl: HTMLElement;
     private colorEl: HTMLElement;
@@ -30,6 +30,7 @@ export class TypingInfoView extends TurboView<Typing, TypingModel> {
             text: this.model.text,
             color: this.model.color,
             oninput: () => this.model.text = this.textEl.value
+
         });
         this.xEl = turboInput({type:"number", placeholder:this.model.x, oninput:()=>{
             console.log(this.xEl.value);

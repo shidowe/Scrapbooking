@@ -785,8 +785,12 @@ let PageModel = (() => {
     let _setupContent_decorators;
     return _a = class PageModel extends _classSuper {
             setupContent() {
+                if (!this.hasBlock("content"))
+                    this.setBlock(this.content, "", "content");
+            }
+            initialize(blockKey) {
+                super.initialize(blockKey);
                 this.setBlock(this.content, "", "content");
-                console.log("CONTENT : " + this.content);
             }
             addScrapComponent(scrapComponent) {
                 this.content.push(scrapComponent);
@@ -816,6 +820,7 @@ let PageModel = (() => {
             __esDecorate(null, null, _content_decorators, { kind: "field", name: "content", static: false, private: false, access: { has: obj => "content" in obj, get: obj => obj.content, set: (obj, value) => { obj.content = value; } }, metadata: _metadata }, _content_initializers, _content_extraInitializers);
             if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
         })(),
+        _a.dataBlockConstructor = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboYBlock,
         _a;
 })();
 
@@ -920,22 +925,12 @@ function page(properties = {}, listDisplay = false) {
         content: properties.content,
     };
     console.log("in page.ts : ", properties);
-    if (listDisplay) {
-        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
-            tag: "page-elt",
-            view: _pageList_view__WEBPACK_IMPORTED_MODULE_3__.PageListView,
-            model: _page_model__WEBPACK_IMPORTED_MODULE_1__.PageModel,
-            data: pageData,
-        });
-    }
-    else {
-        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
-            tag: "page-elt",
-            view: _pageDrawing_view__WEBPACK_IMPORTED_MODULE_4__.PageDrawingView,
-            model: _page_model__WEBPACK_IMPORTED_MODULE_1__.PageModel,
-            data: pageData,
-        });
-    }
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
+        tag: "page-elt",
+        view: listDisplay ? _pageList_view__WEBPACK_IMPORTED_MODULE_3__.PageListView : _pageDrawing_view__WEBPACK_IMPORTED_MODULE_4__.PageDrawingView,
+        model: _page_model__WEBPACK_IMPORTED_MODULE_1__.PageModel,
+        data: pageData,
+    });
     return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
 }
 //todo not sure about that, it works tho
@@ -966,26 +961,24 @@ class PageDrawingView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.Turbo
         super.initialize();
         (_a = this.model.getBlock("content")) === null || _a === void 0 ? void 0 : _a.generateObserver({
             onAdded: (data) => {
-                switch (data.type) {
+                let component;
+                switch (data.get("type")) {
                     case "typing": {
-                        (0,_scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__.typing)({ data: data, parent: this.pageDiv });
+                        component = (0,_scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__.typing)({ data: data, parent: this.pageDiv });
                         break;
                     }
                     case "sketch": {
-                        (0,_scrapComponents_sketch_sketch__WEBPACK_IMPORTED_MODULE_2__.sketch)({ data: data, parent: this.pageDiv });
+                        component = (0,_scrapComponents_sketch_sketch__WEBPACK_IMPORTED_MODULE_2__.sketch)({ data: data, parent: this.pageDiv });
                         break;
                     }
                 }
+                return component;
             }
         });
     }
     setupUIElements() {
         super.setupUIElements();
         this.pageDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ classes: "textured-page" });
-        //on click create a text annotation
-        this.pageDiv.addEventListener("click", (event) => {
-            // todo
-        });
     }
     setupUILayout() {
         super.setupUILayout();
@@ -1022,14 +1015,17 @@ class PageListView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVie
         super.initialize();
         (_a = this.model.getBlock("content")) === null || _a === void 0 ? void 0 : _a.generateObserver({
             onAdded: (data) => {
-                switch (data.type) {
-                    case "typing":
-                        {
-                            (0,_scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__.typing)({ data: data, parent: this.pageInfoList }, true);
-                        }
-                        ;
+                let component;
+                switch (data.get("type")) {
+                    case "typing": {
+                        component = (0,_scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__.typing)({ data: data, parent: this.pageInfoList });
                         break;
+                    }
+                    case "sketch": { //todo
+                        break;
+                    }
                 }
+                return component;
             }
         });
     }
@@ -1124,7 +1120,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   pageDisplay: () => (/* binding */ pageDisplay)
 /* harmony export */ });
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
-/* harmony import */ var _pageList_pageList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../pageList/pageList */ "./client/src/pageList/pageList.ts");
+/* harmony import */ var _pageList_pageList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pageList/pageList */ "./client/src/pageDisplay/pageList/pageList.ts");
 /* harmony import */ var _gridBoard_gridBoard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../gridBoard/gridBoard */ "./client/src/gridBoard/gridBoard.ts");
 /* harmony import */ var _pageDisplay_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pageDisplay.css */ "./client/src/pageDisplay/pageDisplay.css");
 var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
@@ -1219,29 +1215,29 @@ function pageDisplay(PageIdList, properties = {}) {
 
 /***/ }),
 
-/***/ "./client/src/pageList/PageList.css":
-/*!******************************************!*\
-  !*** ./client/src/pageList/PageList.css ***!
-  \******************************************/
+/***/ "./client/src/pageDisplay/pageList/PageList.css":
+/*!******************************************************!*\
+  !*** ./client/src/pageDisplay/pageList/PageList.css ***!
+  \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_PageList_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!./PageList.css */ "./node_modules/css-loader/dist/cjs.js!./client/src/pageList/PageList.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_PageList_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!./PageList.css */ "./node_modules/css-loader/dist/cjs.js!./client/src/pageDisplay/pageList/PageList.css");
 
       
       
@@ -1271,10 +1267,10 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./client/src/pageList/pageList.ts":
-/*!*****************************************!*\
-  !*** ./client/src/pageList/pageList.ts ***!
-  \*****************************************/
+/***/ "./client/src/pageDisplay/pageList/pageList.ts":
+/*!*****************************************************!*\
+  !*** ./client/src/pageDisplay/pageList/pageList.ts ***!
+  \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1283,8 +1279,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   pageList: () => (/* binding */ pageList)
 /* harmony export */ });
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
-/* harmony import */ var _PageList_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PageList.css */ "./client/src/pageList/PageList.css");
-/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../makeRequest */ "./client/src/makeRequest.ts");
+/* harmony import */ var _PageList_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PageList.css */ "./client/src/pageDisplay/pageList/PageList.css");
+/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../makeRequest */ "./client/src/makeRequest.ts");
 var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
     function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
     var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
@@ -1654,6 +1650,7 @@ let SketchModel = (() => {
             __esDecorate(null, null, _points_decorators, { kind: "field", name: "points", static: false, private: false, access: { has: obj => "points" in obj, get: obj => obj.points, set: (obj, value) => { obj.points = value; } }, metadata: _metadata }, _points_initializers, _points_extraInitializers);
             if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
         })(),
+        _a.dataBlockConstructor = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboYBlock,
         _a;
 })();
 
@@ -1767,6 +1764,58 @@ function sketch(properties = {}) {
 
 /***/ }),
 
+/***/ "./client/src/scrapComponents/typing/typing.css":
+/*!******************************************************!*\
+  !*** ./client/src/scrapComponents/typing/typing.css ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_typing_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!./typing.css */ "./node_modules/css-loader/dist/cjs.js!./client/src/scrapComponents/typing/typing.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_typing_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_typing_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_typing_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_typing_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
 /***/ "./client/src/scrapComponents/typing/typing.model.ts":
 /*!***********************************************************!*\
   !*** ./client/src/scrapComponents/typing/typing.model.ts ***!
@@ -1851,6 +1900,7 @@ let TypingModel = (() => {
             __esDecorate(null, null, _color_decorators, { kind: "field", name: "color", static: false, private: false, access: { has: obj => "color" in obj, get: obj => obj.color, set: (obj, value) => { obj.color = value; } }, metadata: _metadata }, _color_initializers, _color_extraInitializers);
             if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
         })(),
+        _a.dataBlockConstructor = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboYBlock,
         _a;
 })();
 
@@ -1872,7 +1922,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
 /* harmony import */ var _typingDrawing_view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./typingDrawing.view */ "./client/src/scrapComponents/typing/typingDrawing.view.ts");
 /* harmony import */ var _typing_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./typing.model */ "./client/src/scrapComponents/typing/typing.model.ts");
-/* harmony import */ var _typingList_view__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./typingList.view */ "./client/src/scrapComponents/typing/typingList.view.ts");
+/* harmony import */ var _typingInfo_view__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./typingInfo.view */ "./client/src/scrapComponents/typing/typingInfo.view.ts");
 var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
     function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
     var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
@@ -1948,7 +1998,7 @@ let Typing = (() => {
 function typing(properties, listDisplay = false) {
     (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
         tag: "typing-element",
-        view: listDisplay ? _typingList_view__WEBPACK_IMPORTED_MODULE_3__.TypingListView : _typingDrawing_view__WEBPACK_IMPORTED_MODULE_1__.TypingDrawingView,
+        view: listDisplay ? _typingInfo_view__WEBPACK_IMPORTED_MODULE_3__.TypingInfoView : _typingDrawing_view__WEBPACK_IMPORTED_MODULE_1__.TypingDrawingView,
         model: _typing_model__WEBPACK_IMPORTED_MODULE_2__.TypingModel,
     });
     return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
@@ -1968,55 +2018,187 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   TypingDrawingView: () => (/* binding */ TypingDrawingView)
 /* harmony export */ });
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
 
-class TypingDrawingView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
-    initialize() {
-        super.initialize();
-    }
-    setupUIElements() {
-        super.setupUIElements();
-        this.textEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({ text: String(this.model.text), color: this.model.color });
-    }
-    setupUILayout() {
-        super.setupUILayout();
-        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).setStyle("position", "relative");
-        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).setStyle("left", this.model.x);
-        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).setStyle("top", this.model.y);
-        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.textEl]);
-    }
-}
+let TypingDrawingView = (() => {
+    var _a;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView;
+    let _instanceExtraInitializers = [];
+    let _textChanged_decorators;
+    return _a = class TypingDrawingView extends _classSuper {
+            constructor() {
+                super(...arguments);
+                this.textEl = __runInitializers(this, _instanceExtraInitializers);
+            }
+            initialize() {
+                super.initialize();
+            }
+            setupUIElements() {
+                super.setupUIElements();
+                this.textEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({
+                    text: this.model.text,
+                    color: this.model.color,
+                    oninput: () => this.model.text = this.textEl.value
+                });
+            }
+            setupUILayout() {
+                super.setupUILayout();
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).setStyle("position", "relative");
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).setStyle("left", this.model.x + "px");
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).setStyle("top", this.model.y + "px");
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.textEl]);
+            }
+            textChanged() {
+                console.log("drawing" + this.model.text);
+                this.textEl.textContent = this.model.text;
+            }
+        },
+        (() => {
+            var _b;
+            const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_b = _classSuper[Symbol.metadata]) !== null && _b !== void 0 ? _b : null) : void 0;
+            _textChanged_decorators = [turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.effect];
+            __esDecorate(_a, null, _textChanged_decorators, { kind: "method", name: "textChanged", static: false, private: false, access: { has: obj => "textChanged" in obj, get: obj => obj.textChanged }, metadata: _metadata }, null, _instanceExtraInitializers);
+            if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        })(),
+        _a;
+})();
+
 
 
 /***/ }),
 
-/***/ "./client/src/scrapComponents/typing/typingList.view.ts":
+/***/ "./client/src/scrapComponents/typing/typingInfo.view.ts":
 /*!**************************************************************!*\
-  !*** ./client/src/scrapComponents/typing/typingList.view.ts ***!
+  !*** ./client/src/scrapComponents/typing/typingInfo.view.ts ***!
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   TypingListView: () => (/* binding */ TypingListView)
+/* harmony export */   TypingInfoView: () => (/* binding */ TypingInfoView)
 /* harmony export */ });
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _typing_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./typing.css */ "./client/src/scrapComponents/typing/typing.css");
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
 
-class TypingListView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
-    initialize() {
-        super.initialize();
-    }
-    setupUIElements() {
-        super.setupUIElements();
-        this.textEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({ text: String(this.model.text), color: this.model.color });
-        this.xEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "number", placeholder: this.model.x });
-        this.yEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "number", placeholder: this.model.y });
-        this.colorEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "color", placeholder: this.model.color });
-    }
-    setupUILayout() {
-        super.setupUILayout();
-        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.textEl, this.xEl, this.yEl, this.colorEl]);
-    }
-}
+
+let TypingInfoView = (() => {
+    var _a;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView;
+    let _instanceExtraInitializers = [];
+    let _textChanged_decorators;
+    return _a = class TypingInfoView extends _classSuper {
+            constructor() {
+                super(...arguments);
+                this.contentObserver = __runInitializers(this, _instanceExtraInitializers);
+            }
+            initialize() {
+                super.initialize();
+            }
+            setupUIElements() {
+                super.setupUIElements();
+                /*
+                this.textEl = textarea({text: String(this.model.text), color: this.model.color, oninput:()=>{
+                        this.model.text= this.textEl.textContent ;
+                    }});
+                    */
+                this.textEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({
+                    text: this.model.text,
+                    color: this.model.color,
+                    oninput: () => this.model.text = this.textEl.value
+                });
+                this.xEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "number", placeholder: this.model.x, oninput: () => {
+                        console.log(this.xEl.value);
+                    } });
+                this.yEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "number", placeholder: this.model.y });
+                this.colorEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "color", placeholder: this.model.color });
+            }
+            setupUILayout() {
+                super.setupUILayout();
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.textEl, this.xEl, this.yEl, this.colorEl]);
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addClass("typing-info");
+            }
+            textChanged() {
+                //this.textEl.textContent = this.model.text;
+                this.textEl.value = this.model.text;
+            }
+        },
+        (() => {
+            var _b;
+            const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_b = _classSuper[Symbol.metadata]) !== null && _b !== void 0 ? _b : null) : void 0;
+            _textChanged_decorators = [turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.effect];
+            __esDecorate(_a, null, _textChanged_decorators, { kind: "method", name: "textChanged", static: false, private: false, access: { has: obj => "textChanged" in obj, get: obj => obj.textChanged }, metadata: _metadata }, null, _instanceExtraInitializers);
+            if (_metadata) Object.defineProperty(_a, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        })(),
+        _a;
+})();
+
 
 
 /***/ }),
@@ -2496,19 +2678,19 @@ ___CSS_LOADER_EXPORT___.push([module.id, `#mode-btn{
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./client/src/pageList/PageList.css":
-/*!********************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./client/src/pageList/PageList.css ***!
-  \********************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js!./client/src/pageDisplay/pageList/PageList.css":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./client/src/pageDisplay/pageList/PageList.css ***!
+  \********************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
@@ -2569,7 +2751,7 @@ nav-bar turbo-button:active {
 .turbo-icon svg {
     width: 32px;
     height: 32px;
-}`, "",{"version":3,"sources":["webpack://./client/src/pageList/PageList.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,YAAY;;IAEZ,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;AACvB;;;;AAIA;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    flex-grow: 0;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:last-child {\r\n    margin-top: auto;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./client/src/pageDisplay/pageList/PageList.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,MAAM;IACN,OAAO;;IAEP,WAAW;IACX,aAAa;;IAEb,aAAa;IACb,mBAAmB;IACnB,2BAA2B;;IAE3B,iBAAiB;;IAEjB,sBAAsB;IACtB,SAAS;;IAET,mBAAmB;IACnB,4BAA4B;AAChC;;AAEA;IACI,gBAAgB;IAChB,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,aAAa;IACb,mBAAmB;IACnB,uBAAuB;;IAEvB,YAAY;;IAEZ,gCAAgC;IAChC,mBAAmB;AACvB;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,mBAAmB;AACvB;;AAEA;IACI,mBAAmB;AACvB;;;;AAIA;IACI,WAAW;IACX,YAAY;AAChB","sourcesContent":["nav-bar {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n\r\n    width: 80px;\r\n    height: 100vh;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n\r\n    padding-top: 20px;\r\n\r\n    flex-direction: column;\r\n    gap: 20px;\r\n\r\n    background: #ffffff;\r\n    border-right: 1px solid #ddd;\r\n}\r\n\r\nnav-bar turbo-button {\r\n    background: none;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    flex-grow: 0;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}\r\n\r\nnav-bar turbo-button:last-child {\r\n    margin-top: auto;\r\n}\r\n\r\nnav-bar turbo-button:hover {\r\n    background: #9a9898;\r\n}\r\n\r\nnav-bar turbo-button:active {\r\n    background: #9a9898;\r\n}\r\n\r\n\r\n\r\n.turbo-icon svg {\r\n    width: 32px;\r\n    height: 32px;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2692,6 +2874,35 @@ p {
     margin-bottom: 15px;
     padding:25px;
 }`, "",{"version":3,"sources":["webpack://./client/src/profile/profile.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,sBAAsB;IACtB,eAAe;IACf,sBAAsB;AAC1B;;AAEA;IACI,iBAAiB;IACjB,gCAAgC;;IAEhC,SAAS;IACT,UAAU;;IAEV,yBAAyB;;IAEzB,yBAAyB;IACzB;;yDAEqD;IACrD,8BAA8B;IAC9B,0BAA0B;AAC9B;;AAEA;IACI,yBAAyB;IACzB,4CAA4C;IAC5C,kBAAkB;IAClB,yBAAyB;IACzB,SAAS;AACb;;AAEA;IACI,2BAA2B;IAC3B,yBAAyB;IACzB,SAAS;AACb;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,eAAe;IACf,0BAA0B;AAC9B;;;AAGA;IACI,aAAa;IACb,iBAAiB;IACjB,QAAQ;AACZ;;AAEA;IACI,aAAa;IACb,qBAAqB;AACzB;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,qBAAqB;IACrB,uBAAuB;;;;IAIvB,YAAY;IACZ,kBAAkB;IAClB,gBAAgB;;IAEhB,UAAU;;IAEV,eAAe;;IAEf,6BAA6B;IAC7B,wCAAwC;AAC5C;;AAEA,eAAe,gBAAgB;IAC3B,6BAA6B;IAC7B,0CAA0C;IAC1C,gBAAgB;IAChB,mBAAmB;IACnB,YAAY;IACZ,iBAAiB;IACjB,gCAAgC;IAChC,aAAa;IACb,YAAY;IACZ,kBAAkB;IAClB,gBAAgB;IAChB,iBAAiB;IACjB,kBAAkB;IAClB,gBAAgB;IAChB,mBAAmB;IACnB,YAAY;AAChB","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --cooler-blue: #23424b;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n}\r\n\r\nbody {\r\n    min-height: 100vh;\r\n    font-family: \"Inter\", sans-serif;\r\n\r\n    margin: 0;\r\n    padding: 0;\r\n\r\n    /*align-content: center;*/\r\n\r\n    background-color: #ffffff;\r\n    background-image:\r\n        linear-gradient(90deg, #ccf0ff80 40px, transparent 40px),\r\n        linear-gradient(#ccf0ff80 40px, transparent 40px);\r\n    background-position: 10px 10px;\r\n    background-size: 78px 78px;\r\n}\r\n\r\nh1 {\r\n    color: var(--cooler-blue);\r\n    font-family: \"Baskerville\", \"Georgia\", serif;\r\n    font-style: italic;\r\n    font-size: 5em !important;\r\n    margin: 0;\r\n}\r\n\r\nh2 {\r\n    font-size: 1.5em !important;\r\n    color: var(--cooler-blue);\r\n    margin: 0;\r\n}\r\n\r\np {\r\n    color: var(--cooler-blue);\r\n}\r\n\r\n#logout-el {\r\n    cursor: pointer;\r\n    text-decoration: underline;\r\n}\r\n\r\n\r\n.container{\r\n    display: flex;\r\n    direction: column;\r\n    gap: 5px;\r\n}\r\n\r\n.posts-container{\r\n    display: grid;\r\n    place-content: center;\r\n}\r\n\r\n#profile-header {\r\n    display: flex;\r\n    flex-direction: row;\r\n    align-items: baseline;\r\n    justify-content: center;\r\n\r\n    \r\n\r\n    height: 10em;\r\n    padding-left:150px;\r\n    padding-top: 2em;\r\n\r\n    width:100%;\r\n\r\n    margin-top: 0px;\r\n\r\n    background-color: var(--snow);\r\n    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.page-list-div{text-align: left;\r\n    background-color: var(--snow);\r\n    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);\r\n    transition: 0.3s;\r\n    border-radius: 50px;\r\n    border:solid;\r\n    border-width: 2px;\r\n    border-color: var(--cooler-blue);\r\n    display: grid;\r\n    width: 800px;\r\n    /* height: 50px; */\r\n    font-size: large;\r\n    margin-left: auto;\r\n    margin-right: auto;\r\n    margin-top: 15px;\r\n    margin-bottom: 15px;\r\n    padding:25px;\r\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./client/src/scrapComponents/typing/typing.css":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./client/src/scrapComponents/typing/typing.css ***!
+  \********************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.typing-info {
+    display:grid;
+    border: 1px solid black;
+}`, "",{"version":3,"sources":["webpack://./client/src/scrapComponents/typing/typing.css"],"names":[],"mappings":"AAAA;IACI,YAAY;IACZ,uBAAuB;AAC3B","sourcesContent":[".typing-info {\r\n    display:grid;\r\n    border: 1px solid black;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -43037,6 +43248,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   interactor: () => (/* binding */ interactor),
 /* harmony export */   isNull: () => (/* binding */ isNull),
 /* harmony export */   isUndefined: () => (/* binding */ isUndefined),
+/* harmony export */   jsonToYjs: () => (/* binding */ jsonToYjs),
 /* harmony export */   kebabToCamelCase: () => (/* binding */ kebabToCamelCase),
 /* harmony export */   linearInterpolation: () => (/* binding */ linearInterpolation),
 /* harmony export */   link: () => (/* binding */ link),
@@ -46289,6 +46501,8 @@ let TurboDataBlock = (() => {
         get keys() {
             if (!this.data || typeof this.data !== "object")
                 return [];
+            if (Array.isArray(this.data))
+                return Array.from({ length: this.data.length }, (_, i) => i);
             if (this.data instanceof Map)
                 return Array.from(this.data.keys());
             return [
@@ -49536,7 +49750,6 @@ function setupEventFunctions() {
                     propagation = utils$6.processPropagation(entry.listener(event, ts), propagation);
                 }
                 finally {
-                    console.log(propagation);
                     firedListeners.add(entry);
                     if (entry.options?.once)
                         boundSet.delete(entry);
@@ -54412,7 +54625,6 @@ let TurboSelect = (() => {
         }
         set entries(value) {
             this.enableObserver(false);
-            console.log(value);
             const previouslySelectedValues = this.selectedValues;
             this.clear(false);
             this._entries = (Array.isArray(value) ? value : Array.from(value))
@@ -56306,6 +56518,20 @@ function createYArray(data) {
     const array = new yjs__WEBPACK_IMPORTED_MODULE_1__.Array();
     array.push(data);
     return array;
+}
+function jsonToYjs(data) {
+    if (Array.isArray(data)) {
+        const arr = new yjs__WEBPACK_IMPORTED_MODULE_1__.Array();
+        arr.push(data.map(jsonToYjs));
+        return arr;
+    }
+    if (data && typeof data === "object") {
+        const map = new yjs__WEBPACK_IMPORTED_MODULE_1__.Map();
+        for (const [key, value] of Object.entries(data))
+            map.set(key, jsonToYjs(value));
+        return map;
+    }
+    return data;
 }
 /**
  * @function addInYMap
