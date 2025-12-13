@@ -16,6 +16,7 @@ import {Page} from "./page";
 import {Typing, typing} from "../scrapComponents/typing/typing";
 import {makeRequest} from "../makeRequest";
 import {ScrapData} from "../scrapComponents/scrapComponent";
+import {sketch} from "../scrapComponents/sketch/sketch";
 
 
 export class PageListView extends TurboView<Page, PageModel> {
@@ -36,12 +37,17 @@ export class PageListView extends TurboView<Page, PageModel> {
 
         this.model.getBlock("content")?.generateObserver({
             onAdded : (data) => {
-                switch (data.type){
-                    case "typing": {
-                        typing({data: data, parent: this.pageInfoList}, true);
-                    };
-                    break;
-                }
+                    let component;
+                    switch (data.get("type")){
+                        case "typing": {
+                            component=typing({data:data, parent:this.pageInfoList});
+                            break;
+                        }
+                        case "sketch": { //todo
+                            break;
+                        }
+                    }
+                return component;
             }
         });
     }

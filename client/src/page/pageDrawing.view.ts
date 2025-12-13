@@ -16,15 +16,17 @@ export class PageDrawingView extends TurboView<Page, PageModel> {
 
         this.model.getBlock("content")?.generateObserver({
             onAdded : (data) => {
-                switch (data.type){
+                let component;
+                switch (data.get("type")){
                     case "typing": {
-                        typing({data:data, parent:this.pageDiv});
+                        component=typing({data:data, parent:this.pageDiv});
                         break;
                     }
                     case "sketch": {
-                        sketch({data:data, parent:this.pageDiv});
+                        component=sketch({data:data, parent:this.pageDiv});
                         break;
                     }
+                    return component;
                 }
             }
         });

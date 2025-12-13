@@ -1,4 +1,4 @@
-import {effect, initializeEffects, modelSignal, TurboModel} from "turbodombuilder";
+import {effect, initializeEffects, modelSignal, TurboModel, TurboYBlock} from "turbodombuilder";
 import {ScrapData} from "../scrapComponents/scrapComponent";
 import {typing, Typing} from "../scrapComponents/typing/typing";
 import {PageProperties} from "./page.types";
@@ -9,10 +9,11 @@ export class PageModel extends TurboModel {
     @modelSignal() public userId: number;
     @modelSignal() public title: string;
     @modelSignal() public content : ScrapData[]=[];
+    public static dataBlockConstructor = TurboYBlock;
+
 
     @effect private setupContent(){
-        this.setBlock(this.content, "", "content");
-        console.log("CONTENT : "+this.content);
+    if (!this.hasBlock("content")) this.setBlock(this.content, "", "content");
     }
 
     public addScrapComponent(scrapComponent: ScrapData) : void {

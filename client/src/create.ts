@@ -1,4 +1,4 @@
-import {button, div, turbo, TurboButton, TurboEventManager, TurboIcon} from "turbodombuilder";
+import {button, div, jsonToYjs, turbo, TurboButton, TurboEventManager, TurboIcon, YDoc} from "turbodombuilder";
 import { CreateToolbar } from "./createToolbar/createToolbar";
 import {Page, page} from "./page/page";
 import {navBar} from "./navBar/navBar";
@@ -22,11 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     navBar({parent: createPageLayout, classes:"nav-bar"});
 
+    const data = JSON.parse(sessionStorage.getItem("currentPage"));
+    const map =new YDoc().getMap("pageData")
+    map.set("0", jsonToYjs(data));
+    const yData = map.get("0");
+
     //page in drawing form
-    let pageDrawing = page({ data: JSON.parse(sessionStorage.getItem("currentPage")), parent:createPageLayout, classes:"page-drawing"});
+    let pageDrawing = page({ data: yData, parent:createPageLayout, classes:"page-drawing"});
 
     //page in list form
-    let pageList = page({data:pageDrawing.model.data, parent:createPageLayout, classes:"page-list"}, true);
+    let pageList = page({data: yData, parent:createPageLayout, classes:"page-list"}, true);
 
 
 

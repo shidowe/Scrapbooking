@@ -1,7 +1,8 @@
-import {Coordinate, modelSignal, TurboElement, TurboModel} from "turbodombuilder";
+import {Coordinate, modelSignal, TurboElement, TurboModel, TurboYBlock} from "turbodombuilder";
 
 export class SketchModel extends TurboModel {
     @modelSignal() color: string;
     @modelSignal() weight: number;
     @modelSignal() points: Coordinate[];
+    public static dataBlockConstructor = TurboYBlock;
 }
