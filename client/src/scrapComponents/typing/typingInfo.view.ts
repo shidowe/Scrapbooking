@@ -21,9 +21,16 @@ export class TypingInfoView extends TurboView<Typing, TypingModel> {
 
     protected setupUIElements() {
         super.setupUIElements();
+        /*
         this.textEl = textarea({text: String(this.model.text), color: this.model.color, oninput:()=>{
                 this.model.text= this.textEl.textContent ;
             }});
+            */
+        this.textEl = textarea({
+            text: this.model.text,
+            color: this.model.color,
+            oninput: () => this.model.text = this.textEl.value
+        });
         this.xEl = turboInput({type:"number", placeholder:this.model.x, oninput:()=>{
             console.log(this.xEl.value);
         }});
@@ -38,7 +45,8 @@ export class TypingInfoView extends TurboView<Typing, TypingModel> {
     }
 
     @effect textChanged() {
-        this.textEl.textContent = this.model.text;
+        //this.textEl.textContent = this.model.text;
+        this.textEl.value = this.model.text;
     }
 
 }

@@ -2,6 +2,7 @@ import {
     button,
     define,
     div,
+    effect,
     element,
     expose,
     spacer,
@@ -17,8 +18,6 @@ import "./pageDisplay.css";
 
 @define("page-display")
 export class PageDisplay extends TurboElement {
-
-
 
     private gridDisplayMode:boolean = false;
     private changeDisplayMode : TurboButton;

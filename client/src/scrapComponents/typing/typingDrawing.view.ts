@@ -9,6 +9,8 @@ export class TypingDrawingView extends TurboView<Typing, TypingModel> {
 
     private contentObserver: TurboObserver;
 
+    
+
     initialize(): void {
         super.initialize();
     }
@@ -32,6 +34,7 @@ export class TypingDrawingView extends TurboView<Typing, TypingModel> {
 
     @effect textChanged() {
         console.log("drawing"+this.model.text)
+        this.textEl.textContent = this.model.text;
     }
 
 
