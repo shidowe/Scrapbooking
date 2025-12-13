@@ -1,11 +1,11 @@
-import {expose, textarea, turbo, TurboObserver, TurboView} from "turbodombuilder";
+import {div, effect, expose, textarea, turbo, TurboObserver, TurboView} from "turbodombuilder";
 
 import {TypingModel} from "./typing.model"
 import {typing, Typing} from "./typing";
 
 
 export class TypingDrawingView extends TurboView<Typing, TypingModel> {
-    private textEl: HTMLElement;
+    private textEl: HTMLDivElement;
 
     private contentObserver: TurboObserver;
 
@@ -15,15 +15,18 @@ export class TypingDrawingView extends TurboView<Typing, TypingModel> {
 
     protected setupUIElements() {
         super.setupUIElements();
-        this.textEl = textarea({text: String(this.model.text), color: this.model.color});
+        this.textEl = div({text: String(this.model.text), contentEditable: "true", color: this.model.color, oninput :()=>{
+            this.model.text= this.textEl.textContent ;
+            }});
     }
 
     protected setupUILayout() {
         super.setupUILayout();
         turbo(this).setStyle("position", "relative");
-        turbo(this).setStyle("left", this.model.x);
-        turbo(this).setStyle("top", this.model.y);
+        turbo(this).setStyle("left",this.model.x+"px");
+        turbo(this).setStyle("top", this.model.y+"px");
         turbo(this).addChild([this.textEl]);
     }
+
 
 }

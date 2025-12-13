@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let pageDrawing = page({ data: JSON.parse(sessionStorage.getItem("currentPage")), parent:createPageLayout, classes:"page-drawing"});
 
     //page in list form
-    let pageList = page({model:pageDrawing.model, parent:createPageLayout, classes:"page-list"}, true);
+    let pageList = page({data:pageDrawing.model.data, parent:createPageLayout, classes:"page-list"}, true);
 
 
 

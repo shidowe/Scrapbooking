@@ -35,11 +35,6 @@ export class PageDrawingView extends TurboView<Page, PageModel> {
 
         this.pageDiv = div({classes:"textured-page"});
 
-
-        //on click create a text annotation
-        this.pageDiv.addEventListener("click", (event: MouseEvent) => {
-            // todo
-        })
     }
 
     protected setupUILayout() {

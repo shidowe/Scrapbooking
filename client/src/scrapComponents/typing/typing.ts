@@ -1,15 +1,19 @@
-import {define, element, expose, turbo, TurboElement} from "turbodombuilder";
+import {define, effect, element, expose, turbo, TurboElement} from "turbodombuilder";
 import {TypingDrawingView} from "./typingDrawing.view";
 import {TypingModel} from "./typing.model";
 import {PageProperties} from "../../page/page.types";
 import {PageModel} from "../../page/page.model";
-import {Page} from "../../page/page";
+import {page, Page} from "../../page/page";
 import {ScrapData} from "../scrapComponent";
 import {TypingInfoView} from "./typingInfo.view";
 
 @define("typing-element")
 export class Typing extends TurboElement<TypingDrawingView|TypingInfoView, TypingModel> {
     @expose("model") public text : String;
+
+    @effect textChanged() {
+        console.log(this.text)
+    }
 }
 
 export function typing(properties:any, listDisplay=false): Typing {

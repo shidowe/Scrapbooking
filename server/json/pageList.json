@@ -5,8 +5,8 @@
         "title": "Test Page",
         "content": [
             {
-                "x": 10,
-                "y": 10,
+                "x": 100,
+                "y": 100,
                 "type": "typing",
                 "color": "blue",
                 "text": "testttttttttttt"

@@ -16,9 +16,7 @@ export class UserRepository {
     }
 
     public async signup(username:string, email:string, password:string, passwordConfirmation:string):Promise<[boolean, any]>{
-        if(this.data.length==0) {
-            await this.fetchData();
-        }
+        await this.fetchData();
 
         if(! this.data.find(user => user.username == username)){
             if (password == passwordConfirmation) { //todo add more conditions to this
@@ -34,9 +32,8 @@ export class UserRepository {
     }
 
     public async signin(username:string, password:string):Promise<[boolean, User  | string]>{
-        if(this.data.length==0) {
-            await this.fetchData();
-        }
+        await this.fetchData();
+
 
         for (let user of this.data){
             if (user.username == username) {
