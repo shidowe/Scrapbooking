@@ -13,7 +13,8 @@
             }
         ],
         "likes": [
-            1
+            1,
+            0
         ]
     },
     {
@@ -33,5 +34,12 @@
             1,
             0
         ]
+    },
+    {
+        "pageId": 2,
+        "userId": 0,
+        "title": "Undefined",
+        "content": [],
+        "likes": []
     }
 ]

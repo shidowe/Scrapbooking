@@ -1,6 +1,8 @@
 import {button, define, div, element, expose, spacer, turbo, TurboButton, TurboElement} from "turbodombuilder";
 import {Page} from "../page";
 import {makeRequest} from "../../makeRequest";
+import "./buttons.css";
+
 
 @define("delete-button")
 export class DeleteButton extends TurboElement {

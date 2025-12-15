@@ -38,22 +38,24 @@ export class PageView extends TurboView<Page, PageModel> {
     protected setupUIElements() {
         super.setupUIElements();
 
-        this.pageDiv = div({classes:"textured-page"});
-        if(sessionStorage.getItem("userId")){ //todo check that we're not in create page
-            likeButton({parent:this}, this.model.pageId);
-            if(JSON.parse(sessionStorage.getItem("userId"))== this.model.pageId){
-                editButton({parent:this},this.model.pageId);
-                deleteButton({parent:this},this.model.pageId);
-            }else if (sessionStorage.getItem("admin")== "true"){
-                deleteButton({parent:this},this.model.pageId);
+        this.pageDiv = div({parent:this.element, classes:"textured-page"});
+        if(true) { //todo replace by condition that checks that we're not in create page
+            if (sessionStorage.getItem("userId")) {
+                likeButton({parent: this}, this.model.pageId);
+                if (JSON.parse(sessionStorage.getItem("userId")) == this.model.pageId) {
+                    editButton({parent: this}, this.model.pageId);
+                    deleteButton({parent: this}, this.model.pageId);
+                } else if (sessionStorage.getItem("admin") == "true") {
+                    deleteButton({parent: this}, this.model.pageId);
+                }
             }
+
         }
 
     }
 
     protected setupUILayout() {
         super.setupUILayout();
-        turbo(this).addChild([this.pageDiv]);
     }
 
 

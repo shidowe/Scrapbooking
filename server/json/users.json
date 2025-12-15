@@ -6,11 +6,11 @@
         "password": "apassword",
         "admin": true,
         "pages": [
-            0,
             1
         ],
         "likedPages": [
-            1
+            1,
+            0
         ]
     },
     {

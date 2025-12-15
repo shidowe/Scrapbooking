@@ -3,6 +3,7 @@
     --snow: #FCF7F8;
     --shadow-grey :#342E37;
     --light-border: #bababa;
+    --blue-slate: #19647E
 }
 
 .textured-page {
@@ -10,5 +11,10 @@
     border: 2px solid var(--light-border );
     height: 500px;
     width: 400px;
+}
+
+.page-elt {
+    background-color: var(--blue-slate);
+    border: 1px solid var(--light-border);
 }
 

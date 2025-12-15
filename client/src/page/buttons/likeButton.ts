@@ -1,6 +1,7 @@
 import {button, define, div, element, expose, spacer, turbo, TurboButton, TurboElement} from "turbodombuilder";
-import {Page} from "../page";
 import {makeRequest} from "../../makeRequest";
+import "./buttons.css";
+
 
 @define("like-button")
 export class LikeButton extends TurboElement {
