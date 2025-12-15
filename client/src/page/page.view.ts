@@ -5,6 +5,7 @@ import {Page} from "./page";
 import {typing} from "../scrapComponents/typing/typing";
 import {sketch} from "../scrapComponents/sketch/sketch";
 import {likeButton} from "./buttons/likeButton";
+import {editButton} from "./buttons/editButton";
 
 
 export class PageView extends TurboView<Page, PageModel> {
@@ -37,7 +38,12 @@ export class PageView extends TurboView<Page, PageModel> {
         super.setupUIElements();
 
         this.pageDiv = div({classes:"textured-page"});
-        if(sessionStorage.getItem("userId")){likeButton({parent:this}, this.model.pageId);}
+        if(sessionStorage.getItem("userId")){ //todo check that we're not in create page
+            likeButton({parent:this}, this.model.pageId);
+            if(JSON.parse(sessionStorage.getItem("userId"))== this.model.pageId){
+                editButton({parent:this},this.model.pageId);
+            }
+        }
 
     }
 
