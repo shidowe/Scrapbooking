@@ -10,7 +10,7 @@ export function pageRoute(): any {
     router.post("/loadPagesFromPageId", (req, res)=> controller.loadPagesFromPageId(req, res));
     router.post("/loadAllPages", (req, res)=> controller.loadAllPages(req, res));
     router.post("/changeLikeStatus", (req, res)=> controller.changeLikeStatus(req, res));
-
+    router.post("/deletePage", (req, res)=> {controller.deletePage(req, res)})
     router.post("/createNewPage", (req, res)=> controller.createNewPage(req, res));
     router.post("/savePage", (req, res)=> controller.savePage(req, res));
 

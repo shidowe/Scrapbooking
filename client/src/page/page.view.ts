@@ -6,6 +6,7 @@ import {typing} from "../scrapComponents/typing/typing";
 import {sketch} from "../scrapComponents/sketch/sketch";
 import {likeButton} from "./buttons/likeButton";
 import {editButton} from "./buttons/editButton";
+import {deleteButton} from "./buttons/deleteButton";
 
 
 export class PageView extends TurboView<Page, PageModel> {
@@ -42,6 +43,9 @@ export class PageView extends TurboView<Page, PageModel> {
             likeButton({parent:this}, this.model.pageId);
             if(JSON.parse(sessionStorage.getItem("userId"))== this.model.pageId){
                 editButton({parent:this},this.model.pageId);
+                deleteButton({parent:this},this.model.pageId);
+            }else if (sessionStorage.getItem("admin")== "true"){
+                deleteButton({parent:this},this.model.pageId);
             }
         }
 

@@ -69,6 +69,22 @@ export class PageRepository {
         return this.data;
     }
 
+    public async deletePage(pageId:number):Promise<number[]>  {
+        if(this.data.length==0) {
+            await this.fetchData();
+        }
+        await this.fetchUserData();
+
+        const userId = this.data[pageId].userId;
+        this.userData[userId].pages = this.userData[userId].pages.filter((page) => page!=pageId);
+
+        fs.writeFile(userJSONPath, JSON.stringify(this.userData, null,4), (err) => {});
+        fs.writeFile(pageListJSONPath, JSON.stringify(this.data, null,4), (err) => {});
+
+        return this.userData[userId].pages;
+
+    }
+
     public async createNewPage(userId:number):Promise<Page>  {
         if(this.data.length==0) {
             await this.fetchData();
