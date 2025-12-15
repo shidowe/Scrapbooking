@@ -21,7 +21,7 @@ export class UserRepository {
         if(! this.data.find(user => user.username == username)){
             if (password == passwordConfirmation) { //todo add more conditions to this
 
-                let user = new User(this.data.length, username, email, password, false, [])
+                let user = new User(this.data.length, username, email, password, false, [], [])
                 this.data.push(user);
                 fs.writeFile(userJSONPath, JSON.stringify(this.data, null,4), (err) => {});
                 return [true, user];
@@ -33,7 +33,6 @@ export class UserRepository {
 
     public async signin(username:string, password:string):Promise<[boolean, User  | string]>{
         await this.fetchData();
-
 
         for (let user of this.data){
             if (user.username == username) {

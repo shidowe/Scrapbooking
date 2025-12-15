@@ -4,9 +4,10 @@ import {PageModel} from "./page.model";
 import {Page} from "./page";
 import {typing} from "../scrapComponents/typing/typing";
 import {sketch} from "../scrapComponents/sketch/sketch";
+import {likeButton} from "./buttons/likeButton";
 
 
-export class PageDrawingView extends TurboView<Page, PageModel> {
+export class PageView extends TurboView<Page, PageModel> {
 
     private pageDiv: HTMLDivElement;
     private contentObserver: TurboObserver;
@@ -17,7 +18,7 @@ export class PageDrawingView extends TurboView<Page, PageModel> {
         this.model.getBlock("content")?.generateObserver({
             onAdded : (data) => {
                 let component;
-                switch (data.get("type")){
+                switch (data.type){
                     case "typing": {
                         component=typing({data:data, parent:this.pageDiv});
                         break;
@@ -36,6 +37,7 @@ export class PageDrawingView extends TurboView<Page, PageModel> {
         super.setupUIElements();
 
         this.pageDiv = div({classes:"textured-page"});
+        if(sessionStorage.getItem("userId")){likeButton({parent:this}, this.model.pageId);}
 
     }
 

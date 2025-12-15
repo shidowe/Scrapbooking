@@ -29,6 +29,27 @@ export class PageRepository {
         });
     }
 
+
+    public async changeLikeStatus(userId:number, pageId:number, likeStatus:boolean):Promise<number[]> {
+        if(this.data.length == 0){
+            await this.fetchData();
+        }
+        await this.fetchUserData();
+
+        if (likeStatus){
+            this.data[pageId].likes.push(userId);
+            this.userData[userId].likedPages.push(pageId);
+        }else {
+            this.data[pageId].likes= this.data[pageId].likes.filter((user) => user!=userId);
+            this.userData[userId].likedPages = this.userData[userId].likedPages.filter((page) => page!=pageId);
+        }
+
+        fs.writeFile(userJSONPath, JSON.stringify(this.userData, null,4), (err) => {});
+        fs.writeFile(pageListJSONPath, JSON.stringify(this.data, null,4), (err) => {});
+
+        return this.userData[userId].likedPages;
+    }
+
     public async loadPageFromPageId(pageIdList:[number]):Promise<Page[]> {
         if(this.data.length == 0){
             await this.fetchData();
@@ -45,7 +66,6 @@ export class PageRepository {
         if(this.data.length == 0){
             await this.fetchData();
         }
-        await this.fetchData();
         return this.data;
     }
 
@@ -60,7 +80,7 @@ export class PageRepository {
         fs.writeFile(userJSONPath, JSON.stringify(this.userData, null,4), (err) => {});
 
         //adding page to json file
-        let page = new Page(this.data.length, userId, [], "Undefined");
+        let page = new Page(this.data.length, userId, [], "Undefined", []);
         this.data.push(page);
         fs.writeFile(pageListJSONPath, JSON.stringify(this.data, null,4), (err) => {});
 

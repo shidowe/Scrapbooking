@@ -5,6 +5,16 @@ export class PageController {
     public constructor(private repository: PageRepository) {
     }
 
+
+    public async changeLikeStatus(req:any, res:any): Promise<any> {
+        const body = req.body;
+        let likedPages = await this.repository.changeLikeStatus(body.userId, body.pageId, body.likeStatus); //TODO : do something if one of the pages is missing
+        res.status(200).send(likedPages);
+        return;
+    }
+
+
+
     public async loadPagesFromPageId(req:any, res:any): Promise<any> {
         const body = req.body;
         let response =await this.repository.loadPageFromPageId(body.pageIdList); //TODO : do something if one of the pages is missing
@@ -24,7 +34,7 @@ export class PageController {
 
     public async loadAllPages(req:any, res:any): Promise<any> {
         let response =await this.repository.loadAllPages();
-        res.status(200).send({response});
+        res.status(200).send(response);
         return;
     }
 

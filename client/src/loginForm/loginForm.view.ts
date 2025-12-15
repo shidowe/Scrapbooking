@@ -110,6 +110,7 @@ export class LoginFormView extends TurboView<LoginForm, LoginFormModel> {
         sessionStorage.setItem("userId", response.userId);
         sessionStorage.setItem("admin", response.admin);
         sessionStorage.setItem("pages", JSON.stringify(response.pages));
+        sessionStorage.setItem("likedPages", JSON.stringify(response.likedPages));
         window.location.replace("/");
     }
 }

@@ -14,6 +14,7 @@ export class NavBar extends TurboElement {
     private homeButton: TurboButton;
     private createButton: TurboButton;
     private logoutButton: TurboButton;
+    private adminButton: TurboButton;
 
     protected setupUIElements() {
         super.setupUIElements();
@@ -47,15 +48,26 @@ export class NavBar extends TurboElement {
             sessionStorage.clear();
             window.location.replace("/login");
         }});
-        
-        
+
+
         
         this.divTop.appendChild(this.profileButton);
         this.divTop.appendChild(this.homeButton);
         this.divTop.appendChild(this.createButton);
+
+        /* Admin button currently unused
+        if(sessionStorage.getItem("admin")=="true"){
+            this.adminButton = button({leftIcon: "admin_icon", hidden: sessionStorage.getItem("username")?false:true, onClick: () => {
+                }});
+            this.divTop.appendChild(this.adminButton);
+        }
+         */
+
         this.divEl.appendChild(this.divTop);
         this.divEl.appendChild(spacer());
         this.divEl.appendChild(this.logoutButton);
+
+
         
     }
 

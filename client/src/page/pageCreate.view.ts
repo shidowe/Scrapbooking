@@ -19,7 +19,7 @@ import {ScrapData} from "../scrapComponents/scrapComponent";
 import {sketch} from "../scrapComponents/sketch/sketch";
 
 
-export class PageListView extends TurboView<Page, PageModel> {
+export class PageCreateView extends TurboView<Page, PageModel> {
 
     private pageInfoList : HTMLElement;
     private title : HTMLElement;
