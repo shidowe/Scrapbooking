@@ -35,16 +35,17 @@ export class PageCreateView extends TurboView<Page, PageModel> {
 
         this.model.getBlock("content")?.generateObserver({
             onAdded : (data) => {
-                    let component;
-                    switch (data.get("type")){
-                        case "typing": {
-                            component=typing({data:data, parent:this.pageInfo}, true);
-                            break;
-                        }
-                        case "sketch": { //todo
-                            component=sketch({data:data});
-                        }
+                let component;
+                switch (data.type){
+                    case "typing": {
+                        component=typing({data:data, parent:this.pageInfo}, true);
+                        break;
                     }
+                    case "sketch": {
+                        //component=sketch({data:data, parent:this.pageInfo});
+                        break;
+                    }
+                }
                 return component;
             }
         });
@@ -86,7 +87,7 @@ export class PageCreateView extends TurboView<Page, PageModel> {
 
     protected setupUILayout() {
         super.setupUILayout();
-        turbo(this).addChild([this.pageInfo]);
+        turbo(this).addChild(this.pageInfo);
     }
 
 
