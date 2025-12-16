@@ -29,6 +29,8 @@ export class PageDisplay extends TurboElement {
 
         let btnDiv = div({parent:document.body, style:"display:flex; justify-content:flex-end; margin:10px;"});
 
+        
+
         this.changeDisplayMode = button({parent:btnDiv, id:"mode-btn", text:this.gridDisplayMode?"List view":"Grid view",
             onClick: () => {
                 this.gridDisplayMode = !this.gridDisplayMode;
