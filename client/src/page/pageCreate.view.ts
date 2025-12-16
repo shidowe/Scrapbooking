@@ -23,6 +23,8 @@ export class PageCreateView extends TurboView<Page, PageModel> {
 
     public pageInfo: HTMLDivElement;
 
+    private title: HTMLTextAreaElement;
+
     private contentObserver: TurboObserver;
 
     private annotationElementList:HTMLElement[] =[];
@@ -52,7 +54,9 @@ export class PageCreateView extends TurboView<Page, PageModel> {
         super.setupUIElements();
             this.pageInfo = div({classes:"page-info-list"});
 
-            let title = textarea({text: this.model.title, label: "PageTitle", parent:this.element});
+            this.title = textarea({text: this.model.title, label: "PageTitle", parent:this.element, oninput:()=>{
+                this.model.title=this.title.value;
+            }});
 /*
             this.saveButton= button({text:"Save", parent:this.pageInfoList, onClick:()=>{
                 console.log( this.model.data);

@@ -48,13 +48,7 @@ export class PageController {
     public async savePage(req:any, res:any): Promise<any> {
         console.log("SAVE REQUEST : "+req.body);
         const body = req.body;
-        let flag =await this.repository.savePage(body.pageId);
-        if(flag){
-            res.status(200).send({
-                //smth like users id or idk
-            })
-            return;
-        }
-        res.status(400).send({})
+        let flag =await this.repository.savePage(body.pageData);
+        res.status(200).send({});
     }
 }

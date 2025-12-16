@@ -104,14 +104,14 @@ export class PageRepository {
     }
 
 
-    public async savePage(pageId:number):Promise<boolean>{
+    public async savePage(pageData:any):Promise<void>{
         if(this.data.length == 0){
             await this.fetchData();
         }
-        //TODO
 
-        //fs.writeFile(pageListJSONPath, JSON.stringify(this.data, null, 4), (err) => { console.log(err)});
-        return new Promise((resolve, reject) => {resolve(true);})
+        let p = new Page (pageData.pageId, pageData.userId, pageData.content, pageData.title, pageData.likes);
+        this.data[p.pageId] = p;
+        fs.writeFile(pageListJSONPath, JSON.stringify(this.data, null,4), (err) => {});
     }
 
 

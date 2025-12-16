@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
     //let pageDrawing = page({ data: yData, parent:createPageLayout, classes:"page-drawing"});
 
     //page in list form
-    let containerDiv = div({id:"containerPage", parent:createPageLayout});
-    let pageList = page({data: yData, parent:containerDiv, parentElement:containerDiv, classes:"page-list"}, true);
+    let containerDiv = div({id:"containerPage", parent:createPageLayout, });
+    let pageList = page({id:"page-in-create", data: yData, parent:containerDiv, parentElement:containerDiv, classes:"page-list"}, true);
     toolBar.append(switchViewButton({parent:toolBar}, pageList.model.pageId));
 
 

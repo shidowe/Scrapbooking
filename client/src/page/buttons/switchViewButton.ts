@@ -7,9 +7,6 @@ import {PageView} from "../page.view";
 
 @define("switch-view-button")
 export class SwitchViewButton extends TurboElement {
-
-    //todo remove those 2
-
     private switchViewButton: TurboButton;
     private infoMode:boolean =true;
     private pageId:number
@@ -18,8 +15,20 @@ export class SwitchViewButton extends TurboElement {
         super.setupUIElements();
 
         this.switchViewButton = button({parent: this, leftIcon: "switch_icon", onClick: () => {
-            console.log("switchViewButton clicked");
             //todo save page
+
+            let pageInCreate= document.getElementById("page-in-create") as Page;
+                makeRequest(
+                    "http://localhost:3000/pages/savePage",
+                    "post",
+                    {"pageData":pageInCreate.data},
+                    (responseString)=>{ console.log("success");
+                    },
+                    (message)=>{
+                        console.log("failure");
+                    }
+                );
+
             this.infoMode = !this.infoMode;
             document.getElementById("containerPage").innerHTML = "";
                 makeRequest(
@@ -29,7 +38,7 @@ export class SwitchViewButton extends TurboElement {
                     (responseString)=>{
                         let pageList = JSON.parse(responseString);
                         for (let pageData of pageList) {
-                            page({data:pageData, parent:document.getElementById("containerPage")}, this.infoMode);
+                            page({id: "page-in-create", data:pageData, parent:document.getElementById("containerPage")}, this.infoMode);
                         }
                     },
                     (message)=>{
