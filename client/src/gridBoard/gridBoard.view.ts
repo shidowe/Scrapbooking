@@ -39,21 +39,13 @@ export class GridBoardView extends TurboView<GridBoard> {
             (responseString)=>{
                 let pageList = JSON.parse(responseString);
                 console.log(pageList);
-                for (let pageData of pageList) { //todo fix this
+                for (let pageData of pageList) {
                     let box = div({parent:this.container, class: "page-box"});
                     pageData.parent=box;
                     page({data:pageData, parent:box});
 
                     let info = div({parent:box});
                     div({parent:info, text:pageData.title});
-                    if (pageData.userId== sessionStorage.getItem("userId")) {
-                        //todo add pen
-                    }
-                    //todo add like
-                    div({parent:info, text:pageData.userId}); //todo replace userid by username
-                    //todo add trashcan
-
-
                 }
             },
             (message)=>{
