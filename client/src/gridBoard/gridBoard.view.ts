@@ -54,8 +54,6 @@ export class GridBoardView extends TurboView<GridBoard> {
                     //todo add trashcan
 
 
-
-
                 }
             },
             (message)=>{

@@ -44,5 +44,4 @@ export function page(properties:PageProperties = {}, listDisplay=false): Page {
     return element({...properties}) as Page;
 }
 
-//todo not sure about that, it works tho
-//todo add types
+

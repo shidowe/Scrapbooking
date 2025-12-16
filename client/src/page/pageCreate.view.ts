@@ -21,11 +21,7 @@ import {sketch} from "../scrapComponents/sketch/sketch";
 
 export class PageCreateView extends TurboView<Page, PageModel> {
 
-    private pageInfoList : HTMLElement;
-    private title : HTMLElement;
-
-    private saveButton: TurboButton;
-    private addAnnotationButton : HTMLElement;
+    public pageInfo: HTMLDivElement;
 
     private contentObserver: TurboObserver;
 
@@ -40,11 +36,11 @@ export class PageCreateView extends TurboView<Page, PageModel> {
                     let component;
                     switch (data.get("type")){
                         case "typing": {
-                            component=typing({data:data, parent:this.pageInfoList});
+                            component=typing({data:data, parent:this.pageInfo}, true);
                             break;
                         }
                         case "sketch": { //todo
-                            break;
+                            component=sketch({data:data});
                         }
                     }
                 return component;
@@ -54,10 +50,10 @@ export class PageCreateView extends TurboView<Page, PageModel> {
 
     protected setupUIElements() {
         super.setupUIElements();
-            this.pageInfoList = div({classes:"page-info-list"});
+            this.pageInfo = div({classes:"page-info-list"});
 
-            this.title = textarea({text: this.model.title, label: "PageTitle", parent:this.pageInfoList});
-
+            let title = textarea({text: this.model.title, label: "PageTitle", parent:this.element});
+/*
             this.saveButton= button({text:"Save", parent:this.pageInfoList, onClick:()=>{
                 console.log( this.model.data);
                 makeRequest(
@@ -79,12 +75,14 @@ export class PageCreateView extends TurboView<Page, PageModel> {
                 }
             })
 
+ */
+
 
     }
 
     protected setupUILayout() {
         super.setupUILayout();
-        turbo(this).addChild([this.pageInfoList]);
+        turbo(this).addChild([this.pageInfo]);
     }
 
 

@@ -178,38 +178,39 @@ class GridBoardView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboVi
     }
     setupUIElements() {
         super.setupUIElements();
-        console.log("Current page: ", window.location.href);
+        //Big container for the grid
+        this.container = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "container", style: "padding-top: 13vh; width: 1400px; margin-left:7%; margin-right: 0; margin-bottom:7%; columns: 2; column-gap: 10px;" });
         if (window.location.href.includes("login")) {
-            //Big container for the grid
-            this.container = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "container", style: "padding-top: 13vh; width: 1400px; margin-left:7%; margin-right: 0; margin-bottom:7%; columns: 3; column-gap: 10px;" });
-            // Populate grid with user's images
-            console.log("PAGES IN SS :" + sessionStorage.getItem("pages"));
-            (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/pages/loadPagesFromPageId", "post", { "pageIdList": JSON.parse(sessionStorage.getItem("pages")) }, (responseString) => {
-                let pageList = JSON.parse(responseString);
-                for (let pageData of pageList) {
-                    let box = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: this.container, class: "page-box" });
-                    pageData.parent = box;
-                    (0,_page_page__WEBPACK_IMPORTED_MODULE_2__.page)(pageData);
-                }
-            }, (message) => {
-                console.log("failure");
-            });
+            this.loadPages("http://localhost:3000/pages/loadPagesFromPageId");
         }
-        else { // for now, placeholder images
-            //Big container for the grid
-            this.container = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "container", style: "padding-top: 13vh; width: 1400px; margin-left:7%; margin-right: 0; margin-bottom:7%; columns: 5; column-gap: 20px;" });
-            for (let i = 1; i <= 15; i++) {
-                let box = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "box", style: "width: 100%; margin-bottom: 10px; break-inside: avoid; border-radius: 15px;" });
-                let image = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.img)({ src: `https://gallery1.charleskdesigns.com/image/${i.toString().padStart(3, '0')}.jpg`, alt: "image", style: "max-width: 90%; min-width: 90%; border-radius: 10px;" });
-                let caption = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ class: "caption", text: "Lorem ipsum ", style: "padding: 10px; text-align: center;" });
-                box.append(image, caption);
-                this.container.appendChild(box);
-            }
+        else {
+            this.loadPages("http://localhost:3000/pages/loadAllPages");
         }
     }
     setupUILayout() {
         super.setupUILayout();
         (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.container]);
+    }
+    loadPages(url) {
+        (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)(url, "post", { "pageIdList": JSON.parse(sessionStorage.getItem("pages")) }, (responseString) => {
+            let pageList = JSON.parse(responseString);
+            console.log(pageList);
+            for (let pageData of pageList) { //todo fix this
+                let box = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: this.container, class: "page-box" });
+                pageData.parent = box;
+                (0,_page_page__WEBPACK_IMPORTED_MODULE_2__.page)({ data: pageData, parent: box });
+                let info = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: box });
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: info, text: pageData.title });
+                if (pageData.userId == sessionStorage.getItem("userId")) {
+                    //todo add pen
+                }
+                //todo add like
+                (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: info, text: pageData.userId }); //todo replace userid by username
+                //todo add trashcan
+            }
+        }, (message) => {
+            console.log("failure");
+        });
     }
 }
 
@@ -398,6 +399,13 @@ let NavBar = (() => {
             this.divTop.appendChild(this.profileButton);
             this.divTop.appendChild(this.homeButton);
             this.divTop.appendChild(this.createButton);
+            /* Admin button currently unused
+            if(sessionStorage.getItem("admin")=="true"){
+                this.adminButton = button({leftIcon: "admin_icon", hidden: sessionStorage.getItem("username")?false:true, onClick: () => {
+                    }});
+                this.divTop.appendChild(this.adminButton);
+            }
+             */
             this.divEl.appendChild(this.divTop);
             this.divEl.appendChild((0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.spacer)());
             this.divEl.appendChild(this.logoutButton);
@@ -422,6 +430,367 @@ let NavBar = (() => {
 function navBar(properties = {}) {
     (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
         tag: "nav-bar"
+    });
+    return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
+}
+
+
+/***/ }),
+
+/***/ "./client/src/page/buttons/buttons.css":
+/*!*********************************************!*\
+  !*** ./client/src/page/buttons/buttons.css ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_buttons_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!./buttons.css */ "./node_modules/css-loader/dist/cjs.js!./client/src/page/buttons/buttons.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_buttons_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_buttons_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_buttons_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_buttons_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./client/src/page/buttons/deleteButton.ts":
+/*!*************************************************!*\
+  !*** ./client/src/page/buttons/deleteButton.ts ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DeleteButton: () => (/* binding */ DeleteButton),
+/* harmony export */   deleteButton: () => (/* binding */ deleteButton)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../makeRequest */ "./client/src/makeRequest.ts");
+/* harmony import */ var _buttons_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./buttons.css */ "./client/src/page/buttons/buttons.css");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+var __setFunctionName = (undefined && undefined.__setFunctionName) || function (f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+};
+
+
+
+let DeleteButton = (() => {
+    let _classDecorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.define)("delete-button")];
+    let _classDescriptor;
+    let _classExtraInitializers = [];
+    let _classThis;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboElement;
+    var DeleteButton = _classThis = class extends _classSuper {
+        setupUIElements() {
+            super.setupUIElements();
+            this.deleteButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ parent: this, leftIcon: "delete_icon", onClick: () => {
+                    (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/pages/deletePage", "post", { pageId: [this.pageId] }, (responseString) => {
+                        console.log("success", responseString);
+                        //let pageData = JSON.parse(responseString)[0];
+                        //sessionStorage.setItem("currentPage", JSON.stringify(pageData));
+                        //window.location.reload();
+                    }, (message) => { console.log("failure"); });
+                    return;
+                } });
+        }
+        setupUILayout() {
+            super.setupUILayout();
+        }
+    };
+    __setFunctionName(_classThis, "DeleteButton");
+    (() => {
+        var _a;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
+        DeleteButton = _classThis = _classDescriptor.value;
+        if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        __runInitializers(_classThis, _classExtraInitializers);
+    })();
+    return DeleteButton = _classThis;
+})();
+
+function deleteButton(properties = {}, pageId) {
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
+        tag: "delete-button",
+        pageId: pageId
+    });
+    return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
+}
+
+
+/***/ }),
+
+/***/ "./client/src/page/buttons/editButton.ts":
+/*!***********************************************!*\
+  !*** ./client/src/page/buttons/editButton.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EditButton: () => (/* binding */ EditButton),
+/* harmony export */   editButton: () => (/* binding */ editButton)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../makeRequest */ "./client/src/makeRequest.ts");
+/* harmony import */ var _buttons_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./buttons.css */ "./client/src/page/buttons/buttons.css");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+var __setFunctionName = (undefined && undefined.__setFunctionName) || function (f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+};
+
+
+
+let EditButton = (() => {
+    let _classDecorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.define)("edit-button")];
+    let _classDescriptor;
+    let _classExtraInitializers = [];
+    let _classThis;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboElement;
+    var EditButton = _classThis = class extends _classSuper {
+        setupUIElements() {
+            super.setupUIElements();
+            this.editButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ parent: this, leftIcon: "edit_icon", onClick: () => {
+                    (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/pages/loadPagesFromPageId", "post", { "pageIdList": [this.pageId] }, (responseString) => {
+                        let pageData = JSON.parse(responseString)[0];
+                        sessionStorage.setItem("currentPage", JSON.stringify(pageData));
+                        window.location.replace("/create");
+                    }, (message) => { console.log("failure"); });
+                    return;
+                } });
+        }
+        setupUILayout() {
+            super.setupUILayout();
+        }
+    };
+    __setFunctionName(_classThis, "EditButton");
+    (() => {
+        var _a;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
+        EditButton = _classThis = _classDescriptor.value;
+        if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        __runInitializers(_classThis, _classExtraInitializers);
+    })();
+    return EditButton = _classThis;
+})();
+
+function editButton(properties = {}, pageId) {
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
+        tag: "edit-button",
+        pageId: pageId
+    });
+    return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
+}
+
+
+/***/ }),
+
+/***/ "./client/src/page/buttons/likeButton.ts":
+/*!***********************************************!*\
+  !*** ./client/src/page/buttons/likeButton.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LikeButton: () => (/* binding */ LikeButton),
+/* harmony export */   likeButton: () => (/* binding */ likeButton)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../makeRequest */ "./client/src/makeRequest.ts");
+/* harmony import */ var _buttons_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./buttons.css */ "./client/src/page/buttons/buttons.css");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+var __setFunctionName = (undefined && undefined.__setFunctionName) || function (f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+};
+
+
+
+let LikeButton = (() => {
+    let _classDecorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.define)("like-button")];
+    let _classDescriptor;
+    let _classExtraInitializers = [];
+    let _classThis;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboElement;
+    var LikeButton = _classThis = class extends _classSuper {
+        constructor() {
+            //todo remove those 2
+            super(...arguments);
+            this.liked = false;
+        }
+        setupUIElements() {
+            super.setupUIElements();
+            this.liked = sessionStorage.getItem("userId") && (JSON.parse(sessionStorage.getItem("likedPages"))).indexOf(this.pageId) > -1;
+            this.likeButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ parent: this, leftIcon: this.liked ? "liked_icon" : "not_liked_icon", onClick: () => {
+                    console.log("clicked like button");
+                    console.log("sessionStorage", sessionStorage);
+                    this.liked = !this.liked;
+                    this.likeButton.leftIcon = this.liked ? "liked_icon" : "not_liked_icon";
+                    (0,_makeRequest__WEBPACK_IMPORTED_MODULE_1__.makeRequest)("http://localhost:3000/pages/changeLikeStatus", "post", { userId: JSON.parse(sessionStorage.getItem("userId")), pageId: this.pageId, likeStatus: this.liked }, (responseString) => {
+                        console.log("like status success !", responseString);
+                        sessionStorage.setItem("likedPages", responseString);
+                    }, (message) => { console.log("failure"); });
+                } });
+        }
+        setupUILayout() {
+            super.setupUILayout();
+        }
+    };
+    __setFunctionName(_classThis, "LikeButton");
+    (() => {
+        var _a;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
+        LikeButton = _classThis = _classDescriptor.value;
+        if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        __runInitializers(_classThis, _classExtraInitializers);
+    })();
+    return LikeButton = _classThis;
+})();
+
+function likeButton(properties = {}, pageId) {
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
+        tag: "like-Button",
+        pageId: pageId
     });
     return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
 }
@@ -603,8 +972,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
 /* harmony import */ var _page_model__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./page.model */ "./client/src/page/page.model.ts");
 /* harmony import */ var _page_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./page.css */ "./client/src/page/page.css");
-/* harmony import */ var _pageList_view__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pageList.view */ "./client/src/page/pageList.view.ts");
-/* harmony import */ var _pageDrawing_view__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pageDrawing.view */ "./client/src/page/pageDrawing.view.ts");
+/* harmony import */ var _pageCreate_view__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pageCreate.view */ "./client/src/page/pageCreate.view.ts");
+/* harmony import */ var _page_view__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./page.view */ "./client/src/page/page.view.ts");
 var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
     function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
     var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
@@ -658,6 +1027,17 @@ let Page = (() => {
     let _content_initializers = [];
     let _content_extraInitializers = [];
     var Page = _classThis = class extends _classSuper {
+        addAnnotation(type, x = 0, y = 0, color = "black", weight = 3) {
+            //todo remake this
+            switch (type) {
+                case "typing":
+                    this.model.content.push({ type: "typing", x: x, y: y, color: color, text: " " });
+                    break;
+                case "sketch":
+                    this.model.content.push({ type: "drawing", points: [{ x: x, y: y }], color: color, weight: weight });
+                    break;
+            }
+        }
         constructor() {
             super(...arguments);
             this.content = __runInitializers(this, _content_initializers, void 0);
@@ -688,7 +1068,7 @@ function page(properties = {}, listDisplay = false) {
     console.log("in page.ts : ", properties);
     (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
         tag: "page-elt",
-        view: listDisplay ? _pageList_view__WEBPACK_IMPORTED_MODULE_3__.PageListView : _pageDrawing_view__WEBPACK_IMPORTED_MODULE_4__.PageDrawingView,
+        view: listDisplay ? _pageCreate_view__WEBPACK_IMPORTED_MODULE_3__.PageCreateView : _page_view__WEBPACK_IMPORTED_MODULE_4__.PageView,
         model: _page_model__WEBPACK_IMPORTED_MODULE_1__.PageModel,
         data: pageData,
     });
@@ -700,30 +1080,36 @@ function page(properties = {}, listDisplay = false) {
 
 /***/ }),
 
-/***/ "./client/src/page/pageDrawing.view.ts":
-/*!*********************************************!*\
-  !*** ./client/src/page/pageDrawing.view.ts ***!
-  \*********************************************/
+/***/ "./client/src/page/page.view.ts":
+/*!**************************************!*\
+  !*** ./client/src/page/page.view.ts ***!
+  \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   PageDrawingView: () => (/* binding */ PageDrawingView)
+/* harmony export */   PageView: () => (/* binding */ PageView)
 /* harmony export */ });
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
 /* harmony import */ var _scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../scrapComponents/typing/typing */ "./client/src/scrapComponents/typing/typing.ts");
 /* harmony import */ var _scrapComponents_sketch_sketch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../scrapComponents/sketch/sketch */ "./client/src/scrapComponents/sketch/sketch.ts");
+/* harmony import */ var _buttons_likeButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./buttons/likeButton */ "./client/src/page/buttons/likeButton.ts");
+/* harmony import */ var _buttons_editButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./buttons/editButton */ "./client/src/page/buttons/editButton.ts");
+/* harmony import */ var _buttons_deleteButton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./buttons/deleteButton */ "./client/src/page/buttons/deleteButton.ts");
 
 
 
-class PageDrawingView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
+
+
+
+class PageView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
     initialize() {
         var _a;
         super.initialize();
         (_a = this.model.getBlock("content")) === null || _a === void 0 ? void 0 : _a.generateObserver({
             onAdded: (data) => {
                 let component;
-                switch (data.get("type")) {
+                switch (data.type) {
                     case "typing": {
                         component = (0,_scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__.typing)({ data: data, parent: this.pageDiv });
                         break;
@@ -739,26 +1125,37 @@ class PageDrawingView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.Turbo
     }
     setupUIElements() {
         super.setupUIElements();
-        this.pageDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ classes: "textured-page" });
+        this.pageDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: this.element, classes: "textured-page" });
+        if (true) { //todo replace by condition that checks that we're not in create page
+            if (sessionStorage.getItem("userId")) {
+                (0,_buttons_likeButton__WEBPACK_IMPORTED_MODULE_3__.likeButton)({ parent: this }, this.model.pageId);
+                if (JSON.parse(sessionStorage.getItem("userId")) == this.model.pageId) {
+                    (0,_buttons_editButton__WEBPACK_IMPORTED_MODULE_4__.editButton)({ parent: this }, this.model.pageId);
+                    (0,_buttons_deleteButton__WEBPACK_IMPORTED_MODULE_5__.deleteButton)({ parent: this }, this.model.pageId);
+                }
+                else if (sessionStorage.getItem("admin") == "true") {
+                    (0,_buttons_deleteButton__WEBPACK_IMPORTED_MODULE_5__.deleteButton)({ parent: this }, this.model.pageId);
+                }
+            }
+        }
     }
     setupUILayout() {
         super.setupUILayout();
-        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.pageDiv]);
     }
 }
 
 
 /***/ }),
 
-/***/ "./client/src/page/pageList.view.ts":
-/*!******************************************!*\
-  !*** ./client/src/page/pageList.view.ts ***!
-  \******************************************/
+/***/ "./client/src/page/pageCreate.view.ts":
+/*!********************************************!*\
+  !*** ./client/src/page/pageCreate.view.ts ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   PageListView: () => (/* binding */ PageListView)
+/* harmony export */   PageCreateView: () => (/* binding */ PageCreateView)
 /* harmony export */ });
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
 /* harmony import */ var _scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../scrapComponents/typing/typing */ "./client/src/scrapComponents/typing/typing.ts");
@@ -766,7 +1163,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-class PageListView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
+class PageCreateView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
     constructor() {
         super(...arguments);
         this.annotationElementList = [];
@@ -1695,6 +2092,46 @@ nav-bar turbo-button:active {
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./client/src/page/buttons/buttons.css":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./client/src/page/buttons/buttons.css ***!
+  \***********************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `delete-button turbo-button, edit-button turbo-button, like-button turbo-button{
+
+     background-color: transparent;
+     border: none;
+    padding: 10px;
+    cursor: pointer;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-grow: 0;
+
+    transition: background 0.2s ease;
+    border-radius: 10px;
+}`, "",{"version":3,"sources":["webpack://./client/src/page/buttons/buttons.css"],"names":[],"mappings":"AAAA;;KAEK,6BAA6B;KAC7B,YAAY;IACb,aAAa;IACb,eAAe;;IAEf,mBAAmB;IACnB,uBAAuB;;IAEvB,YAAY;;IAEZ,gCAAgC;IAChC,mBAAmB;AACvB","sourcesContent":["delete-button turbo-button, edit-button turbo-button, like-button turbo-button{\r\n\r\n     background-color: transparent;\r\n     border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    flex-grow: 0;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./client/src/page/page.css":
 /*!************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./client/src/page/page.css ***!
@@ -1724,6 +2161,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
     --snow: #FCF7F8;
     --shadow-grey :#342E37;
     --light-border: #bababa;
+    --blue-slate: #19647E
 }
 
 .textured-page {
@@ -1733,7 +2171,12 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
     width: 400px;
 }
 
-`, "",{"version":3,"sources":["webpack://./client/src/page/page.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;IACtB,uBAAuB;AAC3B;;AAEA;IACI,yDAA4D;IAC5D,sCAAsC;IACtC,aAAa;IACb,YAAY;AAChB","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n    --light-border: #bababa;\r\n}\r\n\r\n.textured-page {\r\n    background-image: url(\"../../public/assets/pageTexture.jpg\");\r\n    border: 2px solid var(--light-border );\r\n    height: 500px;\r\n    width: 400px;\r\n}\r\n\r\n"],"sourceRoot":""}]);
+.page-elt {
+    background-color: var(--blue-slate);
+    border: 1px solid var(--light-border);
+}
+
+`, "",{"version":3,"sources":["webpack://./client/src/page/page.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;IACtB,uBAAuB;IACvB;AACJ;;AAEA;IACI,yDAA4D;IAC5D,sCAAsC;IACtC,aAAa;IACb,YAAY;AAChB;;AAEA;IACI,mCAAmC;IACnC,qCAAqC;AACzC","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n    --light-border: #bababa;\r\n    --blue-slate: #19647E\r\n}\r\n\r\n.textured-page {\r\n    background-image: url(\"../../public/assets/pageTexture.jpg\");\r\n    border: 2px solid var(--light-border );\r\n    height: 500px;\r\n    width: 400px;\r\n}\r\n\r\n.page-elt {\r\n    background-color: var(--blue-slate);\r\n    border: 1px solid var(--light-border);\r\n}\r\n\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1795,6 +2238,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/** background:#4D7C8A; **/
 }
 
 body {
+  display: flex;
+  flex-direction: row;
+
   margin: 0;
   min-height: 690px;
   min-width: 650px;
@@ -1870,7 +2316,7 @@ h2 {
 }
 
 
-`, "",{"version":3,"sources":["webpack://./client/src/style.css"],"names":[],"mappings":"AAAA,0BAA0B;;AAE1B;EACE,qBAAqB;AACvB;;AAEA;EACE,SAAS;EACT,iBAAiB;EACjB,gBAAgB;;EAEhB,qBAAqB;;EAErB,yBAAyB;EACzB;;qDAEmD;EACnD,8BAA8B;EAC9B,0BAA0B;AAC5B;;AAEA;EACE,wBAAwB;IACtB,4CAA4C;IAC5C,kBAAkB;IAClB,yBAAyB;IACzB,SAAS;AACb;;AAEA;IACI,2BAA2B;IAC3B,wBAAwB;IACxB,SAAS;AACb;;AAEA;EACE,aAAa;EACb,iBAAiB;EACjB,QAAQ;AACV;;AAEA;EACE,YAAY;EACZ,YAAY;EACZ,kCAAkC;EAClC,mBAAmB;AACrB;;;AAGA,uBAAuB;AACvB;IACI,aAAa;IACb,mCAAmC;IACnC,4BAA4B;IAC5B,YAAY;IACZ;;oCAEgC;AACpC;;;AAGA;IACI,kBAAkB;AACtB;;AAEA;IACI,uBAAuB;IACvB,6BAA6B;AACjC;;AAEA;IACI,oBAAoB;IACpB,6BAA6B;IAC7B;AACJ;;AAEA;IACI,kBAAkB;IAClB,6BAA6B;AACjC","sourcesContent":["/** background:#4D7C8A; **/\r\n\r\n:root {\r\n  --text-color: #23424b;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  min-height: 690px;\r\n  min-width: 650px;\r\n\r\n  align-content: center;\r\n\r\n  background-color: #ffffff;\r\n  background-image:\r\n    linear-gradient(90deg, #ccf0ff80 40px, transparent 40px),\r\n    linear-gradient(#ccf0ff80 40px, transparent 40px);\r\n  background-position: 10px 10px;\r\n  background-size: 78px 78px;\r\n}\r\n\r\nh1 {\r\n  color: var(--text-color);\r\n    font-family: \"Baskerville\", \"Georgia\", serif;\r\n    font-style: italic;\r\n    font-size: 5em !important;\r\n    margin: 0;\r\n}\r\n\r\nh2 {\r\n    font-size: 1.5em !important;\r\n    color: var(--text-color);\r\n    margin: 0;\r\n}\r\n\r\n.container{\r\n  display: flex;\r\n  direction: column;\r\n  gap: 5px;\r\n}\r\n\r\n.footer {\r\n  height:100px;\r\n  width: 100vw;\r\n  background-color:var(--text-color);\r\n  align-items: center;\r\n}\r\n\r\n\r\n/* Create page layout */\r\n.create-page-layout {\r\n    display: grid;\r\n    grid-template-columns: 60px 2fr 1fr;\r\n    grid-template-rows: 60px 1fr;\r\n    gap: 4px 6px;\r\n    grid-template-areas:\r\n    \"nav-bar toolbar toolbar\"\r\n    \"nav-bar page-drawing page-list\";\r\n}\r\n\r\n\r\n.nav-bar {\r\n    grid-area: nav-bar;\r\n}\r\n\r\n.page-drawing {\r\n    grid-area: page-drawing;\r\n    background-color: var(--snow);\r\n}\r\n\r\n.page-list {\r\n    grid-area: page-list;\r\n    background-color: var(--snow);\r\n    overflow-y: scroll\r\n}\r\n\r\n.toolbar{\r\n    grid-area: toolbar;\r\n    background-color: var(--snow);\r\n}\r\n\r\n\r\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./client/src/style.css"],"names":[],"mappings":"AAAA,0BAA0B;;AAE1B;EACE,qBAAqB;AACvB;;AAEA;EACE,aAAa;EACb,mBAAmB;;EAEnB,SAAS;EACT,iBAAiB;EACjB,gBAAgB;;EAEhB,qBAAqB;;EAErB,yBAAyB;EACzB;;qDAEmD;EACnD,8BAA8B;EAC9B,0BAA0B;AAC5B;;AAEA;EACE,wBAAwB;IACtB,4CAA4C;IAC5C,kBAAkB;IAClB,yBAAyB;IACzB,SAAS;AACb;;AAEA;IACI,2BAA2B;IAC3B,wBAAwB;IACxB,SAAS;AACb;;AAEA;EACE,aAAa;EACb,iBAAiB;EACjB,QAAQ;AACV;;AAEA;EACE,YAAY;EACZ,YAAY;EACZ,kCAAkC;EAClC,mBAAmB;AACrB;;;AAGA,uBAAuB;AACvB;IACI,aAAa;IACb,mCAAmC;IACnC,4BAA4B;IAC5B,YAAY;IACZ;;oCAEgC;AACpC;;;AAGA;IACI,kBAAkB;AACtB;;AAEA;IACI,uBAAuB;IACvB,6BAA6B;AACjC;;AAEA;IACI,oBAAoB;IACpB,6BAA6B;IAC7B;AACJ;;AAEA;IACI,kBAAkB;IAClB,6BAA6B;AACjC","sourcesContent":["/** background:#4D7C8A; **/\r\n\r\n:root {\r\n  --text-color: #23424b;\r\n}\r\n\r\nbody {\r\n  display: flex;\r\n  flex-direction: row;\r\n\r\n  margin: 0;\r\n  min-height: 690px;\r\n  min-width: 650px;\r\n\r\n  align-content: center;\r\n\r\n  background-color: #ffffff;\r\n  background-image:\r\n    linear-gradient(90deg, #ccf0ff80 40px, transparent 40px),\r\n    linear-gradient(#ccf0ff80 40px, transparent 40px);\r\n  background-position: 10px 10px;\r\n  background-size: 78px 78px;\r\n}\r\n\r\nh1 {\r\n  color: var(--text-color);\r\n    font-family: \"Baskerville\", \"Georgia\", serif;\r\n    font-style: italic;\r\n    font-size: 5em !important;\r\n    margin: 0;\r\n}\r\n\r\nh2 {\r\n    font-size: 1.5em !important;\r\n    color: var(--text-color);\r\n    margin: 0;\r\n}\r\n\r\n.container{\r\n  display: flex;\r\n  direction: column;\r\n  gap: 5px;\r\n}\r\n\r\n.footer {\r\n  height:100px;\r\n  width: 100vw;\r\n  background-color:var(--text-color);\r\n  align-items: center;\r\n}\r\n\r\n\r\n/* Create page layout */\r\n.create-page-layout {\r\n    display: grid;\r\n    grid-template-columns: 60px 2fr 1fr;\r\n    grid-template-rows: 60px 1fr;\r\n    gap: 4px 6px;\r\n    grid-template-areas:\r\n    \"nav-bar toolbar toolbar\"\r\n    \"nav-bar page-drawing page-list\";\r\n}\r\n\r\n\r\n.nav-bar {\r\n    grid-area: nav-bar;\r\n}\r\n\r\n.page-drawing {\r\n    grid-area: page-drawing;\r\n    background-color: var(--snow);\r\n}\r\n\r\n.page-list {\r\n    grid-area: page-list;\r\n    background-color: var(--snow);\r\n    overflow-y: scroll\r\n}\r\n\r\n.toolbar{\r\n    grid-area: toolbar;\r\n    background-color: var(--snow);\r\n}\r\n\r\n\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -66257,9 +66703,14 @@ turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboEventManager.instance.preventD
 document.addEventListener("DOMContentLoaded", () => {
     turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboIcon.config.defaultDirectory = "assets";
     //document.body.setAttribute("style", "background:#4D7C8A; align-content-:center");
-    (0,_navBar_navBar__WEBPACK_IMPORTED_MODULE_1__.navBar)({ parent: document.body });
-    (0,_gridBoard_gridBoard__WEBPACK_IMPORTED_MODULE_2__.gridBoard)({ parent: document.body });
-    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: document.body, classes: "footer" });
+    let d1 = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: document.body, classes: "left-container" });
+    let d2 = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: document.body, classes: "right-container" });
+    (0,_navBar_navBar__WEBPACK_IMPORTED_MODULE_1__.navBar)({ parent: d1 });
+    let header = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: d2, classes: "header", style: "flex-direction: column" });
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.h1)({ parent: header, text: "Patchwork", style: " text-align: center;" });
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.h2)({ parent: header, text: "A Scrapbooking Website", style: " text-align: center;" });
+    (0,_gridBoard_gridBoard__WEBPACK_IMPORTED_MODULE_2__.gridBoard)({ parent: d2 });
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ parent: d2, classes: "footer" });
     let footer_text = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.p)({ parent: document.querySelector(".footer"), text: "© 2025 Patchwork - Sidonie Minodier and Victoria Myot\nAll rights reserved.", style: "color: white; text-align: center; padding: 10px; padding-top: 35px;" });
 });
 

@@ -14,6 +14,7 @@ import {SketchModel} from "./sketch.model";
 
 @define("sketch-element")
 export class Sketch extends TurboElement<any, SketchData, SketchModel> {
+
     @effect pointsChanged() {
         const points = this.model.points;
         if (points.length < 2) return;
@@ -31,6 +32,7 @@ export class Sketch extends TurboElement<any, SketchData, SketchModel> {
             .attr("stroke", "black")
             .attr("stroke-width", 1);
     }
+
 }
 
 export function sketch(properties: TurboElementProperties<any, SketchData, SketchModel> = {}) {

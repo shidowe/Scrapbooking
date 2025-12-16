@@ -7,6 +7,7 @@ import {PageData} from "./page/page.types";
 TurboEventManager.instance.preventDefaultWheel =false;
 import "./style.css";
 import {PageModel} from "./page/page.model";
+import {switchViewButton} from "./page/buttons/switchViewButton";
 
 
 
@@ -28,10 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const yData = map.get("0");
 
     //page in drawing form
-    let pageDrawing = page({ data: yData, parent:createPageLayout, classes:"page-drawing"});
+    //let pageDrawing = page({ data: yData, parent:createPageLayout, classes:"page-drawing"});
 
     //page in list form
-    let pageList = page({data: yData, parent:createPageLayout, classes:"page-list"}, true);
+    let containerDiv = div({id:"containerPage", parent:createPageLayout});
+    let pageList = page({data: yData, parent:containerDiv, parentElement:containerDiv, classes:"page-list"}, true);
+    toolBar.append(switchViewButton({parent:toolBar}, pageList.model.pageId));
+
 
 
 
