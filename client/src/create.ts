@@ -1,4 +1,4 @@
-import {button, div, jsonToYjs, turbo, TurboButton, TurboEventManager, TurboIcon, YDoc} from "turbodombuilder";
+import {button, div, jsonToYjs, turbo, TurboButton, TurboEventManager, TurboIcon, YDoc, h1, h2, p} from "turbodombuilder";
 import {Page, page} from "./page/page";
 import {navBar} from "./navBar/navBar";
 import {makeRequest} from "./makeRequest";
@@ -18,30 +18,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if(! sessionStorage.getItem("userId")) {window.location.replace("/login");}
 
-    let createPageLayout = div({classes:"create-page-layout", parent:document.body});
+    //let createPageLayout = div({classes:"create-page-layout", parent:document.body});
+
+    navBar({parent: document.body, classes:"nav-bar"});
+
+
+    let header = div({ parent: document.body, classes:"header", style: "flex-direction: column" });
+    h1({parent: header, text: "Patchwork", style: " text-align: center;"});
+    h2({parent: header, text: "A Scrapbooking Website", style: " text-align: center;"});
+
+    let containerDiv = div({id:"containerPage", class:"main-body", parent:document.body });
 
     //todo tool bar
-    let toolBar = div({parent: createPageLayout, classes:"toolbar"});
+    let toolBar = div({parent: containerDiv, classes:"toolbar"});
 
-    navBar({parent: createPageLayout, classes:"nav-bar"});
 
-    const data = JSON.parse(sessionStorage.getItem("currentPage"));
+    /*
+    console.log("current page :: "+sessionStorage.getItem("currentPage"));
+    let currPage = sessionStorage.getItem("currentPage");
+
+    if (!currPage) {
+        console.error("No currentPage in sessionStorage");
+        return;
+    }
+
+    const data = JSON.parse(currPage);
+    //const data = JSON.parse(sessionStorage.getItem("currentPage"));
     const map =new YDoc().getMap("pageData")
     map.set("0", jsonToYjs(data));
     const yData = map.get("0");
+    */
 
     //page in drawing form
     //let pageDrawing = page({ data: yData, parent:createPageLayout, classes:"page-drawing"});
 
     //page in list form
-    let containerDiv = div({id:"containerPage", parent:createPageLayout, });
-    let pageList = page({id:"page-in-create", data: yData, parent:containerDiv, parentElement:containerDiv, classes:"page-list"}, true);
+    
+    //let pageList = page({id:"page-in-create", data: yData, parent:containerDiv, parentElement:containerDiv, classes:"page-list"}, true);
+    let pageList = page({id:"page-in-create", parent:containerDiv, parentElement:containerDiv, classes:"page-list"}, true);
 
     toolBar.append(switchViewButton({parent:toolBar}, pageList.model.pageId));
     toolBar.append(addTextButton({parent:toolBar}, pageList.model.pageId));
 
-
-
+    let footer = div({ parent: document.body, classes:"footer" });
+    let footer_text = p({parent: footer, text: "© 2025 Patchwork - Sidonie Minodier and Victoria Myot\nAll rights reserved."});
 
 
 });

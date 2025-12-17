@@ -2,6 +2,7 @@
 
 :root {
   --text-color: #23424b;
+  --baby-blue: #a1ebf1;
 }
 
 body {
@@ -78,11 +79,10 @@ h2 {
 .nav-bar { grid-area: nav-bar; }
 .header { grid-area: header; }
 .footer { grid-area: footer; }
-.body-content { grid-area: body-content; }
 
 
 
-/* Create page layout */
+/* Create page layout
 .create-page-layout {
     display: grid;
     grid-template-columns: 60px 2fr 1fr;
@@ -92,6 +92,23 @@ h2 {
     "nav-bar toolbar toolbar"
     "nav-bar page-drawing page-list";
 }
+    */
+
+
+#containerPage { 
+
+  grid-area: body-content; 
+
+  display: grid; 
+  grid-template-columns: 50% 50%; 
+  grid-template-rows: 0.3fr 1.7fr; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    "toolbar toolbar"
+    "page-list page-drawing"; 
+}
+
+
 
 /*
 .nav-bar {
@@ -100,19 +117,19 @@ h2 {
     */
 
 .page-drawing {
-    grid-area: page-drawing;
+    grid-area: right-pane;
     background-color: var(--snow);
 }
 
 .page-list {
-    grid-area: page-list;
+    grid-area: left-pane;
     background-color: var(--snow);
     overflow-y: scroll
 }
 
 .toolbar{
     grid-area: toolbar;
-    background-color: var(--snow);
+    background-color: var(--baby-blue);
 }
 
 
