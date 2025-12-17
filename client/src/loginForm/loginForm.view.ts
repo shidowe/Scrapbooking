@@ -88,15 +88,14 @@ export class LoginFormView extends TurboView<LoginForm, LoginFormModel> {
         })
 
         //button to switch between register and login
-        this.switchModes = p({text:this.login ? "Register" : "Login", id:"switch-modes", parent:this.formDiv});
-        this.switchModes.addEventListener("click", () => { //meh
+        this.switchModes = p({text:this.login ? "Register" : "Login", id:"switch-modes", parent:this.formDiv, onClick:() => { //meh
             this.login = !this.login;
             this.passwordConfirmationEl.hidden= this.login;
             this.emailEl.hidden= this.login;
             this.modeEl.textContent = this.login ? "Login" : "Register";
             this.switchModes.textContent = this.login ? "Register" : "Login";
             this.messageEl.hidden = true;
-        })
+        }});
 
     }
 

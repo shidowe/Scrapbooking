@@ -53,11 +53,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let toolBar = div({parent: create, classes:"toolbar"});
 
-    let containerDiv = div({id:"containerPage", class:"main-body", parent:create });
-    let pageList = page({data:JSON.parse(sessionStorage.getItem("currentPage")), id:"page-in-create", parent:containerDiv, classes:"page-list"}, true);
+    let pageInfo = page({data:JSON.parse(sessionStorage.getItem("currentPage")), id:"page-info", parent:create, classes:"page-info"}, true);
 
-    toolBar.append(switchViewButton({parent:toolBar}, pageList.model.pageId));
-    toolBar.append(addTextButton({parent:toolBar}, pageList.model.pageId));
+    let containerPage = div({id:"containerPage", class:"container-page", parent:create });
+    let pageVisual =  page({data:JSON.parse(sessionStorage.getItem("currentPage")), id:"page-visual", parent:containerPage, classes:"page-visual"});
+
+
+    toolBar.append(switchViewButton({parent:toolBar}, pageInfo.model.pageId));
+    toolBar.append(addTextButton({parent:toolBar}, pageInfo.model.pageId));
 
 
     //footer

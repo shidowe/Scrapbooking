@@ -13,4 +13,12 @@
     width: 400px;
 }
 
+page-elt.page-visual{
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    height: 504px;
+    width: 404px;
+}
+
 

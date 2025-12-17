@@ -100,12 +100,12 @@ h2 {
   grid-area: body-content; 
 
   display: grid; 
-  grid-template-columns: 50% 50%; 
-  grid-template-rows: 0.3fr 1.7fr; 
+  grid-template-columns: 500px auto;
+  grid-template-rows: 50px auto;
   gap: 0px 0px; 
   grid-template-areas: 
     "toolbar toolbar"
-    "page-list page-drawing"; 
+    "page-info container-page";
 }
 
 
@@ -116,13 +116,14 @@ h2 {
 }
     */
 
-.page-drawing {
-    grid-area: right-pane;
+#containerPage {
+    grid-area: container-page;
     background-color: var(--snow);
+    align-items: center;
 }
 
-.page-list {
-    grid-area: left-pane;
+.page-info {
+    grid-area: page-info;
     background-color: var(--snow);
     overflow-y: scroll
 }

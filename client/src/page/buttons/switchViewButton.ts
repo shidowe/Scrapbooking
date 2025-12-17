@@ -8,43 +8,34 @@ import {PageView} from "../page.view";
 @define("switch-view-button")
 export class SwitchViewButton extends TurboElement {
     private switchViewButton: TurboButton;
-    private infoMode:boolean =true;
     private pageId:number
 
     protected setupUIElements() {
         super.setupUIElements();
 
         this.switchViewButton = button({parent: this, leftIcon: "switch_icon", onClick: () => {
-            //todo save page
+            let pageInfo= document.getElementById("page-info") as Page;
+            makeRequest(
+                "http://localhost:3000/pages/savePage",
+                "post",
+                {"pageData":pageInfo.data},
+                (responseString)=>{ console.log("success");},
+                (message)=>{console.log("failure");}
+            );
 
-            let pageInCreate= document.getElementById("page-in-create") as Page;
-                makeRequest(
-                    "http://localhost:3000/pages/savePage",
-                    "post",
-                    {"pageData":pageInCreate.data},
-                    (responseString)=>{ console.log("success");
-                    },
-                    (message)=>{
-                        console.log("failure");
-                    }
-                );
-
-            this.infoMode = !this.infoMode;
             document.getElementById("containerPage").innerHTML = "";
-                makeRequest(
-                    "http://localhost:3000/pages/loadPagesFromPageId",
-                    "post",
-                    {"pageIdList":[this.pageId]},
-                    (responseString)=>{
-                        let pageList = JSON.parse(responseString);
-                        for (let pageData of pageList) {
-                            page({id: "page-in-create", data:pageData, parent:document.getElementById("containerPage")}, this.infoMode);
-                        }
-                    },
-                    (message)=>{
-                        console.log("failure");
+            makeRequest(
+                "http://localhost:3000/pages/loadPagesFromPageId",
+                "post",
+                {"pageIdList":[this.pageId]},
+                (responseString)=>{
+                    let pageList = JSON.parse(responseString);
+                    for (let pageData of pageList) {
+                        page({id: "page-visual", classes:"page-visual", data:pageData, parent:document.getElementById("containerPage")});
                     }
-                );
+                },
+                (message)=>{console.log("failure");}
+            );
 
         }
         });
