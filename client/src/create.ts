@@ -27,10 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     h1({parent: header, text: "Patchwork", style: " text-align: center;"});
     h2({parent: header, text: "A Scrapbooking Website", style: " text-align: center;"});
 
-    let containerDiv = div({id:"containerPage", class:"main-body", parent:document.body });
 
-    //todo tool bar
-    let toolBar = div({parent: containerDiv, classes:"toolbar"});
 
 
     /*
@@ -49,17 +46,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const yData = map.get("0");
     */
 
-    //page in drawing form
-    //let pageDrawing = page({ data: yData, parent:createPageLayout, classes:"page-drawing"});
+    //create main area
 
-    //page in list form
-    
-    //let pageList = page({id:"page-in-create", data: yData, parent:containerDiv, parentElement:containerDiv, classes:"page-list"}, true);
-    let pageList = page({id:"page-in-create", parent:containerDiv, parentElement:containerDiv, classes:"page-list"}, true);
+    let create = div({id:"create", parent:document.body})
+
+
+    let toolBar = div({parent: create, classes:"toolbar"});
+
+    let containerDiv = div({id:"containerPage", class:"main-body", parent:create });
+    let pageList = page({data:JSON.parse(sessionStorage.getItem("currentPage")), id:"page-in-create", parent:containerDiv, classes:"page-list"}, true);
 
     toolBar.append(switchViewButton({parent:toolBar}, pageList.model.pageId));
     toolBar.append(addTextButton({parent:toolBar}, pageList.model.pageId));
 
+
+    //footer
     let footer = div({ parent: document.body, classes:"footer" });
     let footer_text = p({parent: footer, text: "© 2025 Patchwork - Sidonie Minodier and Victoria Myot\nAll rights reserved."});
 
