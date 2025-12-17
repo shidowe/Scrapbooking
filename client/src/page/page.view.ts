@@ -39,7 +39,7 @@ export class PageView extends TurboView<Page, PageModel> {
         super.setupUIElements();
 
         this.pageDiv = div({parent:this.element, classes:"textured-page"});
-        if(true) { //todo replace by condition that checks that we're not in create page
+        if(! window.location.href.includes("create")) {
             if (sessionStorage.getItem("userId")) {
                 likeButton({parent: this}, this.model.pageId);
                 if (JSON.parse(sessionStorage.getItem("userId")) == this.model.userId) {
