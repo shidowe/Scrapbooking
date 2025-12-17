@@ -2,7 +2,7 @@ import {div, turbo, TurboView, img} from "turbodombuilder";
 import {GridBoard} from "./gridBoard";
 import {makeRequest} from "../makeRequest";
 import {success} from "concurrently/dist/src/defaults";
-import {page} from "../page/page";
+import {Page, page} from "../page/page";
 import "./gridBoard.css";
 import {PageData} from "../page/page.types";
 

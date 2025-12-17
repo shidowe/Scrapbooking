@@ -1,7 +1,6 @@
-delete-button turbo-button, edit-button turbo-button, like-button turbo-button, switch-view-button turbo-button{
-
-     background-color: transparent;
-     border: none;
+turbo-button{
+    background-color: transparent;
+    border: none;
     padding: 10px;
     cursor: pointer;
 

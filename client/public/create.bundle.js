@@ -232,6 +232,103 @@ function navBar(properties = {}) {
 
 /***/ }),
 
+/***/ "./client/src/page/buttons/addTextButton.ts":
+/*!**************************************************!*\
+  !*** ./client/src/page/buttons/addTextButton.ts ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AddTextButton: () => (/* binding */ AddTextButton),
+/* harmony export */   addTextButton: () => (/* binding */ addTextButton)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _buttons_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./buttons.css */ "./client/src/page/buttons/buttons.css");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+var __setFunctionName = (undefined && undefined.__setFunctionName) || function (f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+};
+
+
+let AddTextButton = (() => {
+    let _classDecorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.define)("add-text-button")];
+    let _classDescriptor;
+    let _classExtraInitializers = [];
+    let _classThis;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboElement;
+    var AddTextButton = _classThis = class extends _classSuper {
+        setupUIElements() {
+            super.setupUIElements();
+            this.addTextButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ parent: this, leftIcon: "admin_icon", onClick: () => {
+                    console.log("clicked");
+                    let pageInCreate = document.getElementById("page-in-create");
+                    pageInCreate.addAnnotation({ type: "typing", x: 0, y: 0, color: "black" });
+                    console.log(pageInCreate.model.content);
+                }
+            });
+        }
+        setupUILayout() {
+            super.setupUILayout();
+        }
+    };
+    __setFunctionName(_classThis, "AddTextButton");
+    (() => {
+        var _a;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
+        AddTextButton = _classThis = _classDescriptor.value;
+        if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        __runInitializers(_classThis, _classExtraInitializers);
+    })();
+    return AddTextButton = _classThis;
+})();
+
+function addTextButton(properties = {}, pageId) {
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
+        tag: "add-text-button",
+        pageId: pageId
+    });
+    return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
+}
+
+
+/***/ }),
+
 /***/ "./client/src/page/buttons/buttons.css":
 /*!*********************************************!*\
   !*** ./client/src/page/buttons/buttons.css ***!
@@ -593,6 +690,124 @@ function likeButton(properties = {}, pageId) {
 
 /***/ }),
 
+/***/ "./client/src/page/buttons/switchViewButton.ts":
+/*!*****************************************************!*\
+  !*** ./client/src/page/buttons/switchViewButton.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SwitchViewButton: () => (/* binding */ SwitchViewButton),
+/* harmony export */   switchViewButton: () => (/* binding */ switchViewButton)
+/* harmony export */ });
+/* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
+/* harmony import */ var _page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../page */ "./client/src/page/page.ts");
+/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../makeRequest */ "./client/src/makeRequest.ts");
+/* harmony import */ var _buttons_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./buttons.css */ "./client/src/page/buttons/buttons.css");
+var __esDecorate = (undefined && undefined.__esDecorate) || function (ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+};
+var __runInitializers = (undefined && undefined.__runInitializers) || function (thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+};
+var __setFunctionName = (undefined && undefined.__setFunctionName) || function (f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+};
+
+
+
+
+let SwitchViewButton = (() => {
+    let _classDecorators = [(0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.define)("switch-view-button")];
+    let _classDescriptor;
+    let _classExtraInitializers = [];
+    let _classThis;
+    let _classSuper = turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboElement;
+    var SwitchViewButton = _classThis = class extends _classSuper {
+        constructor() {
+            super(...arguments);
+            this.infoMode = true;
+        }
+        setupUIElements() {
+            super.setupUIElements();
+            this.switchViewButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ parent: this, leftIcon: "switch_icon", onClick: () => {
+                    //todo save page
+                    let pageInCreate = document.getElementById("page-in-create");
+                    (0,_makeRequest__WEBPACK_IMPORTED_MODULE_2__.makeRequest)("http://localhost:3000/pages/savePage", "post", { "pageData": pageInCreate.data }, (responseString) => {
+                        console.log("success");
+                    }, (message) => {
+                        console.log("failure");
+                    });
+                    this.infoMode = !this.infoMode;
+                    document.getElementById("containerPage").innerHTML = "";
+                    (0,_makeRequest__WEBPACK_IMPORTED_MODULE_2__.makeRequest)("http://localhost:3000/pages/loadPagesFromPageId", "post", { "pageIdList": [this.pageId] }, (responseString) => {
+                        let pageList = JSON.parse(responseString);
+                        for (let pageData of pageList) {
+                            (0,_page__WEBPACK_IMPORTED_MODULE_1__.page)({ id: "page-in-create", data: pageData, parent: document.getElementById("containerPage") }, this.infoMode);
+                        }
+                    }, (message) => {
+                        console.log("failure");
+                    });
+                }
+            });
+        }
+        setupUILayout() {
+            super.setupUILayout();
+        }
+    };
+    __setFunctionName(_classThis, "SwitchViewButton");
+    (() => {
+        var _a;
+        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create((_a = _classSuper[Symbol.metadata]) !== null && _a !== void 0 ? _a : null) : void 0;
+        __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
+        SwitchViewButton = _classThis = _classDescriptor.value;
+        if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
+        __runInitializers(_classThis, _classExtraInitializers);
+    })();
+    return SwitchViewButton = _classThis;
+})();
+
+function switchViewButton(properties = {}, pageId) {
+    (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(properties).applyDefaults({
+        tag: "switch-view-button",
+        pageId: pageId
+    });
+    return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
+}
+
+
+/***/ }),
+
 /***/ "./client/src/page/page.css":
 /*!**********************************!*\
   !*** ./client/src/page/page.css ***!
@@ -822,16 +1037,11 @@ let Page = (() => {
     let _content_initializers = [];
     let _content_extraInitializers = [];
     var Page = _classThis = class extends _classSuper {
-        addAnnotation(type, x = 0, y = 0, color = "black", weight = 3) {
-            //todo remake this
-            switch (type) {
-                case "typing":
-                    this.model.content.push({ type: "typing", x: x, y: y, color: color, text: " " });
-                    break;
-                case "sketch":
-                    this.model.content.push({ type: "drawing", points: [{ x: x, y: y }], color: color, weight: weight });
-                    break;
-            }
+        addAnnotation(annotation) {
+            this.model.content.push(annotation);
+        }
+        addPoint(annotationId, x, y) {
+            this.model.content[annotationId].points.push({ x, y });
         }
         constructor() {
             super(...arguments);
@@ -869,8 +1079,6 @@ function page(properties = {}, listDisplay = false) {
     });
     return (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.element)(Object.assign({}, properties));
 }
-//todo not sure about that, it works tho
-//todo add types
 
 
 /***/ }),
@@ -924,7 +1132,7 @@ class PageView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
         if (true) { //todo replace by condition that checks that we're not in create page
             if (sessionStorage.getItem("userId")) {
                 (0,_buttons_likeButton__WEBPACK_IMPORTED_MODULE_3__.likeButton)({ parent: this }, this.model.pageId);
-                if (JSON.parse(sessionStorage.getItem("userId")) == this.model.pageId) {
+                if (JSON.parse(sessionStorage.getItem("userId")) == this.model.userId) {
                     (0,_buttons_editButton__WEBPACK_IMPORTED_MODULE_4__.editButton)({ parent: this }, this.model.pageId);
                     (0,_buttons_deleteButton__WEBPACK_IMPORTED_MODULE_5__.deleteButton)({ parent: this }, this.model.pageId);
                 }
@@ -954,8 +1162,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var turbodombuilder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! turbodombuilder */ "./node_modules/turbodombuilder/build/turbodombuilder.esm.js");
 /* harmony import */ var _scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../scrapComponents/typing/typing */ "./client/src/scrapComponents/typing/typing.ts");
-/* harmony import */ var _makeRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../makeRequest */ "./client/src/makeRequest.ts");
-
 
 
 class PageCreateView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboView {
@@ -969,12 +1175,13 @@ class PageCreateView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboV
         (_a = this.model.getBlock("content")) === null || _a === void 0 ? void 0 : _a.generateObserver({
             onAdded: (data) => {
                 let component;
-                switch (data.get("type")) {
+                switch (data.type) {
                     case "typing": {
-                        component = (0,_scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__.typing)({ data: data, parent: this.pageInfoList });
+                        component = (0,_scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__.typing)({ data: data, parent: this.pageInfo }, true);
                         break;
                     }
-                    case "sketch": { //todo
+                    case "sketch": {
+                        //component=sketch({data:data, parent:this.pageInfo});
                         break;
                     }
                 }
@@ -984,25 +1191,37 @@ class PageCreateView extends turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboV
     }
     setupUIElements() {
         super.setupUIElements();
-        this.pageInfoList = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ classes: "page-info-list" });
-        this.title = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({ text: this.model.title, label: "PageTitle", parent: this.pageInfoList });
-        this.saveButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ text: "Save", parent: this.pageInfoList, onClick: () => {
-                console.log(this.model.data);
-                (0,_makeRequest__WEBPACK_IMPORTED_MODULE_2__.makeRequest)("http://localhost:3000/pages/savePage", "post", this.model.data, (responseString) => {
-                    //sessionStorage.setItem("currentPage", responseString);
-                }, (message) => { console.log("failure"); });
+        this.pageInfo = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ classes: "page-info-list" });
+        this.title = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({ text: this.model.title, label: "PageTitle", parent: this.element, oninput: () => {
+                this.model.title = this.title.value;
             } });
-        this.addAnnotationButton = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.button)({ valueType: "Add Annotation", parent: this.pageInfoList, onClick: () => {
-                let prop = { type: "typing", x: 0, y: 0, text: " ", color: "black" };
-                let t = (0,_scrapComponents_typing_typing__WEBPACK_IMPORTED_MODULE_1__.typing)(Object.assign(Object.assign({}, prop), { parent: (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this.pageInfoList) }), true); //is there a need to save it somewhere tho ?
-                //this.model.content.push(prop)
-                //TODO change color to current color
-            }
-        });
+        /*
+                    this.saveButton= button({text:"Save", parent:this.pageInfoList, onClick:()=>{
+                        console.log( this.model.data);
+                        makeRequest(
+                                "http://localhost:3000/pages/savePage",
+                                "post",
+                                this.model.data,
+                                (responseString)=>{
+                                    //sessionStorage.setItem("currentPage", responseString);
+                                },
+                                (message)=> { console.log("failure");}
+                            );
+                        }});
+        
+                    this.addAnnotationButton = button({valueType:"Add Annotation", parent:this.pageInfoList, onClick:()=>{
+                            let prop:ScrapData ={type: "typing", x:0,y:0, text:" ", color:"black"};
+                            let t:Typing = typing({...prop, ...{parent:turbo(this.pageInfoList)}}, true); //is there a need to save it somewhere tho ?
+                            //this.model.content.push(prop)
+                            //TODO change color to current color
+                        }
+                    })
+        
+         */
     }
     setupUILayout() {
         super.setupUILayout();
-        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild([this.pageInfoList]);
+        (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turbo)(this).addChild(this.pageInfo);
     }
 }
 
@@ -1505,11 +1724,11 @@ let TypingDrawingView = (() => {
             }
             setupUIElements() {
                 super.setupUIElements();
-                this.textEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({
+                this.textEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({
                     text: this.model.text,
-                    color: this.model.color,
-                    oninput: () => this.model.text = this.textEl.value
+                    oninput: () => this.model.text = this.textEl.textContent
                 });
+                this.textEl.style.color = this.model.color;
             }
             setupUILayout() {
                 super.setupUILayout();
@@ -1600,21 +1819,17 @@ let TypingInfoView = (() => {
             }
             setupUIElements() {
                 super.setupUIElements();
-                /*
-                this.textEl = textarea({text: String(this.model.text), color: this.model.color, oninput:()=>{
-                        this.model.text= this.textEl.textContent ;
-                    }});
-                    */
                 this.textEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({
                     text: this.model.text,
                     color: this.model.color,
                     oninput: () => this.model.text = this.textEl.value
                 });
-                this.xEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "number", placeholder: this.model.x, oninput: () => {
-                        console.log(this.xEl.value);
+                this.xEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({ value: this.model.x.toString(), oninput: () => this.model.x = parseInt(this.xEl.value) });
+                this.yEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({ value: this.model.y.toString(), oninput: () => {
+                        console.log("y changed");
+                        this.model.y = parseInt(this.yEl.value);
                     } });
-                this.yEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "number", placeholder: this.model.y });
-                this.colorEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.turboInput)({ type: "color", placeholder: this.model.color });
+                this.colorEl = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.textarea)({ type: "color", value: this.model.color, oninput: () => this.model.color = this.colorEl.value });
             }
             setupUILayout() {
                 super.setupUILayout();
@@ -1789,10 +2004,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `delete-button turbo-button, edit-button turbo-button, like-button turbo-button{
-
-     background-color: transparent;
-     border: none;
+___CSS_LOADER_EXPORT___.push([module.id, `turbo-button{
+    background-color: transparent;
+    border: none;
     padding: 10px;
     cursor: pointer;
 
@@ -1803,7 +2017,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `delete-button turbo-button, edit-butto
 
     transition: background 0.2s ease;
     border-radius: 10px;
-}`, "",{"version":3,"sources":["webpack://./client/src/page/buttons/buttons.css"],"names":[],"mappings":"AAAA;;KAEK,6BAA6B;KAC7B,YAAY;IACb,aAAa;IACb,eAAe;;IAEf,mBAAmB;IACnB,uBAAuB;;IAEvB,YAAY;;IAEZ,gCAAgC;IAChC,mBAAmB;AACvB","sourcesContent":["delete-button turbo-button, edit-button turbo-button, like-button turbo-button{\r\n\r\n     background-color: transparent;\r\n     border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    flex-grow: 0;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./client/src/page/buttons/buttons.css"],"names":[],"mappings":"AAAA;IACI,6BAA6B;IAC7B,YAAY;IACZ,aAAa;IACb,eAAe;;IAEf,mBAAmB;IACnB,uBAAuB;;IAEvB,YAAY;;IAEZ,gCAAgC;IAChC,mBAAmB;AACvB","sourcesContent":["turbo-button{\r\n    background-color: transparent;\r\n    border: none;\r\n    padding: 10px;\r\n    cursor: pointer;\r\n\r\n    align-items: center;\r\n    justify-content: center;\r\n\r\n    flex-grow: 0;\r\n\r\n    transition: background 0.2s ease;\r\n    border-radius: 10px;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1849,12 +2063,8 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
     width: 400px;
 }
 
-.page-elt {
-    background-color: var(--blue-slate);
-    border: 1px solid var(--light-border);
-}
 
-`, "",{"version":3,"sources":["webpack://./client/src/page/page.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;IACtB,uBAAuB;IACvB;AACJ;;AAEA;IACI,yDAA4D;IAC5D,sCAAsC;IACtC,aAAa;IACb,YAAY;AAChB;;AAEA;IACI,mCAAmC;IACnC,qCAAqC;AACzC","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n    --light-border: #bababa;\r\n    --blue-slate: #19647E\r\n}\r\n\r\n.textured-page {\r\n    background-image: url(\"../../public/assets/pageTexture.jpg\");\r\n    border: 2px solid var(--light-border );\r\n    height: 500px;\r\n    width: 400px;\r\n}\r\n\r\n.page-elt {\r\n    background-color: var(--blue-slate);\r\n    border: 1px solid var(--light-border);\r\n}\r\n\r\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./client/src/page/page.css"],"names":[],"mappings":"AAAA;IACI,oBAAoB;IACpB,eAAe;IACf,sBAAsB;IACtB,uBAAuB;IACvB;AACJ;;AAEA;IACI,yDAA4D;IAC5D,sCAAsC;IACtC,aAAa;IACb,YAAY;AAChB","sourcesContent":[":root {\r\n    --cool-blue: #4D7C8A;\r\n    --snow: #FCF7F8;\r\n    --shadow-grey :#342E37;\r\n    --light-border: #bababa;\r\n    --blue-slate: #19647E\r\n}\r\n\r\n.textured-page {\r\n    background-image: url(\"../../public/assets/pageTexture.jpg\");\r\n    border: 2px solid var(--light-border );\r\n    height: 500px;\r\n    width: 400px;\r\n}\r\n\r\n\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -66373,10 +66583,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _page_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./page/page */ "./client/src/page/page.ts");
 /* harmony import */ var _navBar_navBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./navBar/navBar */ "./client/src/navBar/navBar.ts");
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.css */ "./client/src/style.css");
+/* harmony import */ var _page_buttons_switchViewButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./page/buttons/switchViewButton */ "./client/src/page/buttons/switchViewButton.ts");
+/* harmony import */ var _page_buttons_addTextButton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./page/buttons/addTextButton */ "./client/src/page/buttons/addTextButton.ts");
 
 
 
 turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboEventManager.instance.preventDefaultWheel = false;
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
     turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.TurboIcon.config.defaultDirectory = "assets";
@@ -66392,9 +66606,12 @@ document.addEventListener("DOMContentLoaded", () => {
     map.set("0", (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.jsonToYjs)(data));
     const yData = map.get("0");
     //page in drawing form
-    let pageDrawing = (0,_page_page__WEBPACK_IMPORTED_MODULE_1__.page)({ data: yData, parent: createPageLayout, classes: "page-drawing" });
+    //let pageDrawing = page({ data: yData, parent:createPageLayout, classes:"page-drawing"});
     //page in list form
-    let pageList = (0,_page_page__WEBPACK_IMPORTED_MODULE_1__.page)({ data: yData, parent: createPageLayout, classes: "page-list" }, true);
+    let containerDiv = (0,turbodombuilder__WEBPACK_IMPORTED_MODULE_0__.div)({ id: "containerPage", parent: createPageLayout, });
+    let pageList = (0,_page_page__WEBPACK_IMPORTED_MODULE_1__.page)({ id: "page-in-create", data: yData, parent: containerDiv, parentElement: containerDiv, classes: "page-list" }, true);
+    toolBar.append((0,_page_buttons_switchViewButton__WEBPACK_IMPORTED_MODULE_4__.switchViewButton)({ parent: toolBar }, pageList.model.pageId));
+    toolBar.append((0,_page_buttons_addTextButton__WEBPACK_IMPORTED_MODULE_5__.addTextButton)({ parent: toolBar }, pageList.model.pageId));
 });
 
 })();

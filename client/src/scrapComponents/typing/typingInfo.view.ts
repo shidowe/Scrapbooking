@@ -11,8 +11,8 @@ export class TypingInfoView extends TurboView<Typing, TypingModel> {
     private contentObserver: TurboObserver;
 
     private textEl: HTMLTextAreaElement;
-    private xEl: TurboInput;
-    private yEl: TurboInput;
+    private xEl: HTMLTextAreaElement;
+    private yEl: HTMLTextAreaElement;
     private colorEl: HTMLTextAreaElement;
 
     initialize(): void {
@@ -26,9 +26,12 @@ export class TypingInfoView extends TurboView<Typing, TypingModel> {
             color: this.model.color,
             oninput: () => this.model.text = this.textEl.value
         });
-        this.xEl = turboInput({type:"number", placeholder:this.model.x, oninput: () =>this.model.x = parseInt(this.xEl.value)});
-        this.yEl = turboInput({type:"number", placeholder:this.model.y, oninput:() => this.model.y = parseInt(this.yEl.value)});
-        this.colorEl = textarea({type:"color", placeholder:this.model.color, oninput:() => this.model.color = this.colorEl.value});
+        this.xEl = textarea({ value:this.model.x.toString(), oninput: () => this.model.x = parseInt(this.xEl.value)});
+        this.yEl = textarea({ value:this.model.y.toString(), oninput:() => {
+                console.log("y changed")
+                this.model.y = parseInt(this.yEl.value)
+            }});
+        this.colorEl = textarea({type:"color", value:this.model.color, oninput:() => this.model.color = this.colorEl.value});
     }
 
     protected setupUILayout() {

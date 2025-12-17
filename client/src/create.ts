@@ -1,5 +1,4 @@
 import {button, div, jsonToYjs, turbo, TurboButton, TurboEventManager, TurboIcon, YDoc} from "turbodombuilder";
-import { CreateToolbar } from "./createToolbar/createToolbar";
 import {Page, page} from "./page/page";
 import {navBar} from "./navBar/navBar";
 import {makeRequest} from "./makeRequest";
@@ -8,6 +7,9 @@ TurboEventManager.instance.preventDefaultWheel =false;
 import "./style.css";
 import {PageModel} from "./page/page.model";
 import {switchViewButton} from "./page/buttons/switchViewButton";
+import {drawingTool} from "./createToolbar/drawingTool/drawingTool";
+import {drawingButton} from "./page/buttons/drawingButton";
+import {addTextButton} from "./page/buttons/addTextButton";
 
 
 
@@ -34,7 +36,9 @@ document.addEventListener("DOMContentLoaded", () => {
     //page in list form
     let containerDiv = div({id:"containerPage", parent:createPageLayout, });
     let pageList = page({id:"page-in-create", data: yData, parent:containerDiv, parentElement:containerDiv, classes:"page-list"}, true);
+
     toolBar.append(switchViewButton({parent:toolBar}, pageList.model.pageId));
+    toolBar.append(addTextButton({parent:toolBar}, pageList.model.pageId));
 
 
 

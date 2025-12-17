@@ -42,7 +42,7 @@ export class PageView extends TurboView<Page, PageModel> {
         if(true) { //todo replace by condition that checks that we're not in create page
             if (sessionStorage.getItem("userId")) {
                 likeButton({parent: this}, this.model.pageId);
-                if (JSON.parse(sessionStorage.getItem("userId")) == this.model.pageId) {
+                if (JSON.parse(sessionStorage.getItem("userId")) == this.model.userId) {
                     editButton({parent: this}, this.model.pageId);
                     deleteButton({parent: this}, this.model.pageId);
                 } else if (sessionStorage.getItem("admin") == "true") {
