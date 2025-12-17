@@ -20,7 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let d = div({parent: document.body});
         h1({parent:d, text: "Patchwork", style: "text-align: center;"});
         h2({parent:d, text: "A Scrapbooking website", style: "text-align: center;"});
+        spacer({parent:d});
         
-        loginForm({ parent: document.body, style: "align-self: center;"});
+        loginForm({ parent: d, style: "align-self: center;, margin-left:20px;"});
     }
 });

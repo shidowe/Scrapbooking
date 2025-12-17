@@ -40,6 +40,8 @@
         "userId": 0,
         "title": "Undefined",
         "content": [],
-        "likes": []
+        "likes": [
+            0
+        ]
     }
 ]
