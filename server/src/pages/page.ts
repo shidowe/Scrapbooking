@@ -1,5 +1,5 @@
-export class Page {
-    pageId: number;
+export class Page{
+    pageId: number ;
     userId: number;
     title: string;
     content: any; //not sure about any

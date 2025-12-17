@@ -19,12 +19,10 @@ export class DeleteButton extends TurboElement {
             makeRequest(
                 "http://localhost:3000/pages/deletePage",
                 "post",
-                {pageId:[this.pageId]},
+                {pageId:[this.pageId], userId:sessionStorage.getItem("userId")},
                 (responseString)=>{
                     console.log("success",responseString);
-                    //let pageData = JSON.parse(responseString)[0];
-                    //sessionStorage.setItem("currentPage", JSON.stringify(pageData));
-                    //window.location.reload();
+                    sessionStorage.setItem("pages",responseString);
                     },
                 (message)=> { console.log("failure");}
             );

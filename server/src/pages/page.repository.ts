@@ -8,7 +8,7 @@ const userJSONPath = "server/json/users.json";
 
 
 export class PageRepository {
-    private data: Page[] = [];
+    private data: (Page|null)[] = [];
     private userData: User[] = [];
 
     public async fetchData():Promise<Page[]>  {
@@ -36,11 +36,13 @@ export class PageRepository {
         }
         await this.fetchUserData();
 
+        let page = this.data[pageId] as Page;
+
         if (likeStatus){
-            this.data[pageId].likes.push(userId);
+            page.likes.push(userId);
             this.userData[userId].likedPages.push(pageId);
         }else {
-            this.data[pageId].likes= this.data[pageId].likes.filter((user) => user!=userId);
+            page.likes= page.likes.filter((user) => user!=userId);
             this.userData[userId].likedPages = this.userData[userId].likedPages.filter((page) => page!=pageId);
         }
 
@@ -57,7 +59,8 @@ export class PageRepository {
 
         let res=[]
         for(let pageId of pageIdList){
-            res.push(this.data[pageId]);
+            if (this.data[pageId] != null){}
+            res.push(this.data[pageId] as Page);
         }
         return res;
     }
@@ -66,17 +69,23 @@ export class PageRepository {
         if(this.data.length == 0){
             await this.fetchData();
         }
-        return this.data;
+        let res=[]
+        for(let page of this.data){
+            if (page != null) res.push(page);
+        }
+        return res;
     }
 
-    public async deletePage(pageId:number):Promise<number[]>  {
+    public async deletePage(pageId:number, userId:number):Promise<number[]>  {
         if(this.data.length==0) {
             await this.fetchData();
         }
         await this.fetchUserData();
 
-        const userId = this.data[pageId].userId;
-        this.userData[userId].pages = this.userData[userId].pages.filter((page) => page!=pageId);
+
+        this.userData[userId].pages = this.userData[userId].pages.filter((page) => page!= pageId);
+
+        this.data[pageId]=null;
 
         fs.writeFile(userJSONPath, JSON.stringify(this.userData, null,4), (err) => {});
         fs.writeFile(pageListJSONPath, JSON.stringify(this.data, null,4), (err) => {});
@@ -85,7 +94,7 @@ export class PageRepository {
 
     }
 
-    public async createNewPage(userId:number):Promise<Page>  {
+    public async createNewPage(userId:number):Promise<any>  {
         if(this.data.length==0) {
             await this.fetchData();
         }
@@ -100,7 +109,7 @@ export class PageRepository {
         this.data.push(page);
         fs.writeFile(pageListJSONPath, JSON.stringify(this.data, null,4), (err) => {});
 
-        return page;
+        return {newPageId:page, userPages:this.userData[userId].pages};
     }
 
 

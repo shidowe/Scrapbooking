@@ -23,7 +23,7 @@ export class NavBar extends TurboElement {
         this.divTop = div({style: "display: flex; flex-flow: column; flex-grow:0;"});
 
         this.profileButton = button({leftIcon: "profile_icon", onClick: () => {
-                window.location.replace("/login")
+                window.location.replace("/login");
             }});
 
         this.homeButton = button({leftIcon: "home_icon", onClick: () => {
@@ -31,13 +31,14 @@ export class NavBar extends TurboElement {
             }});
 
         this.createButton= button({leftIcon: "create_icon", onClick: () => {
-            //todo if there's a current page save it
             makeRequest(
                 "http://localhost:3000/pages/createNewPage",
                 "post",
                 {"userId":JSON.parse(sessionStorage.getItem("userId"))},
                 (responseString)=>{
-                    sessionStorage.setItem("currentPage", responseString);
+                    let response=JSON.parse(responseString);
+                    sessionStorage.setItem("currentPage", response.newPageId);
+                    sessionStorage.setItem("pages", response.userPages);
                     window.location.replace("/create");
                 },
                 (message)=> { console.log("failure");}
