@@ -10,20 +10,21 @@ document.addEventListener("DOMContentLoaded", () => {
     TurboIcon.config.defaultDirectory = "assets";
     //document.body.setAttribute("style", "background:#4D7C8A; align-content-:center");
 
-    let d1=div({ parent: document.body, classes:"left-container" });
-    let d2=div({ parent: document.body, classes:"right-container" });
+    //let d1=div({ parent: document.body, classes:"left-container" });
+    //let d2=div({ parent: document.body, classes:"right-container" });
 
-    navBar({ parent: d1 });
+    navBar({ parent: document.body, class:"nav-bar"});
 
-    let header = div({ parent: d2, classes:"header", style: "flex-direction: column" });
+    let header = div({ parent: document.body, classes:"header", style: "flex-direction: column" });
     h1({parent: header, text: "Patchwork", style: " text-align: center;"});
     h2({parent: header, text: "A Scrapbooking Website", style: " text-align: center;"});
 
-    gridBoard({ parent: d2 });
+    let mainbody = div({parent: document.body, class: "main-body"});
+    gridBoard({ parent: mainbody });
 
-    div({ parent: d2, classes:"footer" });
+    div({ parent: document.body, classes:"footer" });
 
-    let footer_text = p({parent: document.querySelector(".footer") as HTMLElement, text: "© 2025 Patchwork - Sidonie Minodier and Victoria Myot\nAll rights reserved.", style: "color: white; text-align: center; padding: 10px; padding-top: 35px;"});
+    let footer_text = p({parent: document.querySelector(".footer") as HTMLElement, text: "© 2025 Patchwork - Sidonie Minodier and Victoria Myot\nAll rights reserved."});
 
 
 
