@@ -23,6 +23,7 @@ export class DeleteButton extends TurboElement {
                 (responseString)=>{
                     console.log("success",responseString);
                     sessionStorage.setItem("pages",responseString);
+                    window.location.reload();
                     },
                 (message)=> { console.log("failure");}
             );

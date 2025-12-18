@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = JSON.parse(sessionStorage.getItem("editPage")) as PageData;
 
     //create main area
-    let create = div({id:"create", parent:document.body})
+    let create = div({id:"create", classes:"body-content", parent:document.body})
 
     //toolbar
     let toolBar = div({parent: create, classes:"toolbar"});
