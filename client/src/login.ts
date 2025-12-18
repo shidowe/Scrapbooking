@@ -10,13 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     TurboIcon.config.defaultDirectory = "assets";
 
-    navBar({ parent: document.body,  class:"nav-bar"});
-
     if(sessionStorage.getItem("userId")) {
         profile({parent: document.body});
     }
     else {
 
+        navBar({ parent: document.body,  class:"nav-bar"});
         let header = div({ parent: document.body, classes:"header", style: "flex-direction: column" });
         h1({parent: header, text: "Patchwork", style: " text-align: center;"});
         h2({parent: header, text: "A Scrapbooking Website", style: " text-align: center;"});

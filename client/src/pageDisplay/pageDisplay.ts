@@ -9,7 +9,8 @@ import {
     turbo,
     TurboButton,
     TurboElement,
-    TurboProperties
+    TurboProperties,
+    TurboIcon
 } from "turbodombuilder";
 import {makeRequest} from "../makeRequest";
 import {PageList, pageList} from "./pageList/pageList";
@@ -26,21 +27,30 @@ export class PageDisplay extends TurboElement {
 
     protected setupUIElements() {
         super.setupUIElements();
+        TurboIcon.config.defaultDirectory = "../assets";
 
-        let btnDiv = div({parent:document.body, style:"display:flex; justify-content:flex-end; margin:10px;"});
+        let GRID_ICON = "assets/grid_icon.svg";
+        let LIST_ICON = "assets/list_icon.svg";
 
-        this.changeDisplayMode = button({parent:btnDiv, id:"mode-btn", text:this.gridDisplayMode?"List view":"Grid view",
+        let btnDiv = div({parent:this, style:"display:flex; justify-content:flex-end; margin:10px;"});
+
+        this.changeDisplayMode = button({parent:btnDiv, id:"mode-btn",
+            //text:this.gridDisplayMode?"List view":"Grid view",
+            innerHTML: `<img src="${this.gridDisplayMode ? LIST_ICON : GRID_ICON}" class="toggle-icon" />`,
             onClick: () => {
                 this.gridDisplayMode = !this.gridDisplayMode;
                 this.gridBoard.hidden= this.gridDisplayMode;
                 this.pageList.hidden= !this.gridDisplayMode;
+
+                let iconPath = this.gridDisplayMode ? LIST_ICON : GRID_ICON;
+                this.changeDisplayMode.innerHTML = `<img src="${iconPath}" class="toggle-icon"/>`;
             }});
 
         //todo : both page list and grid board make a request -> change this
 
-        this.pageList = pageList(JSON.parse(sessionStorage.getItem("pages")),{parent: document.body});
+        this.pageList = pageList(JSON.parse(sessionStorage.getItem("pages")),{parent: this});
 
-        this.gridBoard=gridBoard({parent: document.body, hidden:true});
+        this.gridBoard=gridBoard({parent: this, hidden:true});
 
     }
 

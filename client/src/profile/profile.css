@@ -6,13 +6,21 @@
 }
 
 body {
-    min-height: 100vh;
-    font-family: "Inter", sans-serif;
+    overflow-x: hidden;
 
     margin: 0;
-    padding: 0;
+    
+    min-height: 100vh;
+    min-width: 650px;
 
-    /*align-content: center;*/
+    display: grid; 
+    grid-template-columns: 80px 1.5fr 1fr; 
+    grid-template-rows: 10em 1fr 100px; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+        "nav-bar profile-header profile-header"
+        "nav-bar body-content body-content"
+        "nav-bar footer footer"; 
 
     background-color: #ffffff;
     background-image:
@@ -20,6 +28,18 @@ body {
         linear-gradient(#ccf0ff80 40px, transparent 40px);
     background-position: 10px 10px;
     background-size: 78px 78px;
+}
+
+.nav-bar { grid-area: nav-bar; }
+.footer { grid-area: footer; }
+.header { grid-area: header;}
+
+.body-content {
+    grid-area: body-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch; 
 }
 
 h1 {
@@ -58,6 +78,7 @@ p {
 }
 
 #profile-header {
+
     display: flex;
     flex-direction: row;
     align-items: baseline;
