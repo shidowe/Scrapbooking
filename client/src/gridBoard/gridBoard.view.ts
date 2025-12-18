@@ -17,7 +17,7 @@ export class GridBoardView extends TurboView<GridBoard> {
         super.setupUIElements();
 
         //Big container for the grid
-        this.container = div({class:"container", style: "padding-top: 13vh; width: 1400px; margin-left:7%; margin-right: 0; margin-bottom:7%; columns: 2; column-gap: 10px;"});
+        this.container = div({classes:"container"});
 
         if(window.location.href.includes("login")) {
             this.loadPages("http://localhost:3000/pages/loadPagesFromPageId");

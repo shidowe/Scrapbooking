@@ -9,16 +9,32 @@
 .textured-page {
     background-image: url("../../public/assets/pageTexture.jpg");
     border: 2px solid var(--light-border );
+    /*
     height: 500px;
     width: 400px;
+    */
+    width: 100%;
+    max-width: 400px; /* keeps your design */
+    aspect-ratio: 4 / 5;
 }
 
 page-elt.page-visual{
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
+    /*
     height: 504px;
-    width: 404px;
+    width: 404px;*/
+    width: 100%;
+    max-width: 404px;
+    aspect-ratio: 4 / 5;
 }
 
+.page-box {
+  max-width: 100%;
+  min-width: 100%;
+
+  display: flex;
+  justify-content: center;
+}
 
