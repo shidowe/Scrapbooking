@@ -17,20 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     else {
 
-        /*
-        let d = div({parent: document.body});
-        h1({parent:d, text: "Patchwork", style: "text-align: center;"});
-        h2({parent:d, text: "A Scrapbooking website", style: "text-align: center;"});
-        spacer({parent:d});
-        loginForm({ parent: d, style: "align-self: center;, margin-left:20px;"});
-        */
-
         let header = div({ parent: document.body, classes:"header", style: "flex-direction: column" });
         h1({parent: header, text: "Patchwork", style: " text-align: center;"});
         h2({parent: header, text: "A Scrapbooking Website", style: " text-align: center;"});
 
         let mainbody = div({parent: document.body, classes: "body-content"});
-        loginForm({ parent: mainbody});
+        let centerWrapper = div({parent: mainbody, style: "width:100%; height:100%; display:flex; justify-content:center; align-items:center;"});
+        loginForm({ parent: centerWrapper});
 
         div({ parent: document.body, classes:"footer" });
         let footer_text = p({parent: document.querySelector(".footer") as HTMLElement, text: "© 2025 Patchwork - Sidonie Minodier and Victoria Myot\nM1 HCI - Université Paris-Saclay.", style:"color:white;"});
