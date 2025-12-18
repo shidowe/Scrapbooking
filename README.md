@@ -12,6 +12,8 @@ Guest : can only see pages
 User : can see, like and create pages
 Admin : can do everything a user can + delete pages
 
+**Why a web application ?**
+
 ## General architecture
 
 ## Functionalities
