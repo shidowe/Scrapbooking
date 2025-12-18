@@ -31,6 +31,25 @@ export class GridBoardView extends TurboView<GridBoard> {
         turbo(this).addChild([this.container]);
     }
 
+    /**
+     * Modal pop-up preview that opens when clicking on a post (page)
+     * @param pageData the page clicked to be opened
+     */
+    private openModal(pageData: PageData) {
+        let overlay = div({classes: "modal-overlay"});
+        let modalContent = div({classes: "modal-content"});
+
+        page({data: pageData, parent: modalContent});
+
+        overlay.appendChild(modalContent);
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) overlay.remove();
+        });
+    }
+
+
     private loadPages(url): void {
         makeRequest(
             url,
@@ -41,6 +60,9 @@ export class GridBoardView extends TurboView<GridBoard> {
                 console.log(pageList);
                 for (let pageData of pageList) {
                     let box = div({parent:this.container, class: "page-box"});
+                    box.addEventListener("click", () => {
+                        this.openModal(pageData);
+                    });
                     pageData.parent=box;
                     page({data:pageData, parent:box});
 
