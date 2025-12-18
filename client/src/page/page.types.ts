@@ -13,5 +13,4 @@ export type PageData = {
 
 export type PageProperties =
     TurboElementProperties<PageView|PageCreateView, PageData, PageModel> & {
-    //TODO
 };

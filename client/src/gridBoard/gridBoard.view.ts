@@ -71,7 +71,7 @@ export class GridBoardView extends TurboView<GridBoard> {
                 }
             },
             (message)=>{
-                console.log("failure");
+                console.log("failure"+JSON.parse(sessionStorage.getItem("pages")));
             }
         );
     }

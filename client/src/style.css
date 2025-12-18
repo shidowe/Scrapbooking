@@ -118,7 +118,8 @@ h2 {
 
 .toolbar{
     grid-area: toolbar;
-    background-color: var(--baby-blue);
+    background-color: white;
 }
+
 
 

@@ -36,8 +36,8 @@ export class TypingInfoView extends TurboView<Typing, TypingModel> {
             color: this.model.color,
             oninput: () => this.model.text = this.textEl.value
         });
-        this.xEl = input({ type:"number", value:this.model.x.toString(), oninput: () => this.model.x = parseInt(this.xEl.value)});
-        this.yEl = input({ type:"number", value:this.model.y.toString(), oninput:() => this.model.y = parseInt(this.yEl.value)});
+        this.xEl = input({ type:"number", classes:"position", value:this.model.x.toString(), oninput: () => this.model.x = parseInt(this.xEl.value)});
+        this.yEl = input({ type:"number", classes:"position", value:this.model.y.toString(), oninput:() => this.model.y = parseInt(this.yEl.value)});
         this.colorEl = input({type:"color", value:this.model.color, oninput:() => {
             console.log("clor cha"+this.colorEl.value);
                 this.model.color = this.colorEl.value

@@ -39,6 +39,7 @@ export class NavBar extends TurboElement {
                     let response=JSON.parse(responseString);
                     sessionStorage.setItem("editPage",JSON.stringify(response.pageData));
                     sessionStorage.setItem("pages", response.userPages);
+                    console.log(response.userPages);
                     window.location.replace("/create");
                 },
                 (message)=> { console.log("failure");}
@@ -55,15 +56,6 @@ export class NavBar extends TurboElement {
         this.divTop.appendChild(this.profileButton);
         this.divTop.appendChild(this.homeButton);
         this.divTop.appendChild(this.createButton);
-
-        /* Admin button currently unused
-        if(sessionStorage.getItem("admin")=="true"){
-            this.adminButton = button({leftIcon: "admin_icon", hidden: sessionStorage.getItem("username")?false:true, onClick: () => {
-                }});
-            this.divTop.appendChild(this.adminButton);
-        }
-         */
-
 
         this.divEl.appendChild(this.divTop);
         this.divEl.appendChild(div({ style: "flex-grow: 1;" }));

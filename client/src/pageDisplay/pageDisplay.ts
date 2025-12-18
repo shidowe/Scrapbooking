@@ -46,8 +46,6 @@ export class PageDisplay extends TurboElement {
                 this.changeDisplayMode.innerHTML = `<img src="${iconPath}" class="toggle-icon"/>`;
             }});
 
-        //todo : both page list and grid board make a request -> change this
-
         this.pageList = pageList(JSON.parse(sessionStorage.getItem("pages")),{parent: this});
 
         this.gridBoard=gridBoard({parent: this, hidden:true});
