@@ -8,10 +8,6 @@ TurboEventManager.instance.preventDefaultWheel =false;
 
 document.addEventListener("DOMContentLoaded", () => {
     TurboIcon.config.defaultDirectory = "assets";
-    //document.body.setAttribute("style", "background:#4D7C8A; align-content-:center");
-
-    //let d1=div({ parent: document.body, classes:"left-container" });
-    //let d2=div({ parent: document.body, classes:"right-container" });
 
     navBar({ parent: document.body, class:"nav-bar"});
 
@@ -25,7 +21,5 @@ document.addEventListener("DOMContentLoaded", () => {
     div({ parent: document.body, classes:"footer" });
 
     let footer_text = p({parent: document.querySelector(".footer") as HTMLElement, text: "© 2025 Patchwork - Sidonie Minodier and Victoria Myot\nAll rights reserved."});
-
-
 
 });

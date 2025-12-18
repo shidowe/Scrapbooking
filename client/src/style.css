@@ -5,6 +5,8 @@
   --baby-blue: #a1ebf1;
 }
 
+html, body { min-height: 100%;}
+
 body {
   /*
   display: flex;
@@ -13,7 +15,9 @@ body {
   overflow-x: hidden;
 
   margin: 0;
-  min-height: 690px;
+  /*
+  min-height: 690px;*/
+  min-height: 100vh;
   min-width: 650px;
 
   /*
@@ -79,6 +83,12 @@ h2 {
 .nav-bar { grid-area: nav-bar; }
 .header { grid-area: header; }
 .footer { grid-area: footer; }
+.body-content {
+  grid-area: body-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
 

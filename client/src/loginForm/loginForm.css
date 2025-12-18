@@ -46,6 +46,7 @@
     margin: 10px 0;
 }
 
+
 #form-div {
     text-align: center;
     --borderradius: 14px;
@@ -59,12 +60,13 @@
     width: fit-content;
     background: var(--snow);
     border-radius: var(--borderradius, 14px);
-    transform: translateY(-2px);
+    /*transform: translateY(-2px);*/
     z-index: 2;
 
+    /*
     &:hover {
         transform: translateY(-4px);
-    }
+    }*/
 
     &::before,
     &::after {
@@ -96,15 +98,17 @@
         background: var(--snow);
         z-index: -1;
     }
+        
 }
 
+/*
 body {
-    /*display: grid;*/
     align-content: center;
     place-content: center;
     min-height: 100vh;
     font-family: "Inter", sans-serif;
 }
+*/
 
 h3 {
     font-size: 2em !important;
