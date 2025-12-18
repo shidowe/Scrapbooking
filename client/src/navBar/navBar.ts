@@ -19,7 +19,7 @@ export class NavBar extends TurboElement {
     protected setupUIElements() {
         super.setupUIElements();
 
-        this.divEl = div({style: "display: flex; flex-flow: column; justify-content: space-between;"});
+        this.divEl = div({style: "display: flex; flex-flow: column; justify-content: space-between; height: 100%"});
         this.divTop = div({style: "display: flex; flex-flow: column; flex-grow:0;"});
 
         this.profileButton = button({leftIcon: "profile_icon", onClick: () => {
@@ -64,8 +64,9 @@ export class NavBar extends TurboElement {
         }
          */
 
+
         this.divEl.appendChild(this.divTop);
-        this.divEl.appendChild(spacer());
+        this.divEl.appendChild(div({ style: "flex-grow: 1;" }));
         this.divEl.appendChild(this.logoutButton);
 
 

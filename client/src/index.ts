@@ -10,16 +10,17 @@ document.addEventListener("DOMContentLoaded", () => {
     TurboIcon.config.defaultDirectory = "assets";
 
     navBar({ parent: document.body, class:"nav-bar"});
-
+ 
     let header = div({ parent: document.body, classes:"header", style: "flex-direction: column" });
     h1({parent: header, text: "Patchwork", style: " text-align: center;"});
     h2({parent: header, text: "A Scrapbooking Website", style: " text-align: center;"});
 
-    let mainbody = div({parent: document.body, class: "main-body"});
+    let bodyContent = div({ parent: document.body, classes: "body-content" });
+    let mainbody = div({parent: bodyContent, classes: "main-body"});
     gridBoard({ parent: mainbody });
 
     div({ parent: document.body, classes:"footer" });
 
-    let footer_text = p({parent: document.querySelector(".footer") as HTMLElement, text: "© 2025 Patchwork - Sidonie Minodier and Victoria Myot\nAll rights reserved."});
+    let footer_text = p({parent: document.querySelector(".footer") as HTMLElement, text: "© 2025 Patchwork - Sidonie Minodier and Victoria Myot\nM1 HCI - Université Paris-Saclay."});
 
 });

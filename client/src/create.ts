@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //footer
     let footer = div({ parent: document.body, classes:"footer" });
-    let footer_text = p({parent: footer, text: "© 2025 Patchwork - Sidonie Minodier and Victoria Myot\nAll rights reserved."});
+    let footer_text = p({parent: footer, text: "© 2025 Patchwork - Sidonie Minodier and Victoria Myot\nM1 HCI - Université Paris-Saclay."});
 
 
 });

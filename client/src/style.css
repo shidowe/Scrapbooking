@@ -8,10 +8,6 @@
 html, body { min-height: 100%;}
 
 body {
-  /*
-  display: flex;
-  flex-direction: row;*/
-
   overflow-x: hidden;
 
   margin: 0;
@@ -19,9 +15,6 @@ body {
   min-height: 690px;*/
   min-height: 100vh;
   min-width: 650px;
-
-  /*
-  align-content: center;*/
 
   display: grid; 
   grid-template-columns: 80px 1.5fr 1fr; 
@@ -54,21 +47,6 @@ h2 {
     margin: 0;
 }
 
-/*
-.container{
-  display: flex;
-  direction: column;
-  gap: 5px;
-}
-
-.footer {
-  height:100px;
-  width: 100vw;
-  background-color:var(--text-color);
-  align-items: center;
-}
-*/
-
 .footer {
   background-color:var(--text-color);
   color: white;
@@ -85,9 +63,20 @@ h2 {
 .footer { grid-area: footer; }
 .body-content {
   grid-area: body-content;
+  /*
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center;*/
+  height: 100%;
+  /*overflow: hidden;*/
+  display: flex;
+}
+
+.main-body {
+  height: 100%;
+  width: 100%;
+  /*overflow-y: auto;*/
+  padding-bottom: 100px;
 }
 
 
@@ -117,14 +106,6 @@ h2 {
     "toolbar toolbar"
     "page-info container-page";
 }
-
-
-
-/*
-.nav-bar {
-    grid-area: nav-bar;
-}
-    */
 
 #containerPage {
     grid-area: container-page;
