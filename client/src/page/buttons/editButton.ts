@@ -15,20 +15,22 @@ export class EditButton extends TurboElement {
     protected setupUIElements() {
         super.setupUIElements();
 
-        this.editButton = button({parent: this, leftIcon: "edit_icon", onClick: () => {
-            makeRequest(
-                "http://localhost:3000/pages/loadPagesFromPageId",
-                "post",
-                {"pageIdList":[this.pageId]},
-                (responseString)=>{
-                    let pageData = JSON.parse(responseString)[0];
-                    sessionStorage.setItem("currentPage", JSON.stringify(pageData));
-                    window.location.replace("/create");
+        this.editButton = button({parent: this, leftIcon: "edit_icon", onClick: () =>{
+                makeRequest(
+                    "http://localhost:3000/pages/loadPagesFromPageId",
+                    "post",
+                    {pageIdList: [this.pageId]},
+                    (responseString) => {
+                        sessionStorage.setItem("editPage", JSON.stringify(JSON.parse(responseString)[0]));
+                        window.location.replace("/create")
                     },
-                (message)=> { console.log("failure");}
-            );
-            return;
-        }});
+                    (message) => {
+                        console.log("failure");
+                    }
+                );
+            }
+
+        });
     }
 
     protected setupUILayout() {

@@ -1,5 +1,5 @@
 import {button, define, div, element, expose, spacer, turbo, TurboButton, TurboElement} from "turbodombuilder";
-import {Page} from "../page";
+import {page, Page} from "../page";
 import {makeRequest} from "../../makeRequest";
 import "./buttons.css";
 
@@ -14,11 +14,21 @@ export class AddTextButton extends TurboElement {
         super.setupUIElements();
 
         this.addTextButton = button({parent: this, leftIcon: "admin_icon", onClick: () => {
-            console.log("clicked");
-                let pageInCreate = document.getElementById("page-in-create") as Page;
-                pageInCreate.addAnnotation({type:"typing", x:0, y:0, color:"black"})
-                console.log(pageInCreate.model.content);
+                let pageInfo = document.getElementById("page-info") as Page;
+                pageInfo.addAnnotation({type:"typing", x:0, y:0, color:"black"})
 
+                sessionStorage.setItem("editPage", JSON.stringify(pageInfo.data));
+
+
+                //saving the added annotation
+                makeRequest(
+                    "http://localhost:3000/pages/savePage",
+                    "post",
+                    {"pageData":pageInfo.data},
+                    (responseString)=>{ console.log("success");},
+                    (message)=>{console.log("failure");}
+                );
+                window.location.reload();
             }
         });
 

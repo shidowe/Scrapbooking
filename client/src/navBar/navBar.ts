@@ -37,7 +37,7 @@ export class NavBar extends TurboElement {
                 {"userId":JSON.parse(sessionStorage.getItem("userId"))},
                 (responseString)=>{
                     let response=JSON.parse(responseString);
-                    sessionStorage.setItem("currentPage", response.newPageId);
+                    sessionStorage.setItem("editPage",JSON.stringify(response.pageData));
                     sessionStorage.setItem("pages", response.userPages);
                     window.location.replace("/create");
                 },

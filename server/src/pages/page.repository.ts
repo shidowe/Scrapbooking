@@ -109,7 +109,7 @@ export class PageRepository {
         this.data.push(page);
         fs.writeFile(pageListJSONPath, JSON.stringify(this.data, null,4), (err) => {});
 
-        return {newPageId:page, userPages:this.userData[userId].pages};
+        return {newPageId:page, pageData:page, userPages:this.userData[userId].pages};
     }
 
 

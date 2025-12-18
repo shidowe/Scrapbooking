@@ -35,7 +35,7 @@ export class GridBoardView extends TurboView<GridBoard> {
         makeRequest(
             url,
             "post",
-            {"pageIdList":JSON.parse(sessionStorage.getItem("pages"))},
+            {pageIdList: JSON.parse(sessionStorage.getItem("pages"))},
             (responseString)=>{
                 let pageList = JSON.parse(responseString);
                 console.log(pageList);

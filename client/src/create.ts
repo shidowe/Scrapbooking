@@ -27,40 +27,25 @@ document.addEventListener("DOMContentLoaded", () => {
     h1({parent: header, text: "Patchwork", style: " text-align: center;"});
     h2({parent: header, text: "A Scrapbooking Website", style: " text-align: center;"});
 
-
-
-
-    /*
-    console.log("current page :: "+sessionStorage.getItem("currentPage"));
-    let currPage = sessionStorage.getItem("currentPage");
-
-    if (!currPage) {
-        console.error("No currentPage in sessionStorage");
-        return;
-    }
-
-    const data = JSON.parse(currPage);
-    //const data = JSON.parse(sessionStorage.getItem("currentPage"));
-    const map =new YDoc().getMap("pageData")
-    map.set("0", jsonToYjs(data));
-    const yData = map.get("0");
-    */
+    const data = JSON.parse(sessionStorage.getItem("editPage")) as PageData;
 
     //create main area
-
     let create = div({id:"create", parent:document.body})
 
-
+    //toolbar
     let toolBar = div({parent: create, classes:"toolbar"});
+    toolBar.append(switchViewButton({parent:toolBar}, data.pageId));
+    toolBar.append(addTextButton({parent:toolBar}, data.pageId));
 
-    let pageInfo = page({data:JSON.parse(sessionStorage.getItem("currentPage")), id:"page-info", parent:create, classes:"page-info"}, true);
+    //left panel
+    let pageInfo = page({data:data, id:"page-info", parent:create, classes:"page-info"}, true);
 
+    //right panel
     let containerPage = div({id:"containerPage", class:"container-page", parent:create });
-    let pageVisual =  page({data:JSON.parse(sessionStorage.getItem("currentPage")), id:"page-visual", parent:containerPage, classes:"page-visual"});
+    let pageVisual =  page({data:data, id:"page-visual", parent:containerPage, classes:"page-visual"});
 
 
-    toolBar.append(switchViewButton({parent:toolBar}, pageInfo.model.pageId));
-    toolBar.append(addTextButton({parent:toolBar}, pageInfo.model.pageId));
+
 
 
     //footer
